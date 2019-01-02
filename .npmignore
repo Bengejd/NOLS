@@ -1,0 +1,7 @@
+.nyc_output/
+coverage/
+node_modules/
+.idea/
+.vscode/
+example
+/rsoconfig.json
