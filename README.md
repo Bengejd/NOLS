@@ -20,10 +20,16 @@ Analyzes your TS code for methods that could potentially speed up your project
 
 # TODO: 
 
-[ ] - Unit tests as much as possible
-[ ] - Create more manual file tests
-[ ] - Include JSDocs for all utility functions
-[ ] - Hookup TravisCLI
-[ ] - Package for NPM
-[ ] - Fix up readMe
-[ ] - Optimize project code
+[] - Unit tests as much as possible
+
+[] - Create more manual file tests
+
+[] - Include JSDocs for all utility functions
+
+[] - Hookup TravisCLI
+
+[] - Package for NPM
+
+[] - Fix up readMe
+
+[] - Optimize project code
