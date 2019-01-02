@@ -1,24 +1,16 @@
 # RSO: Responsive SCSS Optimizer
 A superb CLI tool that converts your SCSS files from pixel (px) values to viewport (vh/vw).
 
-# Link the local package
+## Project Status
+RSO is currently in development and **NOT RECOMMENDED** for production use at this time. 
 
-`npm link` in this repo.
-
-`npm link code-collection-optimizer` in project repo.
-
-# Build and Run
-`npm run build-and-run`
-
-# Run the build
-`npm run build`
-
-# Run the example index.js (to run the package).
-`cd example`
-
-`node index.js`
+## Why RSO
+RSO makes writing responsive SCSS easier by taking the hassle out of converting pixel `px` values to viewport `vh/vw` 
+values within your project with one simple CLI command.
 
 # TODO: 
+
+- [ ] Add optional CLI arguments (--clean, --revert)
 
 - [ ] Unit tests as much as possible
 
