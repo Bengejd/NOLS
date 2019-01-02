@@ -1,5 +1,5 @@
-# Code-Collection-Optimizer
-Analyzes your TS code for methods that could potentially speed up your project
+# RSO: Responsive SCSS Optimizer
+A superb CLI tool that converts your SCSS files from pixel (px) values to viewport (vh/vw).
 
 # Link the local package
 
