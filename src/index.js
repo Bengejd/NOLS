@@ -4,7 +4,6 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const chalk = require('chalk');
 const figlet = require('figlet');
-const shell = require('shelljs');
 const lineReader = require('line-reader');
 
 import {

@@ -1,7 +1,6 @@
 // Config Utility
 
 const fs = require('fs');
-const chalk = require('chalk');
 
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
