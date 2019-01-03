@@ -22,7 +22,10 @@ const config_data = require('../rsoconfig');
 // DEFAULT VALUES
 var HEIGHT = 812;
 var WIDTH = 375;
-var DEFAULT_DIR = './test/manual-tests/';
+var DEFAULT_DIR = './src/';
+
+var REVERT = false;
+var CLEAN = false;
 
 const RSO_CMT = ' // RSO Converted from:';
 
@@ -134,6 +137,10 @@ const getFiles = (dir, fileList) => {
     } else {
       fileList.push(dir + file);
     }
+  });
+  fileList = fileList.filter(file => {
+    const upper = file.toUpperCase();
+    return upper.indexOf('.SCSS') > -1 || upper.indexOf('.CSS') > -1;
   });
   return new Promise(resolve => resolve(fileList));
 };

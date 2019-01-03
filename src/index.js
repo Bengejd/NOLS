@@ -150,6 +150,10 @@ const getFiles = (dir, fileList) => {
       fileList.push(dir + file);
     }
   });
+  fileList = fileList.filter((file) => {
+    const upper = file.toUpperCase();
+    return (upper.indexOf('.SCSS') > -1 || upper.indexOf('.CSS') > -1);
+  });
   return new Promise((resolve) => resolve(fileList));
 };
 
