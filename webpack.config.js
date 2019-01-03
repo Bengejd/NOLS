@@ -1,8 +1,6 @@
 const path = require("path");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const MinifyPlugin = require("babel-minify-webpack-plugin");
+const webpack = require('webpack');
 
 
 module.exports = {
@@ -13,9 +11,7 @@ module.exports = {
     filename: "index.js"
   },
   plugins: [
-    new LodashModuleReplacementPlugin,
-    new BundleAnalyzerPlugin(),
-    new MinifyPlugin({}, {})
+    new webpack.BannerPlugin({banner: "#!/usr/bin/env node", raw: true}),
   ],
   optimization: {
     minimizer: [new TerserPlugin(
@@ -49,12 +45,6 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"]
-          }
-        }
       }
     ]
   }

@@ -1,9 +1,6 @@
-// #!/usr/bin/env node
-
 const inquirer = require('inquirer');
 const fs = require('fs');
 const chalk = require('chalk');
-const figlet = require('figlet');
 const lineReader = require('line-reader');
 
 import {
@@ -19,7 +16,7 @@ import {
   verifyConfig,
 } from './util/index';
 
-const config_data = require('../rsoconfig');
+// const config_data = require('../nolsconfig');
 
 // Grab the CLI arguments.
 //   console.log(JSON.stringify(process.argv));
@@ -27,54 +24,46 @@ const config_data = require('../rsoconfig');
 // DEFAULT VALUES
 var HEIGHT = 812;
 var WIDTH = 375;
-var DEFAULT_DIR = './src/';
+var DEFAULT_DIR = './test/manual-tests/';
 
 var REVERT = false;
 var CLEAN = false;
 
-const RSO_CMT = ' // RSO Converted from:';
+const NOLS_CMT = ' // NOLS Converted from:';
 
 const init = async () => {
-  console.time('RSO');
+  console.time('NOLS');
   // Show the logo
   showLogo();
 
   // Grab all config values (from input or file).
   determineArgs().then(() => start());
+  console.log(__dirname);
 };
 
 // Show the entry logo and name of the library.
 
 const showLogo = () => {
-  console.log(chalk.green('Responsive SCSS Optimizer - better known as\n'));
-  console.log(
-    chalk.green(
-      figlet.textSync('RSO', {
-        font: 'colossal',
-        horizontalLayout: 'default',
-        verticalLayout: 'default'
-      })
-    )
-  );
+  console.log(chalk.green('No.One.Likes.Stylesheets - better known as\n'));
 };
 
 /* istanbul ignore next */
 const determineArgs = async (badArgs) => {
   return new Promise(async (resolve) => {
     console.log('Checking for config.json file...');
-    if (hasConfigFile() === false || badArgs === true) { // Couldn't find rsoconfig.json
+    if (hasConfigFile() === false || badArgs === true) { // Couldn't find nolsconfig.json
       if (badArgs === false) console.log(chalk.yellow('Config file not found...'));
 
       const answers = await askQuestions();
       HEIGHT = parseFloat(answers.HEIGHT);
       WIDTH = parseFloat(answers.WIDTH);
 
-      if (answers.SAVE === 'YES') { // Save the configuration to the config.json
-        fs.writeFileSync('./rsoconfig.json', JSON.stringify({height: HEIGHT, width: WIDTH}), () => {
-          console.log(chalk.green('Created rsoconfig.json'));
-          console.log(chalk.green('Setup complete. Beginning RSO'));
-        });
-      }
+      // if (answers.SAVE === 'YES') { // Save the configuration to the config.json
+      //   fs.writeFileSync('./nolsconfig.json', JSON.stringify({height: HEIGHT, width: WIDTH}), () => {
+      //     console.log(chalk.green('Created nolsconfig.json'));
+      //     console.log(chalk.green('Setup complete. Beginning NOLS'));
+      //   });
+      // }
       resolve();
     }
     else { // Found the configuration.
@@ -85,7 +74,7 @@ const determineArgs = async (badArgs) => {
         console.log('Config is setup correctly');
         resolve();
       } else {
-        console.log(chalk.red('Something isn\'t right with rsoconfig.json...let\'s fix that!'));
+        console.log(chalk.red('Something isn\'t right with nolsconfig.json...let\'s fix that!'));
         determineArgs(true);
       }
     }
@@ -105,12 +94,12 @@ const askQuestions = () => {
       type: 'input',
       message: 'What is the viewport WIDTH of the device you\'ve been developing in?'
     },
-    {
-      name: 'SAVE',
-      type: 'list',
-      message: 'Use these values in the future?',
-      choices: ['YES', 'NO'],
-    }
+    // {
+    //   name: 'SAVE',
+    //   type: 'list',
+    //   message: 'Use these values in the future?',
+    //   choices: ['YES', 'NO'],
+    // }
   ];
   return inquirer.prompt(questions);
 };
@@ -214,7 +203,7 @@ export const doTranslation = (line, type) => {
       }
     }).then((convertedVal) => {
       if (convertedVal !== null) {
-        resolve(line.replace(`${parsedVal}px`, `${convertedVal}${getViewportType(type)}`) + RSO_CMT + originalValue);
+        resolve(line.replace(`${parsedVal}px`, `${convertedVal}${getViewportType(type)}`) + NOLS_CMT + originalValue);
       }
       else { // Just one last check before writing. We shouldn't ever get here in theory.
         resolve(line);

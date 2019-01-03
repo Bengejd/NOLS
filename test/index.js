@@ -214,12 +214,12 @@ describe('Utility: hasConfigFile()', () => {
 
 const doTranslationTests = [
   {
-    input: {line: 'width: 375px;', type: 'X'}, expectedResult: "width: 100vw; // RSO Converted from: 375px;",
-    description: 'should return "width: 100vw; // RSO Converted from: 375px;" when receiving "width: 375px;"'
+    input: {line: 'width: 375px;', type: 'X'}, expectedResult: "width: 100vw; // NOLS Converted from: 375px;",
+    description: 'should return "width: 100vw; // NOLS Converted from: 375px;" when receiving "width: 375px;"'
   },
   {
-    input: {line: 'height: 203px;', type: 'Y'}, expectedResult: "height: 25vh; // RSO Converted from: 203px;",
-    description: 'should return " height: 25vh; // RSO Converted from: 203px;" when receiving "height: 203px;"'
+    input: {line: 'height: 203px;', type: 'Y'}, expectedResult: "height: 25vh; // NOLS Converted from: 203px;",
+    description: 'should return " height: 25vh; // NOLS Converted from: 203px;" when receiving "height: 203px;"'
   },
   // TODO: Add more tests for doTranslation()
 ];
