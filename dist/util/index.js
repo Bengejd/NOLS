@@ -6,13 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 exports.isNewLine = isNewLine;
 exports.getTranslationType = getTranslationType;
 exports.hasPX = hasPX;
+exports.isString = isString;
 exports.calculateVH = calculateVH;
 exports.calculateVW = calculateVW;
+exports.getViewportType = getViewportType;
 exports.isComment = isComment;
 // Config Utility
 
 const fs = require('fs');
-const chalk = require('chalk');
 
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
@@ -29,7 +30,6 @@ const COMBINED_TRANSLATIONS = {
 const TRANSLATION_TYPES = [COMBINED_TRANSLATIONS, WIDTH_TRANSLATIONS, HEIGHT_TRANSLATIONS];
 
 const hasConfigFile = exports.hasConfigFile = () => {
-  console.log('Checking for config.json file...');
   return fs.existsSync('./rsoconfig.json');
 };
 
@@ -37,25 +37,22 @@ const verifyConfig = exports.verifyConfig = (height, width) => {
   return !isNaN(height) && !isNaN(width) && height > 0 && width > 0;
 };
 
-// File Utility
+//region File Utilities
 
 const isDirectory = exports.isDirectory = path => {
-  fs.statSync(path).isDirectory();
+  try {
+    return fs.statSync(path).isDirectory();
+  } catch (err) {
+    return false;
+  }
 };
-
-const checkLastLine = exports.checkLastLine = line => {
-  return !!(isClosingBrace(line) || isNewLine(line));
-};
-
-function isClosingBrace(line) {
-  return line.indexOf('}') > -1;
-}
 
 /*
  * Blank (new line) strings have a length of 0.
  */
 function isNewLine(line) {
-  return line.length === 0;
+  if (isString(line)) return line.trim().length === 0;
+  return false;
 }
 
 function getTranslationType(line) {
@@ -72,21 +69,38 @@ function getTranslationType(line) {
   });
 }
 
-// Calculation Utility
+//endregion File Utilities
+
+//region Calculation Utilities
 
 function hasPX(line) {
-  return line.includes('px');
+  if (isString(line)) return line.includes('px');
+  return false;
+}
+
+function isString(line) {
+  return typeof line === 'string';
 }
 
 function calculateVH(val, BASE_VIEW_HEIGHT) {
-  return val * 100 / BASE_VIEW_HEIGHT;
+  if (!isNaN(val) && !isNaN(BASE_VIEW_HEIGHT)) return val * 100 / BASE_VIEW_HEIGHT;
+  return null;
 }
 
 function calculateVW(val, BASE_VIEW_WIDTH) {
-  return val * 100 / BASE_VIEW_WIDTH;
+  if (!isNaN(val) && !isNaN(BASE_VIEW_WIDTH)) return val * 100 / BASE_VIEW_WIDTH;
+  return null;
 }
 
-// Comments Utility
+function getViewportType(type) {
+  if (type === 'X') return 'vw';
+  if (type === 'Y') return 'vh';
+  if (type === 'XY') return null;else return null;
+}
+
+//endregion Calculation Utilities
+
+//region Comments Utilities
 
 /**
  * Checks if a line is a comment.
@@ -114,3 +128,5 @@ function isBlockComment(line) {
 function isInlineComment(line) {
   return line.indexOf('//') > -1;
 }
+
+//endregion Comments Utilities

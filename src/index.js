@@ -10,6 +10,7 @@ import {
   calculateVH,
   calculateVW,
   getTranslationType,
+  getViewportType,
   hasConfigFile,
   hasPX,
   isComment,
@@ -19,8 +20,6 @@ import {
 } from './util/index';
 
 const config_data = require('../rsoconfig');
-
-// TODO: Write Unit Tests
 
 // Grab the CLI arguments.
 //   console.log(JSON.stringify(process.argv));
@@ -42,6 +41,7 @@ const init = async () => {
 };
 
 // Show the entry logo and name of the library.
+
 const showLogo = () => {
   console.log(chalk.green('Responsive SCSS Optimizer - better known as\n'));
   console.log(
@@ -55,8 +55,10 @@ const showLogo = () => {
   );
 };
 
+/* istanbul ignore next */
 const determineArgs = async (badArgs) => {
   return new Promise(async (resolve) => {
+    console.log('Checking for config.json file...');
     if (hasConfigFile() === false || badArgs === true) { // Couldn't find rsoconfig.json
       if (badArgs === false) console.log(chalk.yellow('Config file not found...'));
 
@@ -87,6 +89,7 @@ const determineArgs = async (badArgs) => {
   });
 };
 
+/* istanbul ignore next */
 const askQuestions = () => {
   const questions = [
     {
@@ -133,6 +136,7 @@ const writeFile = (file, newFile) => {
   console.log(chalk.green('Finished', file));
 };
 
+/* istanbul ignore next */
 const getFiles = (dir, fileList) => {
   let files = fs.readdirSync(dir);
   fileList = fileList || [];
@@ -146,16 +150,16 @@ const getFiles = (dir, fileList) => {
   return new Promise((resolve) => resolve(fileList));
 };
 
-const readAndTranslateFile = (file) => {
+/* istanbul ignore next */
+export const readAndTranslateFile = (file) => {
+  console.log(file);
   let newFileScss = [];
   return new Promise((resolve) => {
     lineReader.eachLine(file, async (line, last) => {
       if ((isComment(line) || isNewLine(line)) && !last) { // Don't change comments.
-        // console.log('Comment or newline found', line);
         newFileScss.push(line);
       }
       else if (last) { // Last line of the file (should be space in theory, but also could be just a close bracket...))
-        // console.log('Last line found', line);
         newFileScss.push(line);
         resolve(newFileScss);
         return false; // stop reading
@@ -163,11 +167,9 @@ const readAndTranslateFile = (file) => {
       else {
         const translationType = await getTranslationType(line);
         if (translationType !== null) {
-          // console.log('translationType', translationType, 'found for', line);
           const newLine = await doTranslation(line, translationType);
           newFileScss.push(await newLine);
         } else {
-          // console.log('No type found for: ', line);
           newFileScss.push(line);
         }
       }
@@ -175,20 +177,21 @@ const readAndTranslateFile = (file) => {
   });
 };
 
-const doTranslation = (line, type) => {
+export const doTranslation = (line, type) => {
   const originalValue = line.split(':')[1]; // Grab the value.
   const parsedVal = parseFloat(originalValue); // Convert value to float (which removes the px/vh/%/em... strings).
   return new Promise(async (resolve, reject) => {
     if (!hasPX(line.split(':')[1])) resolve(line); // Not a PX value, so we'll skip it for now.
 
+    /* istanbul ignore next */
     new Promise((resolve) => {
       switch (type) {
         case('X'): {
-          resolve(calculateVW(parsedVal, WIDTH));
+          resolve(calculateVW(parsedVal, WIDTH), 'vw');
           break;
         }
         case('Y'): {
-          resolve(calculateVH(parsedVal, HEIGHT));
+          resolve(calculateVH(parsedVal, HEIGHT), 'vh');
           break;
         }
         case('XY'): {
@@ -204,7 +207,7 @@ const doTranslation = (line, type) => {
       }
     }).then((convertedVal) => {
       if (convertedVal !== null) {
-        resolve(line.replace(`${parsedVal}px`, `${convertedVal}vh`) + RSO_CMT + originalValue);
+        resolve(line.replace(`${parsedVal}px`, `${convertedVal}${getViewportType(type)}`) + RSO_CMT + originalValue);
       }
       else { // Just one last check before writing. We shouldn't ever get here in theory.
         resolve(line);

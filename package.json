@@ -7,7 +7,8 @@
     "lint": "eslint ./src",
     "build": "babel ./src -d ./dist",
     "test": "nyc mocha --require babel-core/register",
-    "build-testing":"npm run build && rso"
+    "build-test":"npm run build && npm run test",
+    "build-run":"npm run build && rso"
   },
   "nyc": {
     "reporter": [
