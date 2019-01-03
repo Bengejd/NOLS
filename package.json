@@ -1,6 +1,6 @@
 {
   "name": "rso",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values (vh/vw) with one simple command",
   "main": "dist/src/index.js",
   "scripts": {
