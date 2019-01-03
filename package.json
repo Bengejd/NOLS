@@ -1,14 +1,15 @@
 {
   "name": "rso",
   "version": "0.2.0",
-  "description": "",
+  "description": "A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values (vh/vw) with one simple command",
   "main": "dist/src/index.js",
   "scripts": {
     "lint": "eslint ./src",
-    "build": "babel ./src -d ./dist",
-    "test": "nyc mocha --require babel-core/register",
-    "build-test": "npm run build && npm run test",
-    "build-run": "npm run build && rso"
+    "build:dev": "webpack --mode=development --progress --profile --colors",
+    "build:prod": "webpack --mode=production --progress --colors",
+    "test": "nyc mocha --require @babel/register",
+    "build-test": "npm run build:dev && npm run test",
+    "build-run": "npm run build:dev && rso"
   },
   "nyc": {
     "reporter": [
@@ -31,21 +32,29 @@
     "chalk": "^2.4.1",
     "figlet": "^1.2.1",
     "inquirer": "^6.2.1",
-    "line-reader": "^0.4.0",
-    "shelljs": "^0.8.3"
+    "line-reader": "^0.4.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-preset-env": "^1.7.0",
-    "clg-color": "^1.1.3",
+    "babel-loader": "^8.0.4",
+    "babel-minify-webpack-plugin": "^0.3.1",
     "eslint": "^5.11.1",
     "eslint-config-google": "^0.11.0",
     "http-server": "^0.11.1",
+    "lodash-webpack-plugin": "^0.11.5",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "typescript": "^3.1.6"
+    "terser-webpack-plugin": "^1.2.1",
+    "typescript": "^3.1.6",
+    "uglifyjs-webpack-plugin": "^2.1.1",
+    "webpack": "^4.28.3",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.2.0"
   },
   "bin": {
     "rso": "dist/index.js"

@@ -1,15 +1,14 @@
 {
   "presets": [
     [
-      "env",
-      {
-        "targets": {
-          "node": "current"
-        }
+      "@babel/preset-env", {
+      "targets": {
+        "node": "current"
       }
+    }
     ]
   ],
   "plugins": [
-    "transform-es2015-modules-commonjs"
+    "@babel/plugin-transform-modules-commonjs"
   ]
 }
