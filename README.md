@@ -7,6 +7,11 @@ RSO is currently in development and **NOT RECOMMENDED** for production use at th
 
 # TODO: 
 
+- [ ] Add --clean CLI argument (will remove all comments that RSO adds, but also makes it so you cannot revert 
+changes.)
+
+- [ ] Add --revert CLI argument (will revert all RSO changes, detected by comments in .scss files.)
+
 - [ ] Add optional CLI arguments (--clean, --revert)
 
 - [X] Unit tests as much as possible
