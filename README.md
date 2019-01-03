@@ -9,7 +9,7 @@ RSO is currently in development and **NOT RECOMMENDED** for production use at th
 
 - [ ] Add optional CLI arguments (--clean, --revert)
 
-- [ ] Unit tests as much as possible
+- [X] Unit tests as much as possible
 
 - [ ] Create more manual file tests
 

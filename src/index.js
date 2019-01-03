@@ -27,7 +27,10 @@ const config_data = require('../rsoconfig');
 // DEFAULT VALUES
 var HEIGHT = 812;
 var WIDTH = 375;
-var DEFAULT_DIR = './test/manual-tests/';
+var DEFAULT_DIR = './src/';
+
+var REVERT = false;
+var CLEAN = false;
 
 const RSO_CMT = ' // RSO Converted from:';
 
