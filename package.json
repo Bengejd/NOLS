@@ -1,6 +1,6 @@
 {
   "name": "nols",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values (vh/vw) with one simple command",
   "main": "dist/index.js",
   "scripts": {
