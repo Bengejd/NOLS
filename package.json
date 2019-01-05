@@ -7,9 +7,7 @@
     "lint": "eslint ./src",
     "build:dev": "webpack --mode=development --progress --profile --colors",
     "build:prod": "webpack --mode=production --progress --colors",
-    "test": "nyc mocha --require @babel/register",
-    "build-test": "npm run build:dev && npm run test",
-    "build-run": "npm run build:dev && nols"
+    "test": "nyc mocha --require @babel/register"
   },
   "nyc": {
     "reporter": [

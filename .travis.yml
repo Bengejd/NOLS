@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - node
 before_deploy:
-- npm run build
+- npm run build:prod
 deploy:
   # add this line after travis setup
   skip_cleanup: true
@@ -12,4 +12,4 @@ deploy:
     secure: VIGoapvdhXQGi19oHbF375EoeX6ID/EUAZ4qB74U/5wGlCG1BCKuM3HrMjsYty1rrkHAPO9OkzO7EKcADsI3svCtj+4VYumB1KSUw6QFo9TQxVnY9ss+m+errf+alBnKzznIeUD+puvOCNQw+H+2cO2poQL4dJCM9fFsCNF2ixc09+rPnRV9P/x8bwEK9qxXWyNSVSWqGAsljL1DxYE3NGKiJX9ic7FTtxML4n4BclJrOwvl06Sh5uJ1d++/RifiZiDNjnB0/kW0QWDWeqgE0yIgYkvVlmKj0DEb9RlZi1nCEAFNj1kU6tOENgvn4/3CW/G+k6b0WKebSr4Spu/WiohfSF4FqiGGVe3yRVmvKGOgk9+I/hpNecEmYN9kiM9as4lHBdiCscxH2xD2tC9FG3IM21YT+NvRsSlBSCLTDobwKP3pP5pPU8VgFSkUqHthqI8p5APZkU7fInqWHR7RZbBQfBSpVpBsNLX8UAM8Br2HeSgOGGHcw9Gtj64TuYisWDuTYPW4cbJ+i1aOxQu7FO3kNfgt2zQD/SVmKQba+/vp4+3EPAfIkBkkJOlGIOETg7onnALAersP8vi2wjAW9+RLudiFnJ3d24IBmuGKJwYblKM09zvo5HEKslBHUtGlxxXdbrgbA5p84jP8MnOlDa19RdNNX42wpiMr9++Qr4k=
   on:
     tags: true
-    repo: Bengejd/Responsive-SCSS-Optimizer
+    repo: Bengejd/NOLS
