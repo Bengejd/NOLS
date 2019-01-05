@@ -5,7 +5,6 @@ import {
   calculateVW,
   getTranslationType,
   getViewportType,
-  hasConfigFile,
   hasPX,
   isComment,
   isDirectory,
@@ -15,7 +14,7 @@ import {
 } from '../src/util/index';
 import {doTranslation} from '../src/index';
 
-//region Utility Tests
+// region Utility Tests
 
 const commentTests = [
   {input: '//', expectedResult: true, description: 'should return true when receiving "//"'},
@@ -28,7 +27,7 @@ describe('Utility: Comment Detection: ', () => {
   commentTests.forEach((sample) => {
     it(sample.description, () => {
       assert.equal(isComment(sample.input), sample.expectedResult);
-    })
+    });
   });
 });
 
@@ -194,31 +193,17 @@ describe('Utility: isString()', () => {
   });
 });
 
-const hasConfigFileTests = [
-  // Placeholder tests just for code coverage.
-  {input: null, expectedResult: true || false, description: 'should return false when no rsoconfig.json file exists'},
-  {input: null, expectedResult: true || false, description: 'should return true when rsoconfig.json file exists'},
-];
+// endregion Utility Tests
 
-describe('Utility: hasConfigFile()', () => {
-  hasConfigFileTests.forEach((sample) => {
-    it(sample.description, () => {
-      assert.equal(hasConfigFile(), sample.expectedResult);
-    })
-  });
-});
-
-//endregion Utility Tests
-
-//region Main Tests
+// region Main Tests
 
 const doTranslationTests = [
   {
-    input: {line: 'width: 375px;', type: 'X'}, expectedResult: "width: 100vw; // NOLS Converted from: 375px;",
+    input: {line: 'width: 375px;', type: 'X'}, expectedResult: 'width: 100vw; // NOLS Converted from: 375px;',
     description: 'should return "width: 100vw; // NOLS Converted from: 375px;" when receiving "width: 375px;"'
   },
   {
-    input: {line: 'height: 203px;', type: 'Y'}, expectedResult: "height: 25vh; // NOLS Converted from: 203px;",
+    input: {line: 'height: 203px;', type: 'Y'}, expectedResult: 'height: 25vh; // NOLS Converted from: 203px;',
     description: 'should return " height: 25vh; // NOLS Converted from: 203px;" when receiving "height: 203px;"'
   },
   // TODO: Add more tests for doTranslation()
@@ -233,5 +218,4 @@ describe('Main: doTranslation()', () => {
 });
 
 
-
-//endregion Main Tests
+// endregion Main Tests
