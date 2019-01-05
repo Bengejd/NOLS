@@ -11,7 +11,7 @@ handles the rest.
       alt="API stability" />
   </a>
   <!-- NPM version -->
-  <a href="https://npmjs.org/package/NOLS">
+  <a href="https://npmjs.org/package/nols">
     <img src="https://img.shields.io/npm/v/nols.svg?style=flat-square"
       alt="NPM version" />
   </a>
