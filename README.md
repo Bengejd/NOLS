@@ -22,7 +22,7 @@ changes.)
 
 - [ ] Hookup TravisCLI
 
-- [ ] Package for NPM
+- [X] Package for NPM
 
 - [ ] Fix up readMe
 
