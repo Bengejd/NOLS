@@ -25,7 +25,7 @@ const commentTests = [
 
 describe('Utility: Comment Detection: ', () => {
   commentTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(isComment(sample.input), sample.expectedResult);
     });
   });
@@ -42,7 +42,7 @@ const vhTests = [
 
 describe('Utility: VH Calculation', () => {
   vhTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(calculateVH(sample.input, 812), sample.expectedResult);
     });
   });
@@ -58,7 +58,7 @@ const vwTests = [
 
 describe('Utility: VW Calculation', () => {
   vwTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(calculateVW(sample.input, 375), sample.expectedResult);
     });
   });
@@ -74,7 +74,7 @@ const viewportTypeTests = [
 
 describe('Utility: Viewport Types', () => {
   viewportTypeTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(getViewportType(sample.input), sample.expectedResult);
     });
   });
@@ -90,7 +90,7 @@ const newLineTests = [
 
 describe('Utility: New Line', () => {
   newLineTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(isNewLine(sample.input), sample.expectedResult);
     });
   });
@@ -107,7 +107,7 @@ const translationTypesTest = [
 
 describe('Utility: Get Translation Type', async () => {
   translationTypesTest.forEach((sample) => {
-    it(sample.description, async () => {
+    it(sample.description, async function() {
       assert.equal(await getTranslationType(sample.input), sample.expectedResult);
     });
   });
@@ -134,7 +134,7 @@ const verifyConfigTests = [
 
 describe('Utility: Verify config', () => {
   verifyConfigTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(verifyConfig(sample.input.height, sample.input.width), sample.expectedResult);
     });
   });
@@ -154,7 +154,7 @@ const isDirectoryTests = [
 
 describe('Utility: Is Directory', () => {
   isDirectoryTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(isDirectory(sample.input), sample.expectedResult);
     });
   });
@@ -172,7 +172,7 @@ const hasPXTests = [
 
 describe('Utility: hasPX()', () => {
   hasPXTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(hasPX(sample.input), sample.expectedResult);
     });
   });
@@ -187,7 +187,7 @@ const isStringTests = [
 
 describe('Utility: isString()', () => {
   isStringTests.forEach((sample) => {
-    it(sample.description, () => {
+    it(sample.description, function() {
       assert.equal(isString(sample.input), sample.expectedResult);
     });
   });
@@ -211,7 +211,7 @@ const doTranslationTests = [
 
 describe('Main: doTranslation()', () => {
   doTranslationTests.forEach((sample) => {
-    it(sample.description, async () => {
+    it(sample.description, async function() {
       assert.equal(await doTranslation(sample.input.line, sample.input.type), sample.expectedResult);
     });
   });

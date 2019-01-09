@@ -59,12 +59,30 @@ This command will add in comments for you to see later on, if you're curious wha
 `nols --clean`: This removes all comments left behind by `nols`.
 This also makes it so that you cannot revert the changes. So use this carefully. Check all of your application, before using this command.
 
-# TODO: 
-- [X] Unit tests as much as possible
-- [X] Package for NPM
-- [ ] Create more manual file tests
-- [ ] Add project logo
-- [ ] Include JSDocs for all utility functions
-- [ ] Hookup TravisCLI
-- [ ] Fix up readMe
-- [ ] Optimize project code
+## Test Todo: 
+- [x] Implement unit tests as much as possible.
+- [ ] Create more manual file tests.
+- [ ] Run package on fresh project to test non-linked package.
+
+## CI TODO:
+- [ ] Hookup `TravisCLI`
+- [ ] Hookup `GreenKeeper`
+- [ ] Hook up `snyk`
+- [ ] Hook up `npm audit`
+
+## NPM TODO:
+- [x] Package for `NPM`
+- [ ] Double check npmignore
+
+## Github TODO:
+- [ ] Add Project logo
+- [ ] Create `CHANGELOG.md`
+- [ ] Fix up readme
+- [ ] Create package install/usage guide
+- [ ] create a release that matches the npm package.
+
+## Code TODO:
+- [ ] Include JSDocs for all utility functions.
+- [ ] Optimize project code.
+- [ ] Implement `nols --clean` command
+- [ ] Implement `nols --`

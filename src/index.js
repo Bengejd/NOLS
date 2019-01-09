@@ -22,12 +22,12 @@ import {
 //   console.log(JSON.stringify(process.argv));
 
 // DEFAULT VALUES
-var HEIGHT = 812;
-var WIDTH = 375;
-var DEFAULT_DIR = './test/manual-tests/';
+let HEIGHT = 812;
+let WIDTH = 375;
+const DEFAULT_DIR = './test/manual-tests/';
 
-var REVERT = false;
-var CLEAN = false;
+const REVERT = false;
+const CLEAN = false;
 
 const NOLS_CMT = ' // NOLS Converted from:';
 
@@ -65,8 +65,7 @@ const determineArgs = async (badArgs) => {
       //   });
       // }
       resolve();
-    }
-    else { // Found the configuration.
+    } else { // Found the configuration.
       HEIGHT = parseFloat(config_data.height);
       WIDTH = parseFloat(config_data.width);
 
@@ -109,8 +108,7 @@ const start = async () => {
   const files = await getFiles(DEFAULT_DIR);
   console.log(chalk.green(`${files.length} scss files found`));
 
-  files.forEach(async (file) => {
-
+  files.map(async (file) => {
     // Read that file line by line
     const newFile = await readAndTranslateFile(file);
 
@@ -122,7 +120,7 @@ const start = async () => {
 const writeFile = (file, newFile) => {
   fs.writeFile(file, '', () => {
   });
-  newFile.map(line => {
+  newFile.map((line) => {
     fs.appendFileSync(file, line + '\n');
   });
   console.log(chalk.green('Finished', file));
@@ -130,7 +128,7 @@ const writeFile = (file, newFile) => {
 
 /* istanbul ignore next */
 const getFiles = (dir, fileList) => {
-  let files = fs.readdirSync(dir);
+  const files = fs.readdirSync(dir);
   fileList = fileList || [];
   files.forEach(async (file) => {
     if (isDirectory(dir + file)) {
@@ -149,18 +147,16 @@ const getFiles = (dir, fileList) => {
 /* istanbul ignore next */
 export const readAndTranslateFile = (file) => {
   console.log(file);
-  let newFileScss = [];
+  const newFileScss = [];
   return new Promise((resolve) => {
     lineReader.eachLine(file, async (line, last) => {
       if ((isComment(line) || isNewLine(line)) && !last) { // Don't change comments.
         newFileScss.push(line);
-      }
-      else if (last) { // Last line of the file (should be space in theory, but also could be just a close bracket...))
+      } else if (last) { // Last line of the file (should be space in theory, but also could be just a close bracket...))
         newFileScss.push(line);
         resolve(newFileScss);
         return false; // stop reading
-      }
-      else {
+      } else {
         const translationType = await getTranslationType(line);
         if (translationType !== null) {
           const newLine = await doTranslation(line, translationType);
@@ -182,15 +178,15 @@ export const doTranslation = (line, type) => {
     /* istanbul ignore next */
     new Promise((resolve) => {
       switch (type) {
-        case('X'): {
+        case ('X'): {
           resolve(calculateVW(parsedVal, WIDTH), 'vw');
           break;
         }
-        case('Y'): {
+        case ('Y'): {
           resolve(calculateVH(parsedVal, HEIGHT), 'vh');
           break;
         }
-        case('XY'): {
+        case ('XY'): {
           console.log(chalk.warning(line.split(':')[0], 'attribute not currently supported', line));
           reject(line);
           break;
@@ -204,14 +200,13 @@ export const doTranslation = (line, type) => {
     }).then((convertedVal) => {
       if (convertedVal !== null) {
         resolve(line.replace(`${parsedVal}px`, `${convertedVal}${getViewportType(type)}`) + NOLS_CMT + originalValue);
-      }
-      else { // Just one last check before writing. We shouldn't ever get here in theory.
+      } else { // Just one last check before writing. We shouldn't ever get here in theory.
         resolve(line);
       }
-    }).catch(line => { // Line was rejected for some reason, so we'll skip it.
+    }).catch((line) => { // Line was rejected for some reason, so we'll skip it.
       resolve(line);
     });
-  })
+  });
 };
 
 init();

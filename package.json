@@ -1,7 +1,7 @@
 {
   "name": "nols",
   "version": "0.4.4",
-  "description": "A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values (vh/vw) with one simple command",
+  "description": "Nols: A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint ./src",
@@ -9,6 +9,10 @@
     "build:prod": "webpack --mode=production --progress --colors",
     "test": "nyc mocha --require @babel/register"
   },
+  "bugs": {
+    "url":"https://github.com/Bengejd/NOLS/issues"
+  },
+  "repository": "github:Bengejd/NOLS",
   "nyc": {
     "reporter": [
       "lcov",
@@ -21,7 +25,9 @@
     "Responsive-SCSS-Optimizer",
     "SCSS-Optimizer",
     "px-to-vh",
-    "px-to-vw"
+    "px-to-vw",
+    "nols",
+    "NOLS"
   ],
   "author": "Bengejd",
   "license": "MIT",
