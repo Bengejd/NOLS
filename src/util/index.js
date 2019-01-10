@@ -32,6 +32,8 @@ const TRANSLATION_TYPES = [
   COMBINED_TRANSLATIONS, WIDTH_TRANSLATIONS, HEIGHT_TRANSLATIONS,
 ];
 
+// unclear if we actually need this anymore, since i'm not using a config file...
+
 export const hasConfigFile = () => {
   return fs.existsSync('./rsoconfig.json');
 };
@@ -40,8 +42,13 @@ export const verifyConfig = (height, width) => {
   return (!isNaN(height) && !isNaN(width) && height > 0 && width > 0);
 };
 
-//region File Utilities
+// region File Utilities
 
+/**
+ * Checks if a path is a directory.
+ * @param {string} path - the current path that nols is working in.
+ * @returns boolean;
+ */
 export const isDirectory = (path) => {
   try {
     return fs.statSync(path).isDirectory();
@@ -50,13 +57,16 @@ export const isDirectory = (path) => {
   }
 };
 
-/*
- * Blank (new line) strings have a length of 0.
+/**
+ * Checks if a line is a newLine (\n).
+ * @param {string} line - the current line being checked.
+ * @returns boolean;
  */
 export function isNewLine(line) {
   if (isString(line)) return line.trim().length === 0;
   return false;
 }
+
 
 export function getTranslationType(line) {
   return new Promise((resolve) => {
@@ -72,29 +82,56 @@ export function getTranslationType(line) {
   });
 }
 
-//endregion File Utilities
+// endregion File Utilities
 
-//region Calculation Utilities
+// region Calculation Utilities
 
+/**
+ * Checks if a line has a `px` value.
+ * @param {string} line - the current line being checked.
+ * @returns boolean;
+ */
 export function hasPX(line) {
   if (isString(line)) return line.includes('px');
   return false;
 }
 
+/**
+ * Checks if a line is a string.
+ * @param {string} line - the current line being checked.
+ * @returns boolean;
+ */
 export function isString(line) {
   return typeof line === 'string';
 }
 
+/**
+ * Calculates the VH of a value.
+ * @param {number} val - the current attribute value (in px).
+ * @param {number} BASE_VIEW_HEIGHT - The CLI BASE_VIEW_HEIGHT that you input.
+ * @returns number || null;
+ */
 export function calculateVH(val, BASE_VIEW_HEIGHT) {
   if (!isNaN(val) && !isNaN(BASE_VIEW_HEIGHT)) return (val * 100) / BASE_VIEW_HEIGHT;
   return null;
 }
 
+/**
+ * Calculates the VW of a value.
+ * @param {number} val - the current attribute value (in px).
+ * @param {number} BASE_VIEW_WIDTH - The CLI BASE_VIEW_WIDTH that you input.
+ * @returns number || null;
+ */
 export function calculateVW(val, BASE_VIEW_WIDTH) {
   if (!isNaN(val) && !isNaN(BASE_VIEW_WIDTH)) return (val * 100) / BASE_VIEW_WIDTH;
   return null;
 }
 
+/**
+ * Determines the viewport unit we're going to apply to the attribute, after calculation.
+ * @param {string} type - the translation type of the attribute we converted.
+ * @returns number || null;
+ */
 export function getViewportType(type) {
   if (type === 'X') return 'vw';
   if (type === 'Y') return 'vh';
@@ -102,13 +139,13 @@ export function getViewportType(type) {
   else return null;
 }
 
-//endregion Calculation Utilities
+// endregion Calculation Utilities
 
-//region Comments Utilities
+// region Comments Utilities
 
 /**
  * Checks if a line is a comment.
- * @param {string} line - The title of the book.
+ * @param {string} line - the current line being checked.
  * @returns boolean;
  */
 export function isComment(line) {
@@ -117,7 +154,7 @@ export function isComment(line) {
 
 /**
  * Checks if a line contains a block comment.
- * @param {string} line - The title of the book.
+ * @param {string} line - the current line being checked.
  * @returns boolean;
  */
 function isBlockComment(line) {
@@ -126,11 +163,11 @@ function isBlockComment(line) {
 
 /**
  * Checks if a line is a inline comment.
- * @param {string} line - The title of the book.
+ * @param {string} line - the current line being checked.
  * @returns boolean;
  */
 function isInlineComment(line) {
   return line.indexOf('//') > -1;
 }
 
-//endregion Comments Utilities
+// endregion Comments Utilities

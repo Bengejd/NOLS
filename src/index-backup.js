@@ -45,15 +45,15 @@ const init = async () => {
   /*
    * Grab all config values (from input or file).
    */
-  checkForProcessArgs()
-    .then(async () => {
-      if (MODE.standard) {
-        const answers = await askQuestions();
-        if (!answers.CONFIRM) process.abort();
-        HEIGHT = parseFloat(answers.HEIGHT);
-        WIDTH = parseFloat(answers.WIDTH);
-      }
-    });
+  // checkForProcessArgs()
+  //   .then(async () => {
+  //     if (MODE.standard) {
+  //       const answers = await askQuestions();
+  //       if (!answers.CONFIRM) process.abort();
+  //       HEIGHT = parseFloat(answers.HEIGHT);
+  //       WIDTH = parseFloat(answers.WIDTH);
+  //     }
+  //   });
 
   // determineArgs().then(() => start());
 };

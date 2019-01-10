@@ -1,17 +1,17 @@
-const path = require("path");
+const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 
 
 module.exports = {
   mode: 'development',
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "index.js"
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index.js'
   },
   plugins: [
-    new webpack.BannerPlugin({banner: "#!/usr/bin/env node", raw: true}),
+    new webpack.BannerPlugin({banner: '#!/usr/bin/env node', raw: true}),
   ],
   optimization: {
     minimizer: [new TerserPlugin(
@@ -46,9 +46,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules)/,
 	      use: {
-		      loader: "babel-loader",
+		      loader: 'babel-loader',
 		      options: {
-			      presets: ["@babel/preset-env"]
+			      presets: ['@babel/preset-env']
 		      }
 	      }
       }
