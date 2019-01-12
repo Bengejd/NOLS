@@ -18,6 +18,8 @@
     "no-unused-vars": "warn",
     "space-before-function-paren": "off",
     "max-len": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "keyword-spacing": "off",
+    "no-var": "off"
   }
 }
