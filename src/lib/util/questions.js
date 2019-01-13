@@ -13,7 +13,7 @@ export function configQuestions() {
       message: 'What is the device HEIGHT that you\'re targeting?',
       type: 'input',
       when(mode) {
-       return mode.MODE === 'Default';
+        return mode.MODE === 'Default';
       }
     },
     {

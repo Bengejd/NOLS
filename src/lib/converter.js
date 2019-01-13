@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
   attributes: [
-    'height:',
+    'height:', 'max-height:', 'min-height:', 'line-height:',
     'top:', 'bottom:',
     'padding-top:', 'padding-bottom:',
     'margin-top:', 'margin-bottom:',
@@ -15,11 +15,12 @@ const HEIGHT_TRANSLATIONS = {
 const WIDTH_TRANSLATIONS = {
   name: 'X',
   attributes: [
-    'width:',
+    'width:', 'max-width:', 'min-width:', 'column-width:', 'outline-width:',
     'left:', 'right:',
     'padding-left:', 'padding-right:',
     'margin-left:', 'margin-right:',
     'transform: translateX',
+    'word-spacing:'
   ],
 };
 const COMBINED_TRANSLATIONS = {
@@ -30,7 +31,7 @@ const COMBINED_TRANSLATIONS = {
 };
 
 const CONVERSION_TYPES = [
-  COMBINED_TRANSLATIONS, WIDTH_TRANSLATIONS, HEIGHT_TRANSLATIONS,
+  WIDTH_TRANSLATIONS, HEIGHT_TRANSLATIONS, COMBINED_TRANSLATIONS,
 ];
 
 export function convertLine(line) {
@@ -42,35 +43,41 @@ export function convertLine(line) {
     const originalVal = line.split(':')[1]; // Grab the value.
     const parsedVal = parseFloat(originalVal); // Convert value to float (which removes the px/vh/%/em... strings).
     const calculatedVal = await calculate(parsedVal, conversionType);
-    if(calculatedVal === null) { // Something went wrong with the calculation...
+    if (calculatedVal === null) { // Something went wrong with the calculation...
       resolve(line);
     }
     resolve(line.replace(`${parsedVal}px`, `${calculatedVal}${getViewportType(conversionType)}`) + global.NOLS_CMT + originalVal);
-  });
+  }).catch((err) => console.log(chalk.red('Error processing: ', line, err)));
 }
 
 export async function calculate(val, type) {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     switch (type) {
       case('Y'): {
-        resolve(calculateVH(val));
+        resolve(await calculateVH(val));
         break;
       }
       case('X'): {
-        resolve(calculateVW(val));
+        resolve(await calculateVW(val));
         break;
       }
       case('XY'): {
-        console.log(chalk.warning(line.split(':')[0], 'attribute not currently supported', line));
-        resolve(line);
+        console.log(chalk.yellow(type, 'attribute not currently supported'));
+        resolve(null);
         break;
       }
       default: {
-        console.log(chalk.warning('Unknown type slipped through the cracks...', type));
-        resolve(line);
+        console.log(chalk.yellow('Unknown type slipped through the cracks...', type));
+        resolve(null);
         break;
       }
     }
+    // try {
+    //
+    // } catch (err) {
+    //   console.log(chalk.red('Error calculating: ', val, 'for type: ', type));
+    //   resolve(null);
+    // }
   });
 }
 

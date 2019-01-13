@@ -2,7 +2,7 @@ import {hasNolsComment} from './util/util';
 
 export function revertLine(line) {
   return new Promise((resolve) => {
-    if(hasNolsComment(line)) {
+    if (hasNolsComment(line)) {
       resolve(getRevertedLine(line));
     } else {
       resolve(line);

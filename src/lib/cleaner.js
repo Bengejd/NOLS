@@ -13,5 +13,5 @@ export function cleanLine(line) {
 }
 
 function getCleanedLine(line) {
-  return line.substring(0, line.indexOf('// NOLS') -1);
+  return line.substring(0, line.indexOf('// NOLS') - 1);
 }
