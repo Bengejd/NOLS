@@ -1,6 +1,6 @@
 {
   "name": "nols",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Nols: A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values",
   "main": "dist/index.js",
   "scripts": {
