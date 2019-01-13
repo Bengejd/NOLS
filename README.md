@@ -43,6 +43,23 @@ Now with NOLS, I perfect the CSS on one device, and then run the command, ensuri
 - [ ] padding
 - [ ] translate
 
+## Important notes:
+
+### Unit Compatibility 
+NOLS is only compatible with pixel (`px`) unit values. That means NOLS will **skip** over any value containing the 
+following:
+
+#### Absolute Units
+`cm, mm, in, pt, pc`
+
+#### Relative Units
+`em, ex, ch, rem, vh, vw, vmin, vmax, %`
+
+### No One Likes Dirty Repos
+It is **HIGHLY** recommended that you commit any files before using NOLS. 
+
+NOLS changes your project level stylesheet files, 
+
 ## CLI commands
 - [x] nols: Runs the conversion on your project
 - [ ] nols --revert: reverts project back to pre-nols state.
@@ -82,7 +99,8 @@ This also makes it so that you cannot revert the changes. So use this carefully.
 - [ ] create a release that matches the npm package.
 
 ## Code TODO:
-- [ ] Include JSDocs for all utility functions.
+- [x] Include JSDocs for all utility functions.
 - [ ] Optimize project code.
 - [ ] Implement `nols --clean` command
-- [ ] Implement `nols --`
+- [ ] Implement `nols --revert` command
+
