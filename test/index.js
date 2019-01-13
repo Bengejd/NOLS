@@ -46,7 +46,7 @@ describe('GetFiles(): ', () => {
     {
       input: './test/test-scss/read-file-tests/empty-folder/',
       expectedResult: [],
-      description: 'should return an empty array if there are files in the folder'
+      description: 'should return an empty array if there are no files in the folder'
     },
     {
       input: './test/test-scss/read-file-tests/mixed-files/',
