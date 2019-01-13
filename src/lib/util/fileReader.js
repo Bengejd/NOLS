@@ -9,17 +9,22 @@ const chalk = require('chalk');
  */
 export function readFile(filePath) {
   const parsedFile = [];
-  var isReading = false; // lineReader doesn't handle empty files well.
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
+
     lineReader.eachLine(filePath, (line, last) => {
-      if (!isReading) isReading = true;
       parsedFile.push(line);
       if (last) {
-        resolve(parsedFile);
+        return false;
       }
+    }, (err) => {
+      if (err) { // Shouldn't ever get here, but just in case.
+        console.log(chalk.red('NOLS encountered an error reading file: ', filePath, err));
+        resolve();
+      }
+      console.log('Finished reading file', filePath);
+      resolve(parsedFile);
     });
-    if (!isReading) setTimeout(() => resolve([]), 25); // If the file isn't reading, resolve an empty array.
-  });
+  }).catch( (err) => {});
 }
 
 /**
@@ -30,11 +35,11 @@ export function readFile(filePath) {
 
 /* istanbul ignore next */
 export function writeFile(filePath, newFile) {
-  fs.writeFile(filePath, '', () => {
-  });
-  newFile.map((line, index, arr) => {
-    fs.appendFileSync(filePath, line + '\n');
-    if (arr.length - 1 === index) console.log(chalk.green('Finished', filePath));
+  fs.writeFile(filePath, '\n', () => {
+    newFile.map((line, index, arr) => {
+      fs.appendFileSync(filePath, line + '\n');
+      if (arr.length - 1 === index) console.log(chalk.green('Finished', filePath));
+    });
   });
 }
 

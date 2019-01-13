@@ -20,6 +20,9 @@
     "max-len": "off",
     "comma-dangle": "off",
     "keyword-spacing": "off",
-    "no-var": "off"
+    "no-var": "off",
+    "padded-blocks": "off",
+    "no-trailing-spaces": "off",
+    "brace-style": "off"
   }
 }

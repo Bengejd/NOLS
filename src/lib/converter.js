@@ -2,6 +2,9 @@ import {hasNolsComment} from './util/util';
 
 const chalk = require('chalk');
 
+const [, , ...args] = process.argv;
+const testArgs = ['--require', '@babel/register'];
+
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
   attributes: [
@@ -20,13 +23,13 @@ const WIDTH_TRANSLATIONS = {
     'padding-left:', 'padding-right:',
     'margin-left:', 'margin-right:',
     'transform: translateX',
-    'word-spacing:'
+    'word-spacing:', 'letter-spacing:'
   ],
 };
 const COMBINED_TRANSLATIONS = {
   name: 'XY',
   attributes: [
-    'margin:', 'padding:', 'translate:',
+    'margin:', 'padding:', 'translate:', 'border:', 'border-radius:', 'outline:',
   ]
 };
 
@@ -42,15 +45,19 @@ export function convertLine(line) {
     }
     const originalVal = line.split(':')[1]; // Grab the value.
     const parsedVal = parseFloat(originalVal); // Convert value to float (which removes the px/vh/%/em... strings).
-    const calculatedVal = await calculate(parsedVal, conversionType);
-    if (calculatedVal === null) { // Something went wrong with the calculation...
-      resolve(line);
-    }
-    resolve(line.replace(`${parsedVal}px`, `${calculatedVal}${getViewportType(conversionType)}`) + global.NOLS_CMT + originalVal);
+    const calculatedVal = await calculate(parsedVal, conversionType, line);
+    if (calculatedVal === null) resolve(line);
+    else resolve(formatNewLine(line, parsedVal, calculatedVal, conversionType, originalVal));
   }).catch((err) => console.log(chalk.red('Error processing: ', line, err)));
 }
 
-export async function calculate(val, type) {
+function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
+  const CMT = areWeTesting() ? ' // NOLS Converted from:' : global.NOLS_CMT;
+  return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + CMT + origVal;
+}
+
+export async function calculate(val, type, attribute) {
+  console.log('Calculating: ', val, type, attribute);
   return new Promise(async (resolve) => {
     switch (type) {
       case('Y'): {
@@ -62,32 +69,28 @@ export async function calculate(val, type) {
         break;
       }
       case('XY'): {
-        console.log(chalk.yellow(type, 'attribute not currently supported'));
+        console.log(chalk.yellow(attribute.trim(), 'attribute not currently supported'));
         resolve(null);
         break;
       }
       default: {
-        console.log(chalk.yellow('Unknown type slipped through the cracks...', type));
+        console.log(chalk.yellow('Unknown type slipped through the cracks...', attribute, val));
         resolve(null);
         break;
       }
     }
-    // try {
-    //
-    // } catch (err) {
-    //   console.log(chalk.red('Error calculating: ', val, 'for type: ', type));
-    //   resolve(null);
-    // }
   });
 }
 
 export function calculateVH(val) {
-  if (!isNaN(val) && !isNaN(global.VIEWPORT.HEIGHT)) return (val * 100) / global.VIEWPORT.HEIGHT;
+  const HEIGHT = areWeTesting() ? 812 : global.VIEWPORT.HEIGHT;
+  if(!isNaN(val) && !isNaN(HEIGHT)) return (val * 100) / HEIGHT;
   return null;
 }
 
 export function calculateVW(val) {
-  if (!isNaN(val) && !isNaN(global.VIEWPORT.WIDTH)) return (val * 100) / global.VIEWPORT.WIDTH;
+  const WIDTH = areWeTesting() ? 375 : global.VIEWPORT.WIDTH;
+  if(!isNaN(val) && !isNaN(WIDTH)) return (val * 100) / WIDTH;
   return null;
 }
 
@@ -113,4 +116,9 @@ export function getViewportType(type) {
   } else {
     return null;
   }
+}
+
+// looks for '--require', '@babel/register' in the args array. Which is only present when testing.
+function areWeTesting() {
+  return (args[0] === testArgs[0] && args[1] === testArgs[1]);
 }
