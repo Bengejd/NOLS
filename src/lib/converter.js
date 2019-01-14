@@ -118,7 +118,9 @@ export function getViewportType(type) {
   }
 }
 
-// looks for '--require', '@babel/register' in the args array. Which is only present when testing.
+/*
+ * looks for '--require', '@babel/register' in the args array. Which is only present when testing.
+ */
 function areWeTesting() {
   return (args[0] === testArgs[0] && args[1] === testArgs[1]);
 }

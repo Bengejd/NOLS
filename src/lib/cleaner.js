@@ -1,7 +1,5 @@
 import {hasNolsComment} from './util/util';
 
-const chalk = require('chalk');
-
 export function cleanLine(line) {
   return new Promise((resolve) => {
     if (hasNolsComment(line)) {
