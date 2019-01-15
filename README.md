@@ -1,13 +1,3 @@
-<h1 align="center">
-  <a href="https://github.com/Bengejd/NOLS">
-  <img src="https://raw.githubusercontent.com/bengejd/NOLS/master/.github/NOLS_LOGO.png" 
-  alt="NOLS" width="225"></a>
-</h1>
-
-NOLS makes writing pixel perfect CSS/SCSS easier by taking the hassle out of converting pixel `px` values to viewport 
-`vh/vw` values within your project with one simple CLI command. You can now write your stylesheet with one device in 
-mind, and NOLS handles making it pixel perfect (**within reason**) everywhere else. 
-
 <div align="center">
   <!-- Stability -->
   <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
@@ -37,6 +27,15 @@ mind, and NOLS handles making it pixel perfect (**within reason**) everywhere el
     <img alt="undefined" src="https://img.shields.io/npm/l/nols.svg?style=flat-square" />
   </a>
 </div>
+
+<img src="https://raw.githubusercontent.com/bengejd/NOLS/master/.github/NOLS_LOGO.png" 
+  alt="NOLS" align="left" width="225">
+
+<p align="center">
+NOLS makes writing pixel perfect CSS/SCSS easier by taking the hassle out of converting pixel `px` values to viewport 
+`vh/vw` values within your project with one simple CLI command. You can now write your stylesheet with one device in 
+mind, and NOLS handles making it pixel perfect (**within reason**) everywhere else. 
+</p>
 
 ## Project Status
 NOLS is currently under development and **NOT RECOMMENDED** for production use at this time. 
