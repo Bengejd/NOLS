@@ -49,7 +49,7 @@ export function convertLine(line) {
   }).catch(/* istanbul ignore next */ (err) => log.error('Error processing: ', line, err));
 }
 
-function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
+export function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
   const CMT = areWeTesting() ? ' /* NOLS Converted from:' : global.NOLS_CMT;
   return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + CMT + origVal + ' */';
 }
