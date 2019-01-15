@@ -180,3 +180,5 @@ containing the following:
 - [ ] Convert parser to use AST style parsing.
 - [ ] Utilize RegEx where appropriate.
 - [ ] Reduce Bundle Size (250kb gzipped isn't that bad is it?).
+
+Copyright 2019 Jordan Benge
