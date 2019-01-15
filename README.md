@@ -20,6 +20,10 @@ mind, and NOLS handles making it pixel perfect (**within reason**) everywhere el
     <img src="https://img.shields.io/travis/Bengejd/NOLS/master.svg?style=flat-square"
       alt="Build Status" />
   </a>
+      <!-- CodeCov -->
+    <a href="https://codecov.io/gh/Bengejd/NOLS">
+      <img src="https://codecov.io/gh/Bengejd/NOLS/branch/master/graph/badge.svg" />
+    </a>
 </div>
 
 ## Project Status
