@@ -1,10 +1,12 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
+const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -12,6 +14,8 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin({banner: '#!/usr/bin/env node', raw: true}),
+    new WebpackDeepScopeAnalysisPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     minimizer: [new TerserPlugin(

@@ -1,9 +1,5 @@
-import {hasNolsComment} from './util/util';
-
-const chalk = require('chalk');
-
-const [, , ...args] = process.argv;
-const testArgs = ['--require', '@babel/register'];
+import {hasNolsComment, areWeTesting} from './util/util';
+const log = require('clg-color');
 
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
@@ -48,7 +44,7 @@ export function convertLine(line) {
     const calculatedVal = await calculate(parsedVal, conversionType, line);
     if (calculatedVal === null) resolve(line);
     else resolve(formatNewLine(line, parsedVal, calculatedVal, conversionType, originalVal));
-  }).catch((err) => console.log(chalk.red('Error processing: ', line, err)));
+  }).catch((err) => log.error('Error processing: ', line, err));
 }
 
 function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
@@ -69,12 +65,12 @@ export async function calculate(val, type, attribute) {
         break;
       }
       case('XY'): {
-        console.log(chalk.yellow(attribute.trim(), 'attribute not currently supported'));
+        log.warning(attribute.trim(), 'attribute not currently supported');
         resolve(null);
         break;
       }
       default: {
-        console.log(chalk.yellow('Unknown type slipped through the cracks...', attribute, val));
+        log.warning('Unknown type slipped through the cracks...', attribute, val);
         resolve(null);
         break;
       }
@@ -116,11 +112,4 @@ export function getViewportType(type) {
   } else {
     return null;
   }
-}
-
-/*
- * looks for '--require', '@babel/register' in the args array. Which is only present when testing.
- */
-function areWeTesting() {
-  return (args[0] === testArgs[0] && args[1] === testArgs[1]);
 }

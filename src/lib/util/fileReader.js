@@ -1,6 +1,6 @@
 const lineReader = require('line-reader');
 const fs = require('fs');
-const chalk = require('chalk');
+const log = require('clg-color');
 
 /**
  * Reads a files contents.
@@ -18,7 +18,7 @@ export function readFile(filePath) {
       }
     }, (err) => {
       if (err) { // Shouldn't ever get here, but just in case.
-        console.log(chalk.red('NOLS encountered an error reading file: ', filePath, err));
+        log.error('NOLS encountered an error reading file: ', filePath, err);
         resolve();
       }
       console.log('Finished reading file', filePath);
@@ -35,10 +35,10 @@ export function readFile(filePath) {
 
 /* istanbul ignore next */
 export function writeFile(filePath, newFile) {
-  fs.writeFile(filePath, '\n', () => {
+  fs.writeFile(filePath, '', () => {
     newFile.map((line, index, arr) => {
       fs.appendFileSync(filePath, line + '\n');
-      if (arr.length - 1 === index) console.log(chalk.green('Finished', filePath));
+      if (arr.length - 1 === index) log.error('Finished', filePath);
     });
   });
 }
@@ -60,6 +60,7 @@ export function getFiles(dir, fileList) {
     }
   });
   fileList = fileList.filter((filePath) => isStylesheet(filePath.toLowerCase()));
+  if(!fileList.length) throw new Error('Nols could not find any stylesheets to process.');
   return new Promise((resolve) => resolve(fileList));
 }
 

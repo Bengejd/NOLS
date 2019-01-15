@@ -74,12 +74,40 @@ export function hasNolsComment(line) {
   return line.includes('// NOLS Converted from:');
 }
 
-/* istanbul ignore next */
-export function setOptions(opts) {
-  global.MODE = opts.MODE;
-  global.VIEWPORT = {
-    HEIGHT: parseFloat(opts.HEIGHT),
-    WIDTH: parseFloat(opts.WIDTH)
-  };
-  console.log(global.VIEWPORT);
+/*
+ * When using mocha or build:test, we need to substitute values around the package, so this helps us accomplish that.
+ * `npm run test` - CMD will have global.NOLS_ARGS.testing as UNDEFINED, while env.testing as TRUE.
+ * `npm run build:test` - CMD will have global.NOLS_ARGS.testing as TRUE, while env.testing as UNDEFINED.
+ * This will return false on production environments.
+ */
+export function areWeTesting() {
+  console.log('Are we testing: ', global.NOLS_ARGS.testing === 'true');
+  if (global.NOLS_ARGS && global.NOLS_ARGS.testing === 'true') return true;
+  else if (process.env.testing) return process.env.testing;
+  else return false;
+}
+
+export function hasHeightArg() {
+  console.log('has height: ', (global.NOLS_ARGS && (global.NOLS_ARGS.height || global.NOLS_ARGS.h)));
+  return (global.NOLS_ARGS && (global.NOLS_ARGS.height || global.NOLS_ARGS.h));
+}
+
+export function hasWidthArg() {
+  return (global.NOLS_ARGS && (global.NOLS_ARGS.width || global.NOLS_ARGS.w));
+}
+
+export function hasEntryArg() {
+  return (global.NOLS_ARGS && (global.NOLS_ARGS.entry || global.NOLS_ARGS.e));
+}
+
+export function getTestingSrc() {
+  return './test/test-scss/read-file-tests/only-stylesheets/';
+}
+
+export function getProductionSrc() {
+  if(hasEntryArg()) {
+    if(global.NOLS_ARGS && global.NOLS_ARGS.entry) return global.NOLS_ARGS.entry;
+    else if(global.NOLS_ARGS && global.NOLS_ARGS.e) return global.NOLS_ARGS.e;
+  }
+  else return './src/';
 }

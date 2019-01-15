@@ -1,28 +1,35 @@
-const chalk = require('chalk');
+const log = require('clg-color');
 
 import {configQuestions} from './lib/util/questions';
 import {getFiles, readFile, writeFile} from './lib/util/fileReader';
-import {isConvertible, setOptions} from './lib/util/util';
+import {areWeTesting, getProductionSrc, getTestingSrc, isConvertible} from './lib/util/util';
 import {convertLine} from './lib/converter';
 import {revertLine} from './lib/reverter';
 import {cleanLine} from './lib/cleaner';
 
-const DEFAULT_DIR = './test/test-scss/read-file-tests/only-stylesheets/';
 global.NOLS_CMT = ' // NOLS Converted from:';
+global.NOLS_ARGS = require('minimist')(process.argv.slice(2));
+global.VIEWPORT = {HEIGHT: 0, WIDTH: 0};
+global.DEFAULT_DIR = areWeTesting() ? getTestingSrc() : getProductionSrc();
 
 /* istanbul ignore next */
 async function init() {
-  console.log(chalk.green('Thanks for using NOLS!'));
-  setOptions(await configQuestions());
+  log.success('Thanks for using NOLS!');
 
-  const fileList = await getFiles(DEFAULT_DIR); // Grab all of the files in the default dir.
+  try {
+    await configQuestions();
 
-  fileList.map(async (filePath) => { // Loop through the files.
-    const parsedFile = await readFile(filePath); // Read the file contents.
-    await Promise.all(parsedFile.map(async (line) => {
-      return isConvertible(line) ? await transformLine(line) : new Promise((resolve) => resolve(line));
-    })).then((newFile) => writeFile(filePath, newFile)).catch((err) => console.log(err));
-  });
+    const fileList = await getFiles(global.DEFAULT_DIR); // Grab all of the files in the default dir.
+
+    fileList.map(async (filePath) => { // Loop through the files.
+      const parsedFile = await readFile(filePath); // Read the file contents.
+      await Promise.all(parsedFile.map(async (line) => {
+        return isConvertible(line) ? await transformLine(line) : new Promise((resolve) => resolve(line));
+      })).then((newFile) => writeFile(filePath, newFile)).catch((err) => console.log(err));
+    });
+  } catch (err) {
+    log.error(err);
+  }
 }
 
 /* istanbul ignore next */

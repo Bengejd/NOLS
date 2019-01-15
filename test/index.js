@@ -2,6 +2,7 @@ import assert from 'assert';
 import {getFiles, readFile} from '../src/lib/util/fileReader';
 import {revertLine} from '../src/lib/reverter';
 import {convertLine} from '../src/lib/converter';
+import {areWeTesting} from '../src/lib/util/util';
 
 describe('ReadFile(): ', () => {
   const readFileTests = [
@@ -138,6 +139,19 @@ describe('ConvertLine()', () => {
     it(sample.description, async () => {
       const convertedLine = await convertLine(sample.input);
       assert.equal(convertedLine, sample.expectedResult);
+    });
+  });
+});
+
+describe('areWeTesting()', () => {
+  const areWeTestingTests = [
+    {
+      input: null, expectedResult: null, description: 'Just a placeholder for areWeTesting()'
+    }
+  ];
+  areWeTestingTests.forEach((sample) => {
+    it(sample.description, async () => {
+     assert.equal(sample.input, sample.expectedResult);
     });
   });
 });
