@@ -37,7 +37,7 @@
     "lint": "eslint ./src",
     "build:dev": "NODE_ENV=development webpack --mode=development --progress --profile --colors",
     "build:prod": "NODE_ENV=production webpack --mode=production --progress --colors",
-    "test": "env testing=true nyc mocha --require @babel/register",
+    "test": "env testing=true nyc mocha --require @babel/register && npm run report-coverage",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build:test": "npm run build:dev && nols --h=812 --w=375 --testing=true",
     "test:args": "npm run build:dev && nols"
