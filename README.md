@@ -28,14 +28,20 @@
   </a>
 </div>
 
+_____________________________________________________________________________________
+
 <img src="https://raw.githubusercontent.com/bengejd/NOLS/master/.github/NOLS_LOGO.png" 
   alt="NOLS" align="left" width="225">
 
-<p align="center">
+<p align="left">
 NOLS makes writing pixel perfect CSS/SCSS easier by taking the hassle out of converting pixel `px` values to viewport 
-`vh/vw` values within your project with one simple CLI command. You can now write your stylesheet with one device in 
-mind, and NOLS handles making it pixel perfect (**within reason**) everywhere else. 
+`vh/vw` values within your project with one simple CLI command.
 </p>
+
+<p align="left">
+You can now write your stylesheet with one device in 
+mind, and NOLS handles making it pixel perfect (**within reason**) everywhere else.
+</p><br><br>
 
 ## Project Status
 NOLS is currently under development and **NOT RECOMMENDED** for production use at this time. 
