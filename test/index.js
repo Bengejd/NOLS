@@ -732,46 +732,6 @@ describe('configQuestions()', () => {
   });
 });
 
-describe('setEntry()', () => {
-  const setEntryTests = [
-    {
-      input: 'test/testing',
-      expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "/test/testing"',
-    },
-    {
-      input: '/test/testing',
-      expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "/test/testing/"',
-    },
-    {
-      input: './test/testing',
-      expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "./test/testing"',
-    },
-    {
-      input: './test/testing/',
-      expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
-    },
-    {
-      input: './test/testing/',
-      expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
-    },
-    {
-      input: '.test/testing/',
-      expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving ".test/testing/"',
-    },
-  ];
-  setEntryTests.forEach((sample) => {
-    it(sample.description, async () => {
-      assert.equal(setEntry(sample.input), sample.expectedResult);
-    });
-  });
-});
-
 describe('calculateVW()', () => {
   const calculateVWTests = [
     {
@@ -823,6 +783,56 @@ describe('calculateVH()', () => {
   calculateVHTests.forEach((sample) => {
     it(sample.description, async () => {
       assert.equal(calculateVH(sample.input), sample.expectedResult);
+    });
+  });
+});
+
+describe('setEntry()', () => {
+  const setEntryTests = [
+    {
+      input: 'test/testing',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "/test/testing"',
+    },
+    {
+      input: '/test/testing',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "/test/testing/"',
+    },
+    {
+      input: '/test/testing/tested',
+      expectedResult: './test/testing/tested/',
+      description: 'Should return "./test/testing/tested/" when receiving "/test/testing/tested"',
+    },
+    {
+      input: './test/testing',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "./test/testing"',
+    },
+    {
+      input: './test/testing/',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
+    },
+    {
+      input: './test/testing/',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
+    },
+    {
+      input: '.test/testing/',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving ".test/testing/"',
+    },
+    {
+      input: '.test/testing',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving ".test/testing/"',
+    },
+  ];
+  setEntryTests.forEach((sample) => {
+    it(sample.description, async () => {
+      assert.equal(setEntry(sample.input), sample.expectedResult);
     });
   });
 });

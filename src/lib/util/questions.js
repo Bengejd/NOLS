@@ -75,7 +75,8 @@ export async function configQuestions() {
     },
   ];
 
-  const answers = isMochaRunning() ? await mochaMockConfigQuestionsResponse() : await inquirer.prompt(questions);
+  const answers = isMochaRunning() ?
+    await mochaMockConfigQuestionsResponse() : /* istanbul ignore next */ await inquirer.prompt(questions);
   return setOptions(answers);
 }
 
@@ -127,12 +128,13 @@ export function setOptions(opts) {
 
 export function setEntry(dir) {
   let fixedDir = dir;
-  if (!dir.startsWith('.')) {
-    if (!dir.startsWith('/')) fixedDir = './' + fixedDir;
-    else if (dir.startsWith('/')) fixedDir = '.' + fixedDir;
-  } else {
-    if(!dir.startsWith('./')) fixedDir = './' + fixedDir.substring(1, fixedDir.length);
+
+  if(fixedDir.substring(0, 2) !== './') {
+    if(fixedDir.startsWith('.')) fixedDir = './' + fixedDir.substring(1, fixedDir.length);
+    else if(dir.startsWith('/')) fixedDir = '.' + fixedDir;
+    else fixedDir = './' + fixedDir;
   }
-  if (!dir.endsWith('/')) fixedDir = fixedDir + '/';
+  if(!fixedDir.endsWith('/')) fixedDir = fixedDir + '/';
+
   return global.DEFAULT_DIR = fixedDir;
 }
