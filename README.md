@@ -34,13 +34,16 @@ ________________________________________________________________________________
   alt="NOLS" align="left" width="225">
 
 <p align="left">
-NOLS makes writing pixel perfect CSS/SCSS easier by taking the hassle out of converting pixel `px` values to viewport 
-`vh/vw` values within your project with one simple CLI command.
+  NOLS is a NodeJs package that I came up with after getting tired of making pixel-to-viewport conversions by hand, as in a large project you could potentially have dozens of small conversions that need to be done.
+</p>
+
+<p align="left"> 
+Other Node packages allow you to calculate a conversion, but none actually help you streamline your development process by applying the conversion in your stylesheets for you. <strong>Until NOLS</strong>.
 </p>
 
 <p align="left">
 You can now write your stylesheet with one device in mind, and NOLS handles making it pixel perfect (<strong>within reason</strong>) everywhere else.
-</p><br><br><br>
+</p>
 
 ## Project Status
 NOLS is currently under development and **NOT RECOMMENDED** for production use at this time. 
@@ -54,7 +57,7 @@ Afterwards, I would always go back, and manually make the conversions, so that t
 
 This takes a lot of effort on my part because there are a lot of little calculations to be done. So I wanted to streamline this process. Since no one likes stylesheets, NOLS came to life.
 
-Now with NOLS, I perfect my CSS on one device, run `nols`, and have the peace of mind knowing that it looks pixel perfect on any device. 
+What started out as a way to help myself out, has now become a pivotal part of my development process. As a result, I opened-sourced NOLS under the MIT license. So others could benefit as well.
 
 ## Important Notes
 
