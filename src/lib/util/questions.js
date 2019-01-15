@@ -121,11 +121,10 @@ export function setOptions(opts) {
 }
 
 /**
- * sets the package entry directory.
+ * sets the package entry directory & fixes the path if the user input it incorrectly.
  * @param {string} dir - The question entry directory that we receive.
  * @returns string;
  */
-
 export function setEntry(dir) {
   let fixedDir = dir;
 
