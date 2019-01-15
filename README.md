@@ -1,4 +1,8 @@
-<h1 align="center">NOLS</h1>
+<h1 align="center">
+  <a href="https://github.com/Bengejd/NOLS">
+  <img src="https://raw.githubusercontent.com/bengejd/NOLS/master/.github/NOLS_LOGO.png" 
+  alt="NOLS" width="225"></a>
+</h1>
 
 NOLS makes writing pixel perfect CSS/SCSS easier by taking the hassle out of converting pixel `px` values to viewport 
 `vh/vw` values within your project with one simple CLI command. You can now write your stylesheet with one device in 
