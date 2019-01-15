@@ -15,15 +15,23 @@ mind, and NOLS handles making it pixel perfect (**within reason**) everywhere el
     <img src="https://img.shields.io/npm/v/nols.svg?style=flat-square"
       alt="NPM version" />
   </a>
+    <!-- NPM DOWNLOADS -->
+  <a href="https://www.npmjs.com/package/nols">
+    <img src="https://img.shields.io/npm/dw/nols.svg"
+      alt="NPM version" />
+  </a>
   <!-- Build Status -->
   <a href="https://travis-ci.org/Bengejd/NOLS">
     <img src="https://img.shields.io/travis/Bengejd/NOLS/master.svg?style=flat-square"
       alt="Build Status" />
   </a>
-      <!-- CodeCov -->
-    <a href="https://codecov.io/gh/Bengejd/NOLS">
-      <img src="https://codecov.io/gh/Bengejd/NOLS/branch/master/graph/badge.svg" />
-    </a>
+  <!-- CodeCov -->
+  <a href="https://codecov.io/gh/Bengejd/NOLS">
+   <img src="https://codecov.io/gh/Bengejd/NOLS/branch/master/graph/badge.svg" />
+  </a>
+  <a href="#">
+    <img alt="undefined" src="https://img.shields.io/npm/l/nols.svg?style=flat-square" />
+  </a>
 </div>
 
 ## Project Status
@@ -31,14 +39,14 @@ NOLS is currently under development and **NOT RECOMMENDED** for production use a
 
 <h3>About NOLS</h3>
 
-I don't know about you, but I typically write my CSS with one device in mind, during development. I work with a 
+I don't know about you, but I typically write my CSS with one device in mind. During development I work with a 
 device that has a view height of `812px` and a view width of `375px`. 
 
-Afterward, I would always go back, and manually make the conversions, so that the CSS that looks good on that device, looks good on any device. 
+Afterwards, I would always go back, and manually make the conversions, so that the CSS that looks good on my device, looks good on any device. 
 
-This takes a lot of effort on my part because there are a lot of little calculations to be done. So I wanted to streamline this process. Since no one likes stylesheets, NOLS came to life
+This takes a lot of effort on my part because there are a lot of little calculations to be done. So I wanted to streamline this process. Since no one likes stylesheets, NOLS came to life.
 
-Now with NOLS, I perfect the CSS on one device, and then run the command, ensuring that it looks the same across any number of devices. 
+Now with NOLS, I perfect my CSS on one device, run `nols`, and have the peace of mind knowing that it looks pixel perfect on any device. 
 
 ## Important Notes
 
@@ -46,7 +54,7 @@ It is **HIGHLY RECOMMENDED**  that you commit any files before using NOLS.
 
 ### No One Likes Dirty Repos
  
-NOLS changes your project level stylesheet files. As a result of this, some changes may be irreversible if you do not
+NOLS changes your project level stylesheet files. As a result of this, some changes may be **irreversible** if you do not
 commit files before using NOLS or have an IDE with the ability to revert historical changes.
  
 If you knowingly use NOLS before backing up your project, you accept all risks associated with NOLS potentially 
@@ -69,19 +77,29 @@ From NPM for programmatic use:
 
 ## Usage
 
-If you have installed NOLS from npm, in your project directory in terminal, run the command
+If you have installed NOLS from npm, from terminal in your project directory, run the command
 
     nols
+    
+> Note: `nols` is meant to be run before any minification / compression is done. Running it on minified / compressed files will have adverse affects. Don't say I didn't warn you.
+    
+### Optional Parameters
+
+`--e=` or `--entry=` - A relative path of the directory you would like NOLS to start in. Unfortunately, NOLS cannot target specific files, it has to be a parent directory of the file. 
+
+`--h=` or `--height=` - The viewport height you would like NOLS to use in it's conversions.
+
+`--w=` or `--width=` - The viewport width you would like NOLS to use in it's conversions.
     
 ### Modes
 
 `Default` 
 
-This is the bread and butter of the package. This will ask you a couple questions, such as what the 
-viewport height & width that you're working with. 
+This is the bread and butter of the package. This will ask you a couple questions, such as what the directory you would like to target and the viewport height & viewport width that you're working with. 
 
-Afterwards, it reads & converts all stylesheets in your project 
-`src` folder to use `vh` and `vw`.
+By default NOLS targets your `./src/` folder as an entry point, unless one is provided via the prompt, or passed as a parameter in the `nols` command.
+
+Afterwards, it reads & converts all stylesheets in your project `./src/` folder to use `vh` and `vw`.
 
 `Revert`
 
@@ -92,7 +110,6 @@ any comments left behind by NOLS. So if you remove a comment, it will skip that 
 
 This reverts all conversions in your project back to their original state. This command depends on the 
 comments left behind by `nols`, so do not remove or alter them unless you're sure that the conversion worked correctly.
-
 
 ## Supported Attributes
 These are the attributes that NOLS will attempt to convert for you. If you would like something to be supported by NOLS 
@@ -141,28 +158,29 @@ containing the following:
 
 ## Test Todo: 
 - [x] Implement unit tests as much as possible.
-- [ ] Create more manual file tests.
-- [ ] Run package on fresh project to test non-linked package.
+- [x] Create more manual file tests.
+- [x] Run package on fresh project to test non-linked package.
 
 ## CI TODO:
 - [x] Hookup `TravisCLI`
+- [x] Hookup `CodeCov`
 - [ ] Hookup `GreenKeeper`
 - [ ] Hook up `snyk`
 - [ ] Hook up `npm audit`
 
 ## NPM TODO:
 - [x] Package for `NPM`
-- [ ] Double check npmignore
+- [X] Double check npmignore
 
 ## Github TODO:
-- [ ] Add Project logo
 - [ ] Create `CHANGELOG.md`
-- [ ] Fix up readme
-- [ ] Create package install/usage guide
+- [X] Fix up readme
+- [X] Create package install/usage guide
 - [x] create a release that matches the npm package.
 
 ## Code TODO:
-- [x] Include JSDocs for all utility functions.
+- [x] Include JSDocs for all appropriate functions.
 - [ ] Optimize project code.
 - [ ] Convert parser to use AST style parsing.
-
+- [ ] Utilize RegEx where appropriate.
+- [ ] Reduce Bundle Size (250kb gzipped isn't that bad is it?).
