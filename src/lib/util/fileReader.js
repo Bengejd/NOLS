@@ -17,13 +17,15 @@ export function readFile(filePath) {
         return false;
       }
     }, (err) => {
+      /* istanbul ignore next */
       if (err) { // Shouldn't ever get here, but just in case.
         log.error('NOLS encountered an error reading file: ', filePath, err);
         resolve();
       }
       resolve(parsedFile);
     });
-  }).catch( (err) => {});
+  }).catch(/* istanbul ignore next */ (err) => {
+  });
 }
 
 /**
@@ -31,6 +33,7 @@ export function readFile(filePath) {
  * @param {string} filePath - The filePath of the file we are writing to.
  * @param {string[]} newFile - The newFile contents.
  */
+
 /* istanbul ignore next */
 export function writeFile(filePath, newFile) {
   fs.writeFile(filePath, '', () => {

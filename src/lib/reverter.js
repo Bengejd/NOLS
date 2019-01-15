@@ -11,20 +11,16 @@ export function revertLine(line) {
   });
 }
 
-// TODO: Improve this bit, right now it seems like it's dependent on styles being uniform across devs.
-
 /*
  * Reverts (removes all NOLS conversions / comments) from a line.
  * @param {string} line - The line in question.
  * @returns Promise<string>;
  */
 function getRevertedLine(line) {
-  if (line === null) return new Promise((resolve) => resolve(line));
   const fileVal = line.split(':')[1].split(';')[0];
   const revertedVal = line.split(':')[2].split(';')[0];
   const newLine = line.replace(fileVal, revertedVal);
-  const revertedLine = newLine.substring(0, newLine.indexOf(';') + 1);
-  return new Promise((resolve) => resolve(revertedLine)).catch((err) => {
-  });
+  const revertedLine = newLine.substring(0, newLine.indexOf(' /* NOLS Converted from:'));
+  return new Promise((resolve) => resolve(revertedLine));
 }
 

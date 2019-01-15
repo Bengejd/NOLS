@@ -1,6 +1,7 @@
 const log = require('clg-color');
 
-import {hasNolsComment, areWeTesting} from './util/util';
+/* istanbul ignore next */
+import {areWeTesting, hasNolsComment} from './util/util';
 
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
@@ -45,7 +46,7 @@ export function convertLine(line) {
     const calculatedVal = await calculate(parsedVal, conversionType, line);
     if (calculatedVal === null) resolve(line);
     else resolve(formatNewLine(line, parsedVal, calculatedVal, conversionType, originalVal));
-  }).catch((err) => log.error('Error processing: ', line, err));
+  }).catch(/* istanbul ignore next */ (err) => log.error('Error processing: ', line, err));
 }
 
 function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
@@ -80,13 +81,15 @@ export async function calculate(val, type, attribute) {
 
 export function calculateVH(val) {
   const HEIGHT = areWeTesting() ? 812 : global.VIEWPORT.HEIGHT;
-  if(!isNaN(val) && !isNaN(HEIGHT)) return (val * 100) / HEIGHT;
+  if (!isNaN(val) && !isNaN(HEIGHT)) return (val * 100) / HEIGHT;
+  /* istanbul ignore next */
   return null;
 }
 
 export function calculateVW(val) {
   const WIDTH = areWeTesting() ? 375 : global.VIEWPORT.WIDTH;
-  if(!isNaN(val) && !isNaN(WIDTH)) return (val * 100) / WIDTH;
+  if (!isNaN(val) && !isNaN(WIDTH)) return (val * 100) / WIDTH;
+  /* istanbul ignore next */
   return null;
 }
 
