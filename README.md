@@ -50,7 +50,7 @@ Now with NOLS, I perfect my CSS on one device, run `nols`, and have the peace of
 
 ## Important Notes
 
-It is **HIGHLY RECOMMENDED**  that you commit any files before using NOLS.
+> It is **HIGHLY RECOMMENDED**  that you commit any files before using NOLS.
 
 ### No One Likes Dirty Repos
  
@@ -67,7 +67,7 @@ This does not happen often, but it's always a possibility.
 First make sure you have installed the latest version of [node.js](http://nodejs.org/)
 (You may need to restart your computer after this step).
 
-From NPM:
+Install NOLS From NPM:
 
     npm install nols -g
     
@@ -81,66 +81,45 @@ If you have installed NOLS from npm, then from terminal in your project director
     
 ### Optional Parameters
 
-`--e=` or `--entry=` - A relative path of the directory you would like NOLS to start in. Unfortunately, NOLS cannot target specific files, it has to be a parent directory of the file. 
-
-`--h=` or `--height=` - The viewport height you would like NOLS to use in it's conversions.
-
-`--w=` or `--width=` - The viewport width you would like NOLS to use in it's conversions.
+|       Parameter       | Default | Explanation                                                                                                                                                       |
+|:---------------------:|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  `--entry=` or `--e=` | `./src` | A relative path of the directory you would like NOLS to start in.  Unfortunately, NOLS cannot target specific files, it has to be a parent directory of the file. |
+| `--height=` or `--h=` | `N/A`   | The device viewport height you would like NOLS to use in it's conversions.                                                                                        |
+|  `--width=` or `--w=` | `N/A`   | The viewport width you would like NOLS to use in it's conversions.                                                                                                |
     
 ### Modes
-
-`Default` 
-
-This is the bread and butter of the package. This will ask you a couple questions, such as what the directory you would like to target and the viewport height & viewport width that you're working with. 
-
-By default NOLS targets your `./src/` folder as an entry point, unless one is provided via the prompt, or passed as a parameter in the `nols` command.
-
-Afterwards, it reads & converts all stylesheets in your project `./src/` folder to use `vh` and `vw`.
-
-`Revert`
-
-Reverts all changes made by NOLS. This is currently dependent on the assumption that you did not remove 
-any comments left behind by NOLS. So if you remove a comment, it will skip that value reversion.
-
-`Clean` 
-
-This reverts all conversions in your project back to their original state. This command depends on the 
-comments left behind by `nols`, so do not remove or alter them unless you're sure that the conversion worked correctly.
+|    Mode   | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|:---------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Default` | This is the bread and butter of the package. This will ask you a couple questions, such as the directory you would like to target and the viewport height & viewport width that you're working with. By default NOLS targets your `./src/` folder as an entry point, unless one is provided via the prompt, or passed as a parameter in the `nols` command. Afterwards, it reads & converts all stylesheets in your project entry folder (default or provided) to use `vh` and `vw`. |
+|  `Revert` | Reverts all changes made by NOLS. This is currently dependent on the assumption that you did not remove any comments left behind by NOLS.  So if you remove a comment, it will skip that value reversion.                                                                                                                                                                                                                                                                           |
+|  `Clean`  | This removes all conversion comments left behind by NOLS in your project. This will make it impossible to reverse a conversion in the future. This command depends on the comments left behind by `nols`, so do not remove or alter them unless you're sure that the conversion worked correctly. Only run this command **AFTER VERRIFICATION** that the conversions ran correctly, and did not break your application code.                                               |                                                                                                                                                                                                                      |
 
 ## Supported Attributes
 These are the attributes that NOLS will attempt to convert for you. If you would like something to be supported by NOLS 
 that isn't currently, or estabilished as known in the **unsupported attributtes** list, add it to 
 [our attributes request-list](https://github.com/Bengejd/NOLS/issues/3).
 
-#### X Attributes
-- [x] height / min-height / max-height
-- [x] line-height
-- [x] top / bottom
-- [x] padding-top / padding-bottom
-- [x] margin-top / margin-bottom
-- [x] transform: translateY
+| X Attributes                     | Y Attributes                  |
+|----------------------------------|-------------------------------|
+| height / min-height / max-height | width / min-width / max-width |
+| top / bottom                     | left / right                  |
+| margin-top / margin-bottom       | margin-left / margin-right    |
+| padding-top / padding-bottom     | padding-left / padding-right  |
+| transform: translateY            | transform: translateX         |
+| line-height                      | word-spacing / letter-spacing |
+|                                  | outline-width                 |
+|                                  | column-width                  |
 
-#### Y Attributes
-- [x] width / min-width / max-width
-- [x] column-width
-- [x] outline-width
-- [x] left / right
-- [x] padding-left / padding-right
-- [x] margin-left / margin-right
-- [x] transform: translateX
-- [x] word-spacing / letter-spacing
-
-#### Unsupported Attributes
+## Unsupported Attributes
 
 Nols has a few attributes that are not currently supported in this version. Some of them are because of usage 
 limitations, others are because I simply haven't gotten around them yet.
 
-- [ ] margin - `margin: 1px 2px 3px 4px;`
-- [ ] padding - `padding: 1px 2px 3px 4px;`
-- [ ] transform: translate - `transform: translate(50px, 50px);`
-- [ ] outline - `outline: 5px solid green;`
-- [ ] font-size - `font-size: 12px;`
-- [ ] border-radius - All types
+| XY                                                         | MISC                                  |
+|------------------------------------------------------------|---------------------------------------|
+| margin - `margin: 1px 2px 3px 4px;`                        | outline - `outline: 5px solid green;` |
+| padding - `padding: 1px 2px 3px 4px;`                      | font-size - `font-size: 12px;`        |
+| transform: translate - `transform: translate(50px, 50px);` | border-radius - All types             |
 
 ### Unit Compatibility 
 NOLS is only compatible with pixel (`px`) unit values at this time. That means NOLS will **skip** over any value 
@@ -181,4 +160,5 @@ containing the following:
 - [ ] Utilize RegEx where appropriate.
 - [ ] Reduce Bundle Size (250kb gzipped isn't that bad is it?).
 
-Copyright 2019 Jordan Benge
+
+**Copyright © 2018 Jordan Benge**
