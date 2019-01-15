@@ -23,10 +23,15 @@
     "SCSS-Translator",
     "Responsive-SCSS-Optimizer",
     "SCSS-Optimizer",
+    "Responsive SCSS",
     "px-to-vh",
     "px-to-vw",
     "nols",
-    "NOLS"
+    "NOLS",
+    "pixel-perfect-scss",
+    "stylesheet converted",
+    "no one likes stylesheets",
+    "No One Likes StyleSheets"
   ],
   "scripts": {
     "lint": "eslint ./src",
