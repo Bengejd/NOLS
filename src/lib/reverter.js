@@ -1,5 +1,10 @@
 import {hasNolsComment} from './util/util';
 
+/*
+ * Reverts (removes all NOLS conversions / comments) from a line.
+ * @param {string} line - The line in question.
+ * @returns Promise<string>;
+ */
 export function revertLine(line) {
   return new Promise((resolve) => {
     hasNolsComment(line) ? resolve(getRevertedLine(line)) : resolve(line);
@@ -7,6 +12,12 @@ export function revertLine(line) {
 }
 
 // TODO: Improve this bit, right now it seems like it's dependent on styles being uniform across devs.
+
+/*
+ * Reverts (removes all NOLS conversions / comments) from a line.
+ * @param {string} line - The line in question.
+ * @returns Promise<string>;
+ */
 function getRevertedLine(line) {
   if (line === null) return new Promise((resolve) => resolve(line));
   const fileVal = line.split(':')[1].split(';')[0];

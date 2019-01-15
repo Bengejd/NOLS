@@ -7,11 +7,14 @@ import {convertLine} from './lib/converter';
 import {revertLine} from './lib/reverter';
 import {cleanLine} from './lib/cleaner';
 
-global.NOLS_CMT = ' // NOLS Converted from:';
+global.NOLS_CMT = ' /* NOLS Converted from:';
 global.NOLS_ARGS = require('minimist')(process.argv.slice(2));
 global.VIEWPORT = {HEIGHT: 0, WIDTH: 0};
 global.DEFAULT_DIR = areWeTesting() ? getTestingSrc() : getProductionSrc();
 
+/*
+ * The entry point of the package..
+ */
 /* istanbul ignore next */
 async function init() {
   log.success('Thanks for using NOLS!');
@@ -27,11 +30,18 @@ async function init() {
         return isConvertible(line) ? await transformLine(line) : new Promise((resolve) => resolve(line));
       })).then((newFile) => writeFile(filePath, newFile)).catch((err) => console.log(err));
     });
+    const len = fileList.length;
+    log.success(`NOLS processed: ${len} stylesheet${len > 1 ? 's' : ''} in an arbitrarily short amount of time`);
   } catch (err) {
     log.error(err);
   }
 }
 
+/*
+ * Determines what we should do with a line & calls the respective function on it..
+ * @param {string} line - The line in question.
+ * @returns Promise<string>;
+ */
 /* istanbul ignore next */
 function transformLine(line) {
   return new Promise(async (resolve) => {

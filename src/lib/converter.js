@@ -1,5 +1,6 @@
-import {hasNolsComment, areWeTesting} from './util/util';
 const log = require('clg-color');
+
+import {hasNolsComment, areWeTesting} from './util/util';
 
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
@@ -48,12 +49,11 @@ export function convertLine(line) {
 }
 
 function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
-  const CMT = areWeTesting() ? ' // NOLS Converted from:' : global.NOLS_CMT;
-  return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + CMT + origVal;
+  const CMT = areWeTesting() ? ' /* NOLS Converted from:' : global.NOLS_CMT;
+  return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + CMT + origVal + ' */';
 }
 
 export async function calculate(val, type, attribute) {
-  console.log('Calculating: ', val, type, attribute);
   return new Promise(async (resolve) => {
     switch (type) {
       case('Y'): {

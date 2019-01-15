@@ -21,7 +21,6 @@ export function readFile(filePath) {
         log.error('NOLS encountered an error reading file: ', filePath, err);
         resolve();
       }
-      console.log('Finished reading file', filePath);
       resolve(parsedFile);
     });
   }).catch( (err) => {});
@@ -32,13 +31,11 @@ export function readFile(filePath) {
  * @param {string} filePath - The filePath of the file we are writing to.
  * @param {string[]} newFile - The newFile contents.
  */
-
 /* istanbul ignore next */
 export function writeFile(filePath, newFile) {
   fs.writeFile(filePath, '', () => {
-    newFile.map((line, index, arr) => {
+    newFile.map((line) => {
       fs.appendFileSync(filePath, line + '\n');
-      if (arr.length - 1 === index) log.error('Finished', filePath);
     });
   });
 }
@@ -60,13 +57,12 @@ export function getFiles(dir, fileList) {
     }
   });
   fileList = fileList.filter((filePath) => isStylesheet(filePath.toLowerCase()));
-  if(!fileList.length) throw new Error('Nols could not find any stylesheets to process.');
   return new Promise((resolve) => resolve(fileList));
 }
 
 /**
- * Writes to a filePath with the specified contents.
- * @param {string} filePath - The filePath of the file we are writing to.
+ * Tells us if a file is a stylesheet file.
+ * @param {string} filePath - The filePath of the file we are checking.
  * @returns Boolean;
  */
 function isStylesheet(filePath) {

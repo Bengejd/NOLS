@@ -1,14 +1,14 @@
-import {areWeTesting, hasEntryArg, hasHeightArg, hasWidthArg} from './util';
 const log = require('clg-color');
-
 const inquirer = require('inquirer');
 
+import {areWeTesting, hasEntryArg, hasHeightArg, hasWidthArg} from './util';
+
+/**
+ * Asks the user some config questions.
+ * @returns Promise<Object>;
+ */
 /* istanbul ignore next */
 export async function configQuestions() {
-
-  console.log(areWeTesting());
-  console.log(hasHeightArg());
-
   const questions = [
     {
       name: 'MODE',
@@ -72,6 +72,11 @@ export async function configQuestions() {
   return setOptions(answers);
 }
 
+/**
+ * Sets the package config options.
+ * @param {object} opts - The question answers that we receive.
+ * @returns Promise;
+ */
 /* istanbul ignore next */
 export function setOptions(opts) {
   return new Promise((resolve, reject) => {
@@ -90,6 +95,11 @@ export function setOptions(opts) {
   });
 }
 
+/**
+ * sets the package entry directory.
+ * @param {string} dir - The question entry directory that we receive.
+ * @returns string;
+ */
 /* istanbul ignore next */
 function setEntry(dir) {
   let fixedDir = dir;

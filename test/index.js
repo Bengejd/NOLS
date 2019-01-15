@@ -2,7 +2,6 @@ import assert from 'assert';
 import {getFiles, readFile} from '../src/lib/util/fileReader';
 import {revertLine} from '../src/lib/reverter';
 import {convertLine} from '../src/lib/converter';
-import {areWeTesting} from '../src/lib/util/util';
 
 describe('ReadFile(): ', () => {
   const readFileTests = [
@@ -84,17 +83,17 @@ describe('GetFiles(): ', () => {
 describe('RevertLine(): ', () => {
   const revertLineTests = [
     {
-      input: '  height: 100vh; // NOLS Converted from: 812px;',
+      input: '  height: 100vh; /* NOLS Converted from: 812px; */',
       expectedResult: '  height: 812px;',
       description: 'should return the original string in px, without the comment, when a line has a NOLS comment'
     },
     {
-      input: '  padding-left: 5.333333333333333vw; // NOLS Converted from: 20px;',
+      input: '  padding-left: 5.333333333333333vw; /* NOLS Converted from: 20px; */',
       expectedResult: '  padding-left: 20px;',
       description: 'should return the original string in px, without the comment, when a line has a NOLS comment'
     },
     {
-      input: '  margin-bottom: 6.157635467980295vh; // NOLS Converted from: 50px;',
+      input: '  margin-bottom: 6.157635467980295vh; /* NOLS Converted from: 50px; */',
       expectedResult: '  margin-bottom: 50px;',
       description: 'should return the original string in px, without the comment, when a line has a NOLS comment',
     },
@@ -104,8 +103,8 @@ describe('RevertLine(): ', () => {
       description: 'should return the empty string when receiving an empty string',
     },
     {
-      input: '  margin-bottom: 6.157635467980295vh; // from: 50px;',
-      expectedResult: '  margin-bottom: 6.157635467980295vh; // from: 50px;',
+      input: '  margin-bottom: 6.157635467980295vh; /* from: 50px; */',
+      expectedResult: '  margin-bottom: 6.157635467980295vh; /* from: 50px; */',
       description: 'should return the string when receiving a line that doesn\'t contain a complete NOLS comment ',
     },
   ];
@@ -121,18 +120,20 @@ describe('ConvertLine()', () => {
   const convertLineTests = [
     {
       input: '  height: 812px;',
-      expectedResult: '  height: 100vh; // NOLS Converted from: 812px;',
-      description: 'should return "height: 100vh; // NOLS Converted from: 812px;" when receiving "height: 812px;"'
+      expectedResult: '  height: 100vh; /* NOLS Converted from: 812px; */',
+      description: 'should return "height: 100vh; /* NOLS Converted from: 812px;" when receiving "height: 812px;"'
     },
     {
       input: '  padding-left: 20px;',
-      expectedResult: '  padding-left: 5.333333333333333vw; // NOLS Converted from: 20px;',
-      description: 'should return "padding-left: 5.333333333333333vw; // NOLS Converted from: 20px;" when receiving "padding-left:20px"'
+      expectedResult: '  padding-left: 5.333333333333333vw; /* NOLS Converted from: 20px; */',
+      description: 'should return "padding-left: 5.333333333333333vw; /* NOLS Converted from: 20px;" when receiving' +
+        ' "padding-left:20px"'
     },
     {
       input: '  margin-bottom: 50px;',
-      expectedResult: '  margin-bottom: 6.157635467980295vh; // NOLS Converted from: 50px;',
-      description: 'should return "margin-bottom: 6.157635467980295vh; // NOLS Converted from: 50px;" when receiving "margin-bottom: 50px;"'
+      expectedResult: '  margin-bottom: 6.157635467980295vh; /* NOLS Converted from: 50px; */',
+      description: 'should return "margin-bottom: 6.157635467980295vh; /* NOLS Converted from: 50px;" when receiving' +
+        ' "margin-bottom: 50px;"'
     },
   ];
   convertLineTests.forEach((sample) => {
@@ -146,7 +147,9 @@ describe('ConvertLine()', () => {
 describe('areWeTesting()', () => {
   const areWeTestingTests = [
     {
-      input: null, expectedResult: null, description: 'Just a placeholder for areWeTesting()'
+      input: null,
+      expectedResult: null,
+      description: 'Just a placeholder for areWeTesting()'
     }
   ];
   areWeTestingTests.forEach((sample) => {

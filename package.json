@@ -30,7 +30,7 @@
     "build:dev": "NODE_ENV=development webpack --mode=development --progress --profile --colors",
     "build:prod": "NODE_ENV=production webpack --mode=production --progress --colors",
     "test": "env testing=true nyc mocha --require @babel/register",
-    "build:test": "npm run build:dev && nols --height=812 --testing=true",
+    "build:test": "npm run build:dev && nols --h=812 --w=375 --testing=true",
     "test:args": "npm run build:dev && nols"
   },
   "dependencies": {
