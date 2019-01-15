@@ -1,6 +1,6 @@
 <h1 align="center">NOLS</h1>
 
-NOLS makes writing pixel perfect SCSS easier by taking the hassle out of converting pixel `px` values to viewport 
+NOLS makes writing pixel perfect CSS/SCSS easier by taking the hassle out of converting pixel `px` values to viewport 
 `vh/vw` values within your project with one simple CLI command. You can now write your stylesheet with one device in 
 mind, and NOLS handles making it pixel perfect (**within reason**) everywhere else. 
 
