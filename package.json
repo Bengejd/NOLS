@@ -1,7 +1,7 @@
 {
   "name": "nols",
   "version": "0.9.4",
-  "description": "Nols: A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values",
+  "description": "A superb CLI tool that makes writing pixel perfect css a breeze - by converting pixel (px) values to viewport values (vh/vw) with one simple command",
   "main": "dist/index.js",
   "repository": "github:Bengejd/NOLS",
   "author": "Bengejd",
