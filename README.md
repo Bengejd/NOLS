@@ -71,10 +71,6 @@ From NPM for use as a command line app:
 
     npm install nols -g
     
-From NPM for programmatic use:
-    
-    npm install nols --save-dev
-
 ## Usage
 
 If you have installed NOLS from npm, from terminal in your project directory, run the command
