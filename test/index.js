@@ -2,7 +2,7 @@ import assert from 'assert';
 import {getFiles, readFile} from '../src/lib/util/fileReader';
 import {revertLine} from '../src/lib/reverter';
 import {cleanLine} from '../src/lib/cleaner';
-import {convertLine, getViewportType} from '../src/lib/converter';
+import {calculateVH, calculateVW, convertLine, getViewportType} from '../src/lib/converter';
 import {
   getTestingSrc,
   hasBorderRadius,
@@ -20,6 +20,7 @@ import {
   onlyInlineComment,
   removeBlockComments,
 } from '../src/lib/util/util';
+import {configQuestions, setEntry} from '../src/lib/util/questions';
 
 describe('readFile(): ', () => {
   const readFileTests = [
@@ -706,6 +707,122 @@ describe('cleanLine()', () => {
   cleanLineTests.forEach((sample) => {
     it(sample.description, async () => {
       assert.equal(await cleanLine(sample.input), sample.expectedResult);
+    });
+  });
+});
+
+describe('configQuestions()', () => {
+  const configQuestionsTests = [
+    {
+      input: '',
+      expectedResult: {
+        WIDTH: 375,
+        HEIGHT: 812,
+        DEFAULT_DIR: './test/test-scss/read-file-tests/only-stylesheets/',
+        MODE: 'Default',
+        CONFIRM: 'YES',
+      },
+      description: 'should return the mocha user interaction mock data.',
+    },
+  ];
+  configQuestionsTests.forEach((sample) => {
+    it(sample.description, async () => {
+      assert.deepEqual(await configQuestions(), sample.expectedResult);
+    });
+  });
+});
+
+describe('setEntry()', () => {
+  const setEntryTests = [
+    {
+      input: 'test/testing',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "/test/testing"',
+    },
+    {
+      input: '/test/testing',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "/test/testing/"',
+    },
+    {
+      input: './test/testing',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "./test/testing"',
+    },
+    {
+      input: './test/testing/',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
+    },
+    {
+      input: './test/testing/',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
+    },
+    {
+      input: '.test/testing/',
+      expectedResult: './test/testing/',
+      description: 'Should return "./test/testing/" when receiving ".test/testing/"',
+    },
+  ];
+  setEntryTests.forEach((sample) => {
+    it(sample.description, async () => {
+      assert.equal(setEntry(sample.input), sample.expectedResult);
+    });
+  });
+});
+
+describe('calculateVW()', () => {
+  const calculateVWTests = [
+    {
+      input: 375,
+      expectedResult: 100,
+      description: 'should return "100" (vw) when receiving "375" (px)',
+    },
+    {
+      input: 187.5,
+      expectedResult: 50,
+      description: 'should return "50" (vw) when receiving "187.5" (px)',
+    },
+    {
+      input: '812px',
+      expectedResult: null,
+      description: 'should return "null" when receiving a non-number',
+    },
+  ];
+  calculateVWTests.forEach((sample) => {
+    it(sample.description, async () => {
+      assert.equal(calculateVW(sample.input), sample.expectedResult);
+    });
+  });
+});
+
+describe('calculateVH()', () => {
+  const calculateVHTests = [
+    {
+      input: 812,
+      expectedResult: 100,
+      description: 'should return "100" (vh) when receiving "812" (px)',
+    },
+    {
+      input: 406,
+      expectedResult: 50,
+      description: 'should return "50" (vh) when receiving "406" (px)',
+    },
+    {
+      input: 162.4,
+      expectedResult: 20,
+      description: 'should return "20" (vh) when receiving "162.4" (px)'
+    },
+    {
+      input: '812px',
+      expectedResult: null,
+      description: 'should return "null" when receiving a non-number',
+    },
+  ];
+  calculateVHTests.forEach((sample) => {
+    it(sample.description, async () => {
+      assert.equal(calculateVH(sample.input), sample.expectedResult);
     });
   });
 });

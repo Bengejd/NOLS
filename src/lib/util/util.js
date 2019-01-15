@@ -150,8 +150,17 @@ export function hasNolsComment(line) {
 
 /* istanbul ignore next */
 export function areWeTesting() {
-  if (global.NOLS_ARGS && global.NOLS_ARGS.testing === 'true') return true;
-  else if (process.env.testing) return process.env.testing;
+  return (isDevTestRunning() || isMochaRunning());
+}
+
+/* istanbul ignore next */
+export function isDevTestRunning() {
+  return !!(global.NOLS_ARGS && global.NOLS_ARGS.testing === 'true');
+}
+
+/* istanbul ignore next */
+export function isMochaRunning() {
+  if (process.env.testing) return process.env.testing;
   else return false;
 }
 

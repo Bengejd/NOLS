@@ -50,7 +50,7 @@ export function convertLine(line) {
 }
 
 export function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
-  const CMT = areWeTesting() ? ' /* NOLS Converted from:' : global.NOLS_CMT;
+  const CMT = areWeTesting() ? ' /* NOLS Converted from:' : /* istanbul ignore next */ global.NOLS_CMT;
   return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + CMT + origVal + ' */';
 }
 
@@ -80,17 +80,15 @@ export async function calculate(val, type, attribute) {
 }
 
 export function calculateVH(val) {
-  const HEIGHT = areWeTesting() ? 812 : global.VIEWPORT.HEIGHT;
+  const HEIGHT = areWeTesting() ? 812 : /* istanbul ignore next */ global.VIEWPORT.HEIGHT;
   if (!isNaN(val) && !isNaN(HEIGHT)) return (val * 100) / HEIGHT;
-  /* istanbul ignore next */
-  return null;
+  else return null;
 }
 
 export function calculateVW(val) {
-  const WIDTH = areWeTesting() ? 375 : global.VIEWPORT.WIDTH;
+  const WIDTH = areWeTesting() ? 375 : /* istanbul ignore next */ global.VIEWPORT.WIDTH;
   if (!isNaN(val) && !isNaN(WIDTH)) return (val * 100) / WIDTH;
-  /* istanbul ignore next */
-  return null;
+  else return null;
 }
 
 export function getConversionType(line) {

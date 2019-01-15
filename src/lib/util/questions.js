@@ -1,15 +1,14 @@
 const log = require('clg-color');
 const inquirer = require('inquirer');
 
-import {areWeTesting, hasEntryArg, hasHeightArg, hasWidthArg} from './util';
+import {areWeTesting, getTestingSrc, hasEntryArg, hasHeightArg, hasWidthArg, isMochaRunning} from './util';
 
 /**
  * Asks the user some config questions.
  * @returns Promise<Object>;
  */
-
-/* istanbul ignore next */
 export async function configQuestions() {
+  /* istanbul ignore next */
   const questions = [
     {
       name: 'MODE',
@@ -57,20 +56,41 @@ export async function configQuestions() {
       type: 'list',
       message: 'Are you sure you want to proceed with this configuration?',
       when(ANS) {
-        log.info(`
+        if(ANS.MODE === 'Default') {
+          log.info(`
         MODE: ${ANS.MODE}
         HEIGHT: ${parseFloat(ANS.HEIGHT || global.NOLS_ARGS.height || global.NOLS_ARGS.h)}px
         WIDTH: ${parseFloat(ANS.WIDTH || global.NOLS_ARGS.width || global.NOLS_ARGS.w)}px
         ENTRY FOLDER: ${ANS.DEFAULT_DIR || global.DEFAULT_DIR}
         `);
+        } else {
+          log.info(`
+        MODE: ${ANS.MODE}
+        ENTRY FOLDER: ${ANS.DEFAULT_DIR || global.DEFAULT_DIR}
+        `);
+        }
         return true;
       },
       choices: ['YES', 'NO'],
     },
   ];
 
-  const answers = await inquirer.prompt(questions);
+  const answers = isMochaRunning() ? await mochaMockConfigQuestionsResponse() : await inquirer.prompt(questions);
   return setOptions(answers);
+}
+
+export function mochaMockConfigQuestionsResponse() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        WIDTH: 375,
+        HEIGHT: 812,
+        DEFAULT_DIR: getTestingSrc(),
+        MODE: 'Default',
+        CONFIRM: 'YES',
+      });
+    }, 25);
+  });
 }
 
 /**
@@ -79,9 +99,11 @@ export async function configQuestions() {
  * @returns Promise;
  */
 
-/* istanbul ignore next */
 export function setOptions(opts) {
+  /* istanbul ignore next */
   return new Promise((resolve, reject) => {
+    if(areWeTesting()) resolve(opts);
+
     global.MODE = opts.MODE;
 
     if (opts.DEFAULT_DIR) setEntry(opts.DEFAULT_DIR.trim());
@@ -92,7 +114,7 @@ export function setOptions(opts) {
     if (opts.WIDTH) global.VIEWPORT.WIDTH = parseFloat(opts.WIDTH);
     else global.VIEWPORT.WIDTH = global.NOLS_ARGS.width || global.NOLS_ARGS.w;
 
-    if (opts.CONFIRM === 'YES') resolve();
+    if (opts.CONFIRM === 'YES') resolve(opts);
     else reject('NOLS Aborted: Try fixing your NOLS arguments before running again.');
   });
 }
@@ -103,12 +125,13 @@ export function setOptions(opts) {
  * @returns string;
  */
 
-/* istanbul ignore next */
-function setEntry(dir) {
+export function setEntry(dir) {
   let fixedDir = dir;
   if (!dir.startsWith('.')) {
     if (!dir.startsWith('/')) fixedDir = './' + fixedDir;
     else if (dir.startsWith('/')) fixedDir = '.' + fixedDir;
+  } else {
+    if(!dir.startsWith('./')) fixedDir = './' + fixedDir.substring(1, fixedDir.length);
   }
   if (!dir.endsWith('/')) fixedDir = fixedDir + '/';
   return global.DEFAULT_DIR = fixedDir;

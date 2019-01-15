@@ -13,6 +13,15 @@
     "url": "https://github.com/Bengejd/NOLS/issues"
   },
   "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 90,
+    "statements": 90,
+    "functions": 90,
+    "branches": 90,
+    "include": [
+      "src/**/*.js"
+    ],
     "reporter": [
       "lcov",
       "text"
@@ -34,13 +43,12 @@
     "No One Likes StyleSheets"
   ],
   "scripts": {
-    "lint": "eslint ./src",
+    "lint": "eslint ./src/",
     "build:dev": "NODE_ENV=development webpack --mode=development --progress --profile --colors",
     "build:prod": "NODE_ENV=production webpack --mode=production --progress --colors",
-    "test": "env testing=true nyc mocha --require @babel/register && npm run report-coverage",
-    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "build:test": "npm run build:dev && nols --h=812 --w=375 --testing=true",
-    "test:args": "npm run build:dev && nols"
+    "test": "env testing=true nyc mocha --require @babel/register",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "build:test": "npm run build:dev && nols --h=812 --w=375 --testing=true"
   },
   "dependencies": {
     "clg-color": "^1.1.3",

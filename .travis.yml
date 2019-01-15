@@ -3,7 +3,8 @@ node_js:
 - node
 before_deploy:
 - npm run build:prod
-- npm run report-coverage
+after_success:
+- npm run coverage
 deploy:
   skip_cleanup: true
   provider: npm
