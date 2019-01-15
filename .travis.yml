@@ -3,9 +3,7 @@ node_js:
 - node
 before_deploy:
 - npm run build:prod
-script:
-- istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
-- codecov
+- npm run report-coverage
 deploy:
   skip_cleanup: true
   provider: npm
