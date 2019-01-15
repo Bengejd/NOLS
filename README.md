@@ -67,13 +67,13 @@ This does not happen often, but it's always a possibility.
 First make sure you have installed the latest version of [node.js](http://nodejs.org/)
 (You may need to restart your computer after this step).
 
-From NPM for use as a command line app:
+From NPM:
 
     npm install nols -g
     
 ## Usage
 
-If you have installed NOLS from npm, from terminal in your project directory, run the command
+If you have installed NOLS from npm, then from terminal in your project directory, run the command
 
     nols
     
