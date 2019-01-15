@@ -1,6 +1,6 @@
 {
   "name": "nols",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Nols: A superb CLI tool that takes the hassle out of converting pixel (px) values to viewport values",
   "main": "dist/index.js",
   "repository": "github:Bengejd/NOLS",
