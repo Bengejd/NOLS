@@ -99,7 +99,7 @@ Afterwards, it reads & converts all stylesheets in your project `./src/` folder 
 
 `Revert`
 
-Removes all changes made by NOLS. This is currently dependent on the assumption that you did not remove 
+Reverts all changes made by NOLS. This is currently dependent on the assumption that you did not remove 
 any comments left behind by NOLS. So if you remove a comment, it will skip that value reversion.
 
 `Clean` 
