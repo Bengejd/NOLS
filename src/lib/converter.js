@@ -66,12 +66,12 @@ export async function calculate(val, type, attribute) {
         break;
       }
       case('XY'): {
-        log.warning(attribute.trim(), 'attribute not currently supported');
+        // log.warning(attribute.trim(), 'attribute not currently supported');
         resolve(null);
         break;
       }
       default: {
-        log.warning('Unknown type slipped through the cracks...', attribute, val);
+        // log.warning('Unknown type slipped through the cracks...', attribute, val);
         resolve(null);
         break;
       }
