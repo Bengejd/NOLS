@@ -39,9 +39,8 @@ NOLS makes writing pixel perfect CSS/SCSS easier by taking the hassle out of con
 </p>
 
 <p align="left">
-You can now write your stylesheet with one device in 
-mind, and NOLS handles making it pixel perfect (**within reason**) everywhere else.
-</p><br><br>
+You can now write your stylesheet with one device in mind, and NOLS handles making it pixel perfect (<strong>within reason</strong>) everywhere else.
+</p><br><br><br>
 
 ## Project Status
 NOLS is currently under development and **NOT RECOMMENDED** for production use at this time. 
