@@ -33,6 +33,7 @@ async function init() {
     });
     const len = fileList.length;
     log.success(`NOLS processed: ${len} stylesheet${len > 1 ? 's' : ''} in an arbitrarily short amount of time`);
+    log.warning(`Do not close terminal until NOLS has exited gracefully`);
   } catch (err) {
     log.error(err);
   }

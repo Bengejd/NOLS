@@ -128,7 +128,7 @@ export function setOptions(opts) {
 export function setEntry(dir) {
   let fixedDir = dir;
 
-  if(fixedDir.substring(0, 2) !== './') {
+  if(fixedDir.substring(0, 2) !== './' && !fixedDir.startsWith('~')) {
     if(fixedDir.startsWith('.')) fixedDir = './' + fixedDir.substring(1, fixedDir.length);
     else if(dir.startsWith('/')) fixedDir = '.' + fixedDir;
     else fixedDir = './' + fixedDir;

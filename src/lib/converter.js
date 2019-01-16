@@ -1,7 +1,7 @@
 const log = require('clg-color');
 
 /* istanbul ignore next */
-import {areWeTesting, hasNolsComment} from './util/util';
+import {areWeTesting, hasNolsComment, hasPX, hasComma, isString} from './util/util';
 
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
@@ -27,7 +27,8 @@ const WIDTH_TRANSLATIONS = {
 const COMBINED_TRANSLATIONS = {
   name: 'XY',
   attributes: [
-    'margin:', 'padding:', 'translate:', 'border:', 'border-radius:', 'outline:',
+    'margin:', 'padding:', 'translate:',
+    // 'border:', 'border-radius:', 'outline:',
   ]
 };
 
@@ -45,6 +46,7 @@ export function convertLine(line) {
     const parsedVal = parseFloat(originalVal); // Convert value to float (which removes the px/vh/%/em... strings).
     const calculatedVal = await calculate(parsedVal, conversionType, line);
     if (calculatedVal === null) resolve(line);
+    else if(conversionType === 'XY') resolve(calculatedVal); // XY handles it's own formatting.
     else resolve(formatNewLine(line, parsedVal, calculatedVal, conversionType, originalVal));
   }).catch(/* istanbul ignore next */ (err) => log.error('Error processing: ', line, err));
 }
@@ -113,4 +115,55 @@ export function getViewportType(type) {
   } else {
     return null;
   }
+}
+
+export function handleTranslateAttribute(line, vals) {
+  return line; // This isn't handled yet.
+}
+
+// TODO: Find out if we can speed this process up. Could cause a bottleneck.
+export async function calculateCombined(line) {
+  return new Promise(async (resolve) => {
+    const indexOfFirstNum = line.search(/\d/);
+    const valsAfterFirstNum = line.substring(indexOfFirstNum, line.index);
+    const baseString = line.substring(0, indexOfFirstNum);
+    const origVal = line.substring(line.indexOf(':'), line.length);
+    console.log('valsAfterFirstNum: ', valsAfterFirstNum);
+    console.log('baseString: ', baseString);
+    // Since translate doesn't adhere to our calculation. Handle it specially.
+    if (hasComma(line)) return resolve(await handleTranslateAttribute(line, valsAfterFirstNum));
+
+    // Now we need to create an array of the values.
+    const lineValues = valsAfterFirstNum.split(' ');
+    console.log('lineValues: ', lineValues);
+
+    var calculatedString = baseString;
+
+    // Get only the numbers that have px values.
+    var onlyPxValues = lineValues.map((v) => {
+      if (parseFloat(v) === null || !hasPX(v.trim())) return v;
+      else return parseFloat(v);
+    }).map((v, index) => {
+      if (isString(v)) return v;
+      else { // Calculate them individually.
+        // top || bottom
+        if (index === 0 || index === 2) return calculateVH(v) + 'vh';
+        // right || left
+        if (index === 1 || index === 3) return calculateVW(v) + 'vw';
+      }
+    }).map((v, index) => { // Put all the calculated vals together.
+      // Add a semi-colon at the end.
+      if (index === lineValues.length - 1) calculatedString = calculatedString + v + ';';
+      // Add a space between values.
+      else calculatedString = calculatedString + v + ' ';
+    });
+    console.log('CalculatedString: ', calculatedString);
+
+    console.log('onlyPxValues Calculated : ', onlyPxValues);
+
+    // Format the string with the comment & original value.
+
+    const CMT = areWeTesting() ? ' /* NOLS Converted from' : /* istanbul ignore next */ global.NOLS_CMT;
+    resolve(calculatedString + CMT + origVal + ' */');
+  });
 }

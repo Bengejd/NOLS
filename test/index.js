@@ -2,7 +2,7 @@ import assert from 'assert';
 import {getFiles, readFile} from '../src/lib/util/fileReader';
 import {revertLine} from '../src/lib/reverter';
 import {cleanLine} from '../src/lib/cleaner';
-import {calculateVH, calculateVW, convertLine, getViewportType} from '../src/lib/converter';
+import {calculateVH, calculateVW, convertLine, getViewportType, calculateCombined} from '../src/lib/converter';
 import {
   getTestingSrc,
   hasBorderRadius,
@@ -29,18 +29,18 @@ describe('readFile(): ', () => {
       expectedResult: ['.foo {', '  height: 812px;', '  width: 375px;', '  padding-left: 20px;', '  padding-right: 20px;',
         '  margin-bottom: 50px;', '}', '', '.bar {', '  height: 200px;', '  width: 267px;', '  margin-top: 90px;', '}',
         '', '.baz {', '  height: 406px;', '  width: 100px;', '  transform: translateX(20px);', '}', '', ''],
-      description: 'should return an array of the file contents.'
+      description: 'returns an array of the file contents.'
     },
     {
       input: './test/test-scss/read-file-tests/only-stylesheets/second.scss',
       expectedResult: ['.foo {', '  height: 812px;', '  //width: 375px;', '', '}', '', '.bar {', '  height: 200px;',
         '  width: 267px;', '  margin-top: 90px;', '  /*', '   * THIS IS A BLOCK COMMENT.', '   */', '}'],
-      description: 'should return an array of the file contents.'
+      description: 'returns an array of the file contents.'
     },
     {
       input: './test/test-scss/read-file-tests/only-stylesheets/third.scss',
       expectedResult: [],
-      description: 'should return an empty array if the file is empty.'
+      description: 'returns an empty array if the file is empty.'
     }
   ];
   readFileTests.forEach((sample) => {
@@ -61,12 +61,12 @@ describe('getFiles(): ', () => {
         './test/test-scss/read-file-tests/only-stylesheets/second.scss',
         './test/test-scss/read-file-tests/only-stylesheets/third.scss',
       ],
-      description: 'should return an array of stylesheet file paths: first.scss, second.scss, third.scss'
+      description: 'returns an array of stylesheet file paths: first.scss, second.scss, third.scss'
     },
     {
       input: './test/test-scss/read-file-tests/empty-folder/',
       expectedResult: [],
-      description: 'should return an empty array if there are no files in the folder'
+      description: 'returns an empty array if there are no files in the folder'
     },
     {
       input: './test/test-scss/read-file-tests/mixed-files/',
@@ -74,22 +74,22 @@ describe('getFiles(): ', () => {
         './test/test-scss/read-file-tests/mixed-files/fifth.css',
         './test/test-scss/read-file-tests/mixed-files/fourth.scss'
       ],
-      description: 'should return an array of only stylesheets when there are multiple file types.'
+      description: 'returns an array of only stylesheets when there are multiple file types.'
     },
     {
       input: './test/test-scss/read-file-tests/no-stylesheets/',
       expectedResult: [],
-      description: 'should return an empty array when no stylesheets are present.'
+      description: 'returns an empty array when no stylesheets are present.'
     },
     {
       input: './test/test-scss/read-file-tests/folder-with-.scss-in-name/',
       expectedResult: [],
-      description: 'should return an empty array even if the folder name has scss in it',
+      description: 'returns an empty array even if the folder name has scss in it',
     },
     {
       input: './test/test-scss/read-file-tests/folder-with-.scss-in-name/.scss',
       expectedResult: [],
-      description: 'should return an empty array even if the folder name ends with .scss',
+      description: 'returns an empty array even if the folder name ends with .scss',
     }
   ];
   getFilesTests.forEach((sample) => {
@@ -105,37 +105,39 @@ describe('revertLine(): ', () => {
     {
       input: '  height: 100vh; /* NOLS Converted from: 812px; */',
       expectedResult: '  height: 812px;',
-      description: 'should return the original string in px, without the comment, when a line has a NOLS comment'
+      description: 'returns the original string in px, without the comment, when a line has a NOLS comment'
     },
     {
       input: '  padding-left: 5.333333333333333vw; /* NOLS Converted from: 20px; */',
       expectedResult: '  padding-left: 20px;',
-      description: 'should return the original string in px, without the comment, when a line has a NOLS comment'
+      description: 'returns the original string in px, without the comment, when a line has a NOLS comment'
     },
     {
       input: '  margin-bottom: 6.157635467980295vh; /* NOLS Converted from: 50px; */',
       expectedResult: '  margin-bottom: 50px;',
-      description: 'should return the original string in px, without the comment, when a line has a NOLS comment',
+      description: 'returns the original string in px, without the comment, when a line has a NOLS comment',
     },
     {
       input: ' ',
       expectedResult: ' ',
-      description: 'should return the empty string when receiving an empty string',
+      description: 'returns the empty string when receiving an empty string',
     },
     {
       input: '  margin-bottom: 6.157635467980295vh; /* from: 50px; */',
       expectedResult: '  margin-bottom: 6.157635467980295vh; /* from: 50px; */',
-      description: 'should return the string when receiving a line that doesn\'t contain a complete NOLS comment ',
+      description: 'returns the string when receiving a line that doesn\'t contain a complete NOLS comment ',
     },
     {
       input: '  height: 100vh; } /* NOLS Converted from: 812px; */',
       expectedResult: '  height: 812px; }',
-      description: 'should return the original string in px, when receiving "height: 100vh; } /* NOLS Converted from: 812px; */"'
+      description: 'returns the original string in px, when receiving "height: 100vh; } /* NOLS Converted from:' +
+        ' 812px; */"'
     },
     {
       input: '{ height: 100vh; } /* NOLS Converted from: 812px; */',
       expectedResult: '{ height: 812px; }',
-      description: 'should return the original string in px when receiving "{ height: 100vh; } /* NOLS Converted from: 812px; */"'
+      description: 'returns the original string in px when receiving "{ height: 100vh; } /* NOLS Converted from:' +
+        ' 812px; */"'
     },
   ];
   revertLineTests.forEach((sample) => {
@@ -151,29 +153,29 @@ describe('convertLine()', () => {
     {
       input: '  height: 812px;',
       expectedResult: '  height: 100vh; /* NOLS Converted from: 812px; */',
-      description: 'should return "height: 100vh; /* NOLS Converted from: 812px;" when receiving "height: 812px;"'
+      description: 'returns "height: 100vh; /* NOLS Converted from: 812px;" when receiving "height: 812px;"'
     },
     {
       input: '  padding-left: 20px;',
       expectedResult: '  padding-left: 5.333333333333333vw; /* NOLS Converted from: 20px; */',
-      description: 'should return "padding-left: 5.333333333333333vw; /* NOLS Converted from: 20px;" when receiving' +
+      description: 'returns "padding-left: 5.333333333333333vw; /* NOLS Converted from: 20px;" when receiving' +
         ' "padding-left:20px"'
     },
     {
       input: '  margin-bottom: 50px;',
       expectedResult: '  margin-bottom: 6.157635467980295vh; /* NOLS Converted from: 50px; */',
-      description: 'should return "margin-bottom: 6.157635467980295vh; /* NOLS Converted from: 50px;" when receiving' +
+      description: 'returns "margin-bottom: 6.157635467980295vh; /* NOLS Converted from: 50px;" when receiving' +
         ' "margin-bottom: 50px;"'
     },
     {
       input: '  margin: 50px;',
       expectedResult: '  margin: 50px;',
-      description: 'should return "margin: 50px;" when receiving "margin: 50px;"'
+      description: 'returns "margin: 50px;" when receiving "margin: 50px;"'
     },
     {
       input: '  asdf: 50px;',
       expectedResult: '  asdf: 50px;',
-      description: 'should return "asdf: 50px;" when receiving "asdf: 50px;"'
+      description: 'returns "asdf: 50px;" when receiving "asdf: 50px;"'
     },
   ];
   convertLineTests.forEach((sample) => {
@@ -204,88 +206,88 @@ describe('isConvertible()', () => {
     {
       input: '\n',
       expectedResult: false,
-      description: 'should return false when receiving a new line',
+      description: 'returns false when receiving a new line',
     },
     {
       input: '// inline comment',
       expectedResult: false,
-      description: 'should return false when receiving only an inline comment',
+      description: 'returns false when receiving only an inline comment',
     },
     {
       input: '/* block comment */',
       expectedResult: false,
-      description: 'should return false when receiving only a block comment',
+      description: 'returns false when receiving only a block comment',
     },
     {
       input: '@include testing(50px, 30px)',
       expectedResult: false,
-      description: 'should return false when receiving a mixin',
+      description: 'returns false when receiving a mixin',
     },
     {
       input: '@extend testing',
       expectedResult: false,
-      description: 'should return false when receiving an extend',
+      description: 'returns false when receiving an extend',
     },
     {
       input: 'font-size:30px',
       expectedResult: false,
-      description: 'should return false when receiving a font-size',
+      description: 'returns false when receiving a font-size',
     },
     {
       input: 'border-top-right-radius: 30px',
       expectedResult: false,
-      description: 'should return false when receiving a border-top-right-radius',
+      description: 'returns false when receiving a border-top-right-radius',
     },
     {
       input: 'border-top-left-radius: 30px',
       expectedResult: false,
-      description: 'should return false when receiving a border-top-left-radius',
+      description: 'returns false when receiving a border-top-left-radius',
     },
     {
       input: 'border-bottom-left-radius: 30px',
       expectedResult: false,
-      description: 'should return false when receiving a border-bottom-left-radius',
+      description: 'returns false when receiving a border-bottom-left-radius',
     },
     {
       input: 'border-top-right-radius: 30px',
       expectedResult: false,
-      description: 'should return false when receiving a border-top-right-radius',
+      description: 'returns false when receiving a border-top-right-radius',
     },
     {
       input: 'width: 30px',
       expectedResult: true,
-      description: 'should return true when receiving a line with a px value.',
+      description: 'returns true when receiving a line with a px value.',
     },
     {
       input: 'height: 30vh /* NOLS C /*',
       expectedResult: false,
-      description: 'should return false when receiving a line without a px value'
+      description: 'returns false when receiving a line without a px value'
     },
     {
       input: 'height: 30px // testing',
       expectedResult: true,
-      description: 'should return true when receiving a line with a px value & ending with an inline comment',
+      description: 'returns true when receiving a line with a px value & ending with an inline comment',
     },
     {
       input: '//height: 30px // testing',
       expectedResult: false,
-      description: 'should return false when receiving a line starting with an inline comment px value',
+      description: 'returns false when receiving a line starting with an inline comment px value',
     },
     {
       input: '/* Block comment */ height: 30px // testing',
       expectedResult: true,
-      description: 'should return true when receiving a line starting with a block comment, containing a px value,' +
+      description: 'returns true when receiving a line starting with a block comment, containing a px value,' +
         ' and ending with an inline comment.',
     },
     {
       input: 'heite: 30px',
       expectedResult: true,
-      description: 'should return true when receiving a line with a misspelling in it, with a pixel value',
+      description: 'returns true when receiving a line with a misspelling in it, with a pixel value',
     },
     {
       input: '/* block comment */ height: 30px; /* block comment */',
       expectedResult: true,
-      description: 'should return true when receiving "/* block comment */ height: 30px; /* block comment */"'
+      description: 'returns true when receiving "/* block comment */ height: 30px; /* block comment */"'
     }
   ];
   isConvertibleTests.forEach((sample) => {
@@ -301,27 +303,27 @@ describe('hasBorderRadius()', () => {
     {
       input: 'border-top-left-radius: 50px',
       expectedResult: true,
-      description: 'should return true when receiving a line with "border-top-left-radius"',
+      description: 'returns true when receiving a line with "border-top-left-radius"',
     },
     {
       input: 'border-top-right-radius: 50px',
       expectedResult: true,
-      description: 'should return true when receiving a line with "border-top-left-radius"',
+      description: 'returns true when receiving a line with "border-top-left-radius"',
     },
     {
       input: 'border-bottom-left-radius: 50px',
       expectedResult: true,
-      description: 'should return true when receiving a line with "border-bottom-left-radius"',
+      description: 'returns true when receiving a line with "border-bottom-left-radius"',
     },
     {
       input: 'border-bottom-right-radius: 50px',
       expectedResult: true,
-      description: 'should return true when receiving a line with "border-bottom-right-radius"',
+      description: 'returns true when receiving a line with "border-bottom-right-radius"',
     },
     {
       input: 'height: 30px',
       expectedResult: false,
-      description: 'should return false when receiving anything else',
+      description: 'returns false when receiving anything else',
     },
   ];
   hasBorderRadiusTests.forEach((sample) => {
@@ -336,12 +338,12 @@ describe('hasFontSize()', () => {
     {
       input: 'font-size: 30px',
       expectedResult: true,
-      description: 'should return true when receiving a line with "font-size: 30px"',
+      description: 'returns true when receiving a line with "font-size: 30px"',
     },
     {
       input: 'height: 30px',
       expectedResult: false,
-      description: 'should return true when receiving anything else',
+      description: 'returns true when receiving anything else',
     },
   ];
   hasFontSizeTests.forEach((sample) => {
@@ -356,12 +358,12 @@ describe('isAMixin()', () => {
     {
       input: '@include testing(50px, 50px)',
       expectedResult: true,
-      description: 'should return true when receiving a mixin - "@include testing(50px, 50px)',
+      description: 'returns true when receiving a mixin - "@include testing(50px, 50px)',
     },
     {
       input: 'height: 30px',
       expectedResult: false,
-      description: 'should return false when receiving anything else',
+      description: 'returns false when receiving anything else',
     },
   ];
   isAMixinTests.forEach((sample) => {
@@ -376,12 +378,12 @@ describe('isExtended()', () => {
     {
       input: '@extend .test;',
       expectedResult: true,
-      description: 'should return true when receiving "@extend .test"',
+      description: 'returns true when receiving "@extend .test"',
     },
     {
       input: 'height: 30px;',
       expectedResult: false,
-      description: 'should return false when receiving anything else',
+      description: 'returns false when receiving anything else',
     },
   ];
   isExtendedTests.forEach((sample) => {
@@ -396,27 +398,27 @@ describe('notABracket()', () => {
     {
       input: '{',
       expectedResult: true,
-      description: 'should return true when receiving only an opening bracket',
+      description: 'returns true when receiving only an opening bracket',
     },
     {
       input: '}',
       expectedResult: true,
-      description: 'should return true when receiving only a closing bracket',
+      description: 'returns true when receiving only a closing bracket',
     },
     {
       input: '{ height: 30px; }',
       expectedResult: false,
-      description: 'should return false when receiving "{ height: 30px; }"',
+      description: 'returns false when receiving "{ height: 30px; }"',
     },
     {
       input: '{ height: 30px;',
       expectedResult: false,
-      description: 'should return false when receiving "{ height: 30px;"',
+      description: 'returns false when receiving "{ height: 30px;"',
     },
     {
       input: 'height: 30px; }',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px; }"',
+      description: 'returns false when receiving "height: 30px; }"',
     },
   ];
   isABracketTests.forEach((sample) => {
@@ -431,27 +433,27 @@ describe('isOnlyComment()', () => {
     {
       input: '// inline comment',
       expectedResult: true,
-      description: 'should return true when recieving "// inline comment"',
+      description: 'returns true when recieving "// inline comment"',
     },
     {
       input: 'height: 30px; // test inline-comment',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px; // test inline-comment"',
+      description: 'returns false when receiving "height: 30px; // test inline-comment"',
     },
     {
       input: '/* block comment */',
       expectedResult: true,
-      description: 'should return true when receiving "/* block comment */"',
+      description: 'returns true when receiving "/* block comment */"',
     },
     {
       input: 'height: 30px /* block comment */',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px /* block comment */"',
+      description: 'returns false when receiving "height: 30px /* block comment */"',
     },
     {
       input: 'height: 30px;',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px;"',
+      description: 'returns false when receiving "height: 30px;"',
     },
   ];
   isOnlyCommentTests.forEach((sample) => {
@@ -466,22 +468,22 @@ describe('onlyInlineComment()', () => {
     {
       input: '// this is an inline comment',
       expectedResult: true,
-      description: 'should return true when receiving "// this is an inline comment"',
+      description: 'returns true when receiving "// this is an inline comment"',
     },
     {
       input: '/* block comment */',
       expectedResult: false,
-      description: 'should return false when receiving "/* block comment */"',
+      description: 'returns false when receiving "/* block comment */"',
     },
     {
       input: 'height: 30px; // inline comment',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px; // inline comment"',
+      description: 'returns false when receiving "height: 30px; // inline comment"',
     },
     {
       input: 'height: 30px;',
       expectedResult: false,
-      description: 'should return false when receiving anything else',
+      description: 'returns false when receiving anything else',
     },
   ];
   onlyInlineCommentTests.forEach((sample) => {
@@ -496,17 +498,17 @@ describe('onlyBlockComment()', () => {
     {
       input: '/* block comment */',
       expectedResult: true,
-      description: 'should return true when receiving "/* block comment */"',
+      description: 'returns true when receiving "/* block comment */"',
     },
     {
       input: '/* block comment */ height: 30px; /* block comment */',
       expectedResult: false,
-      description: 'should return false when receiving "/* block comment */ height: 30px; /* block comment */"',
+      description: 'returns false when receiving "/* block comment */ height: 30px; /* block comment */"',
     },
     {
       input: 'height: 30px;',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px;"'
+      description: 'returns false when receiving "height: 30px;"'
     },
   ];
   onlyBlockCommentTests.forEach((sample) => {
@@ -521,17 +523,17 @@ describe('removeBlockComments()', () => {
     {
       input: '/* block comment */',
       expectedResult: '',
-      description: 'should return an empty string when receiving "/* block comment */"',
+      description: 'returns an empty string when receiving "/* block comment */"',
     },
     {
       input: '',
       expectedResult: '',
-      description: 'should return an empty string when receiving an empty string',
+      description: 'returns an empty string when receiving an empty string',
     },
     {
       input: '/* block comment */ height: 30px; /* block comment */',
       expectedResult: 'height: 30px;',
-      description: 'should return "height: 30px;" when receiving "/* block comment */ height: 30px; /* block comment */"',
+      description: 'returns "height: 30px;" when receiving "/* block comment */ height: 30px; /* block comment */"',
     },
   ];
   removeBlockCommentsTests.forEach((sample) => {
@@ -546,22 +548,22 @@ describe('isNewLine()', () => {
     {
       input: '\n',
       expectedResult: true,
-      description: 'should return true when receiving a new line',
+      description: 'returns true when receiving a new line',
     },
     {
       input: 'height: 30px;',
       expectedResult: false,
-      description: 'should return false when receiving a new line',
+      description: 'returns false when receiving a new line',
     },
     {
       input: 'height: 30px; \n',
       expectedResult: false,
-      description: 'should return false when receiving a "height: 30px;" with a new line char.',
+      description: 'returns false when receiving a "height: 30px;" with a new line char.',
     },
     {
       input: 300,
       expectedResult: false,
-      description: 'should return false when receiving a "30"',
+      description: 'returns false when receiving a "30"',
     }
   ];
   isNewLineTests.forEach((sample) => {
@@ -576,17 +578,17 @@ describe('hasPX()', () => {
     {
       input: 'height: 30px;',
       expectedResult: true,
-      description: 'should return true when receiving "height: 30px;"',
+      description: 'returns true when receiving "height: 30px;"',
     },
     {
       input: 'width: 30vh;',
       expectedResult: false,
-      description: 'should return false when receiving "width: 30vh;"',
+      description: 'returns false when receiving "width: 30vh;"',
     },
     {
       input: 300,
       expectedResult: false,
-      description: 'should return false when receiving a "30"',
+      description: 'returns false when receiving a "30"',
     }
   ];
   hasPXTests.forEach((sample) => {
@@ -601,17 +603,17 @@ describe('isString()', () => {
     {
       input: 'height: 30px;',
       expectedResult: true,
-      description: 'should return true when receiving a string',
+      description: 'returns true when receiving a string',
     },
     {
       input: 812,
       expectedResult: false,
-      description: 'should return false when receiving a number',
+      description: 'returns false when receiving a number',
     },
     {
       input: '812',
       expectedResult: true,
-      description: 'should return true when receiving a "812"',
+      description: 'returns true when receiving a "812"',
     },
   ];
   isStringTests.forEach((sample) => {
@@ -626,17 +628,17 @@ describe('hasNolsComment()', () => {
     {
       input: 'height: 30px; /* NOLS Converted from: */',
       expectedResult: true,
-      description: 'should return true when receiving "height: 30px; /* NOLS Converted from: */"',
+      description: 'returns true when receiving "height: 30px; /* NOLS Converted from: */"',
     },
     {
       input: 'height: 30px; /* NOLS: */',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px; /* NOLS: */"',
+      description: 'returns false when receiving "height: 30px; /* NOLS: */"',
     },
     {
       input: 'height: 30px;',
       expectedResult: false,
-      description: 'should return false when receiving "height: 30px;"',
+      description: 'returns false when receiving "height: 30px;"',
     },
   ];
   hasNolsCommentTests.forEach((sample) => {
@@ -651,7 +653,7 @@ describe('getTestingSrc()', () => {
     {
       input: '',
       expectedResult: './test/test-scss/read-file-tests/only-stylesheets/',
-      description: 'should return "./test/test-scss/read-file-tests/only-stylesheets/"',
+      description: 'returns "./test/test-scss/read-file-tests/only-stylesheets/"',
     },
   ];
   temp.forEach((sample) => {
@@ -666,22 +668,22 @@ describe('getViewportType()', () => {
     {
       input: 'X',
       expectedResult: 'vw',
-      description: 'should return "vw" when receiving "X"',
+      description: 'returns "vw" when receiving "X"',
     },
     {
       input: 'Y',
       expectedResult: 'vh',
-      description: 'should return "vh" when receiving "Y"',
+      description: 'returns "vh" when receiving "Y"',
     },
     {
       input: 'XY',
       expectedResult: null,
-      description: 'should return null when receiving "XY"',
+      description: 'returns null when receiving "XY"',
     },
     {
       input: null,
       expectedResult: null,
-      description: 'should return null when receiving null',
+      description: 'returns null when receiving null',
     },
   ];
   getViewportTypeTests.forEach((sample) => {
@@ -696,12 +698,12 @@ describe('cleanLine()', () => {
     {
       input: 'height: 30px; /* NOLS Converted from: */',
       expectedResult: 'height: 30px;',
-      description: 'should return "height: 30px;" when receiving "height: 30px; /* NOLS Converted from: */"',
+      description: 'returns "height: 30px;" when receiving "height: 30px; /* NOLS Converted from: */"',
     },
     {
       input: 'height: 30px;',
       expectedResult: 'height: 30px;',
-      description: 'should return "height: 30px;" when receiving "height: 30px;"',
+      description: 'returns "height: 30px;" when receiving "height: 30px;"',
     },
   ];
   cleanLineTests.forEach((sample) => {
@@ -722,7 +724,7 @@ describe('configQuestions()', () => {
         MODE: 'Default',
         CONFIRM: 'YES',
       },
-      description: 'should return the mocha user interaction mock data.',
+      description: 'returns the mocha user interaction mock data.',
     },
   ];
   configQuestionsTests.forEach((sample) => {
@@ -737,17 +739,17 @@ describe('calculateVW()', () => {
     {
       input: 375,
       expectedResult: 100,
-      description: 'should return "100" (vw) when receiving "375" (px)',
+      description: 'returns "100" (vw) when receiving "375" (px)',
     },
     {
       input: 187.5,
       expectedResult: 50,
-      description: 'should return "50" (vw) when receiving "187.5" (px)',
+      description: 'returns "50" (vw) when receiving "187.5" (px)',
     },
     {
       input: '812px',
       expectedResult: null,
-      description: 'should return "null" when receiving a non-number',
+      description: 'returns "null" when receiving a non-number',
     },
   ];
   calculateVWTests.forEach((sample) => {
@@ -762,22 +764,22 @@ describe('calculateVH()', () => {
     {
       input: 812,
       expectedResult: 100,
-      description: 'should return "100" (vh) when receiving "812" (px)',
+      description: 'returns "100" (vh) when receiving "812" (px)',
     },
     {
       input: 406,
       expectedResult: 50,
-      description: 'should return "50" (vh) when receiving "406" (px)',
+      description: 'returns "50" (vh) when receiving "406" (px)',
     },
     {
       input: 162.4,
       expectedResult: 20,
-      description: 'should return "20" (vh) when receiving "162.4" (px)'
+      description: 'returns "20" (vh) when receiving "162.4" (px)'
     },
     {
       input: '812px',
       expectedResult: null,
-      description: 'should return "null" when receiving a non-number',
+      description: 'returns "null" when receiving a non-number',
     },
   ];
   calculateVHTests.forEach((sample) => {
@@ -792,47 +794,107 @@ describe('setEntry()', () => {
     {
       input: 'test/testing',
       expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "/test/testing"',
+      description: 'returns "./test/testing/" when receiving "/test/testing"',
     },
     {
       input: '/test/testing',
       expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "/test/testing/"',
+      description: 'returns "./test/testing/" when receiving "/test/testing/"',
     },
     {
       input: '/test/testing/tested',
       expectedResult: './test/testing/tested/',
-      description: 'Should return "./test/testing/tested/" when receiving "/test/testing/tested"',
+      description: 'returns "./test/testing/tested/" when receiving "/test/testing/tested"',
     },
     {
       input: './test/testing',
       expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "./test/testing"',
+      description: 'returns "./test/testing/" when receiving "./test/testing"',
     },
     {
       input: './test/testing/',
       expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
+      description: 'returns "./test/testing/" when receiving "./test/testing/"',
     },
     {
       input: './test/testing/',
       expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving "./test/testing/"',
+      description: 'returns "./test/testing/" when receiving "./test/testing/"',
     },
     {
       input: '.test/testing/',
       expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving ".test/testing/"',
+      description: 'returns "./test/testing/" when receiving ".test/testing/"',
     },
     {
       input: '.test/testing',
       expectedResult: './test/testing/',
-      description: 'Should return "./test/testing/" when receiving ".test/testing/"',
+      description: 'returns "./test/testing/" when receiving ".test/testing/"',
     },
   ];
   setEntryTests.forEach((sample) => {
     it(sample.description, async () => {
       assert.equal(setEntry(sample.input), sample.expectedResult);
+    });
+  });
+});
+
+describe('calculateCombined()', () => {
+  const calculateCombinedTests = [
+    {
+      input: 'padding: 406px;',
+      expectedResult: 'padding: 50vh; /* NOLS Converted from: 406px; */',
+      description: 'returns "padding: 50vh; /* ... */", when receiving "padding: 406px;"',
+    },
+    {
+      input: 'margin: 406px;',
+      expectedResult: 'margin: 50vh; /* NOLS Converted from: 406px; */',
+      description: 'returns "margin: 50vh; /* ... */", when receiving "margin: 406px;"',
+    },
+    {
+      input: 'padding: 406px 187.5px;',
+      expectedResult: 'padding: 50vh 50vw; /* NOLS Converted from: 406px 187.5px; */',
+      description: 'returns "padding: 50vh 50vw; /* ... */", when receiving "padding: 406px;"',
+    },
+    {
+      input: 'margin: 406px 187.5px;',
+      expectedResult: 'margin: 50vh 50vw; /* NOLS Converted from: 406px 187.5px; */',
+      description: 'returns "margin: 50vh 50vw; /* ... */", when receiving "margin: 406px 187.5px;"',
+    },
+    {
+      input: 'padding: 406px 187.5px 406px;',
+      expectedResult: 'padding: 50vh 50vw 50vh; /* NOLS Converted from: 406px 187.5px 406px; */',
+      description: 'returns "padding: 50vh 50vw 50vh; /* ... */", when receiving "padding: 406px 187.5px 406px;"',
+    },
+    {
+      input: 'margin: 406px 187.5px 406px;',
+      expectedResult: 'margin: 50vh 50vw 50vh; /* NOLS Converted from: 406px 187.5px 406px; */',
+      description: 'returns "margin: 50vh 50vw 50vh; /* ... */", when receiving "margin: 406px 187.5px 406px;"',
+    },
+    {
+      input: 'padding: 203px 150px 162.4px 75px;',
+      expectedResult: 'padding: 25vh 40vw 20vh 20vw; /* NOLS Converted from: 203px 150px 162.4px 75px; */',
+      description: 'returns "padding: 25vh 40vw 20vh 20vw; /* ... */", when receiving "padding: 203px 150px 162.4px 75px;"',
+    },
+    {
+      input: 'margin: 203px 150px 162.4px 75px;',
+      expectedResult: 'margin: 25vh 40vw 20vh 20vw; /* NOLS Converted from: 203px 150px 162.4px 75px; */',
+      description: 'returns "margin: 25vh 40vw 20vh 20vw; /* ... */", when receiving "margin: 203px 150px 162.4px 75px;"',
+    },
+    // {
+    //   input: 'transform: translate(50px, 60px);',
+    //   expectedResult: '50px 60px',
+    //   description: 'returns "50px 60px" when receiving "padding: 50px 60px;"',
+    // },
+    // {
+    //   input: 'margin: 406px 187.5px;',
+    //   expectedResult: '50px 60px',
+    //   description: 'returns "50px 60px" when receiving "padding: 50px 60px;"',
+    // },
+  ];
+  calculateCombinedTests.forEach((sample) => {
+    it(sample.description, async () => {
+      assert.equal(await calculateCombined(sample.input), sample.expectedResult);
     });
   });
 });

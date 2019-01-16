@@ -50,9 +50,15 @@ export function writeFile(filePath, newFile) {
  * @returns Promise<[]>;
  */
 export function getFiles(dir, fileList) {
-  const files = fs.readdirSync(dir);
+  var files = fs.readdirSync(dir);
   fileList = fileList || [];
+  // Don't allow node_modules.
+  files = files.filter((f) => !f.includes('node_modules'));
   files.map(async (filePath) => {
+    if(isNodeModules(dir)) {
+      log.error('node_modules path detected. Aborting NOLS to keep you safe.');
+      // process.abort();
+    }
     if (isDirectory(dir + filePath)) {
       fileList = await getFiles(dir + filePath + '/', fileList);
     } else {
@@ -83,4 +89,8 @@ function isDirectory(path) {
   } catch (err) {
     return false;
   }
+}
+
+function isNodeModules(dir) {
+  return dir.toLowerCase().includes('node_modules');
 }

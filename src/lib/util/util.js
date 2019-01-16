@@ -215,3 +215,7 @@ export function getProductionSrc() {
   }
   else return './src/';
 }
+
+export function hasComma(line) {
+  return line.includes(',');
+}
