@@ -15,6 +15,10 @@
   "nyc": {
     "check-coverage": true,
     "per-file": true,
+    "lines": 85,
+    "statements": 85,
+    "functions": 85,
+    "branches": 85,
     "include": [
       "src/**/*.js"
     ],
@@ -44,7 +48,7 @@
     "build:prod": "NODE_ENV=production webpack --mode=production --progress --colors",
     "test": "env testing=true nyc mocha --require @babel/register",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "build:test": "npm run build:dev && nols --h=812 --w=375 --testing=true"
+    "build:test": "npm run build:dev && time nols --h=812 --w=375 --testing=true"
   },
   "dependencies": {
     "clg-color": "^1.1.3",

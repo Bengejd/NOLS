@@ -57,7 +57,7 @@ export function getFiles(dir, fileList) {
   files.map(async (filePath) => {
     if(isNodeModules(dir)) {
       log.error('node_modules path detected. Aborting NOLS to keep you safe.');
-      // process.abort();
+      process.abort();
     }
     if (isDirectory(dir + filePath)) {
       fileList = await getFiles(dir + filePath + '/', fileList);

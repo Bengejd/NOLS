@@ -56,6 +56,11 @@ export function formatNewLine(line, parsedVal, calcVal, conversionType, origVal)
   return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + CMT + origVal + ' */';
 }
 
+export function getCMT() {
+  if(areWeTesting()) return ' /* NOLS Converted from';
+  else return global.NOLS_CMT;
+}
+
 export async function calculate(val, type, attribute) {
   return new Promise(async (resolve) => {
     switch (type) {
@@ -117,8 +122,29 @@ export function getViewportType(type) {
   }
 }
 
-export function handleTranslateAttribute(line, vals) {
-  return line; // This isn't handled yet.
+// TODO: Decouple all of this logic. A lot of it is duplicate from calculateCombined()
+export function handleTranslateAttribute(line, vals, base, origVal) {
+  var calculatedString = base;
+  const lineValues = vals.split(' ');
+  console.log(lineValues);
+  console.log(calculatedString);
+
+  lineValues.map((v) => parseFloat(v))
+    .map((v, index) => {
+    // X POS
+    if (index === 0) return calculateVW(v) + 'vw' + ',';
+    // Y POS
+    if (index === 1) return calculateVH(v) + 'vh);';
+  }).map((v, index) => { // Put all the calculated vals together.
+    // Add a semi-colon at the end.
+    if (index === vals.length - 1) calculatedString = calculatedString + v + ';';
+    // Add a space between values.
+    else calculatedString = calculatedString + v + ' ';
+  });
+  // An extra space gets added in, so we have to remove that... TODO: Fix this in the future.
+  calculatedString = calculatedString.substring(0, calculatedString.length -1);
+  console.log('Calculated String Translate: ', calculatedString);
+  return new Promise((resolve) => resolve(calculatedString + getCMT() + origVal + ' */'));
 }
 
 // TODO: Find out if we can speed this process up. Could cause a bottleneck.
@@ -131,16 +157,16 @@ export async function calculateCombined(line) {
     console.log('valsAfterFirstNum: ', valsAfterFirstNum);
     console.log('baseString: ', baseString);
     // Since translate doesn't adhere to our calculation. Handle it specially.
-    if (hasComma(line)) return resolve(await handleTranslateAttribute(line, valsAfterFirstNum));
+    if (hasComma(line)) return resolve(await handleTranslateAttribute(line, valsAfterFirstNum, baseString, origVal));
 
     // Now we need to create an array of the values.
     const lineValues = valsAfterFirstNum.split(' ');
-    console.log('lineValues: ', lineValues);
+    // console.log('lineValues: ', lineValues);
 
     var calculatedString = baseString;
 
     // Get only the numbers that have px values.
-    var onlyPxValues = lineValues.map((v) => {
+    lineValues.map((v) => {
       if (parseFloat(v) === null || !hasPX(v.trim())) return v;
       else return parseFloat(v);
     }).map((v, index) => {
@@ -157,13 +183,11 @@ export async function calculateCombined(line) {
       // Add a space between values.
       else calculatedString = calculatedString + v + ' ';
     });
-    console.log('CalculatedString: ', calculatedString);
+    // console.log('CalculatedString: ', calculatedString);
 
-    console.log('onlyPxValues Calculated : ', onlyPxValues);
+    // console.log('onlyPxValues Calculated : ', onlyPxValues);
 
     // Format the string with the comment & original value.
-
-    const CMT = areWeTesting() ? ' /* NOLS Converted from' : /* istanbul ignore next */ global.NOLS_CMT;
-    resolve(calculatedString + CMT + origVal + ' */');
+    resolve(calculatedString + getCMT() + origVal + ' */');
   });
 }

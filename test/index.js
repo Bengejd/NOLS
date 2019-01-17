@@ -881,11 +881,12 @@ describe('calculateCombined()', () => {
       expectedResult: 'margin: 25vh 40vw 20vh 20vw; /* NOLS Converted from: 203px 150px 162.4px 75px; */',
       description: 'returns "margin: 25vh 40vw 20vh 20vw; /* ... */", when receiving "margin: 203px 150px 162.4px 75px;"',
     },
-    // {
-    //   input: 'transform: translate(50px, 60px);',
-    //   expectedResult: '50px 60px',
-    //   description: 'returns "50px 60px" when receiving "padding: 50px 60px;"',
-    // },
+    {
+      input: 'transform: translate(75px, 162.4px);',
+      expectedResult: 'transform: translate(20vw, 20vh); /* NOLS Converted from: translate(75px, 162.4px); */',
+      description: 'returns "transform: translate(20vw, 20vh); /* ... */" when receiving "transform: translate(75px,' +
+        ' 162.4px);"',
+    },
     // {
     //   input: 'margin: 406px 187.5px;',
     //   expectedResult: '50px 60px',
