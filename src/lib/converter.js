@@ -10,7 +10,7 @@ const HEIGHT_TRANSLATIONS = {
     'top:', 'bottom:',
     'padding-top:', 'padding-bottom:',
     'margin-top:', 'margin-bottom:',
-    'transform: translateY',
+    'transform: translateY(',
   ],
 };
 const WIDTH_TRANSLATIONS = {
@@ -20,14 +20,14 @@ const WIDTH_TRANSLATIONS = {
     'left:', 'right:',
     'padding-left:', 'padding-right:',
     'margin-left:', 'margin-right:',
-    'transform: translateX',
+    'transform: translateX(',
     'word-spacing:', 'letter-spacing:'
   ],
 };
 const COMBINED_TRANSLATIONS = {
   name: 'XY',
   attributes: [
-    'margin:', 'padding:', 'translate:',
+    'margin:', 'padding:', 'transform: translate',
     // 'border:', 'border-radius:', 'outline:',
   ]
 };
@@ -40,14 +40,24 @@ export function convertLine(line) {
   return new Promise(async (resolve) => {
     const conversionType = await getConversionType(line);
     if (conversionType === null || hasNolsComment(line)) {
-      resolve(line);
+      return resolve(line);
     }
     const originalVal = line.split(':')[1]; // Grab the value.
-    const parsedVal = parseFloat(originalVal); // Convert value to float (which removes the px/vh/%/em... strings).
+    var parsedVal = parseFloat(originalVal); // Convert value to float (which removes the px/vh/%/em... strings).
+
+    if(isNaN(parsedVal)) { // TranslateX & translateY don't work well.
+      parsedVal = line.split(':')[1];
+      parsedVal = parsedVal.substring(parsedVal.search(/\d/), parsedVal.length -1);
+      parsedVal = parseFloat(parsedVal);
+    }
+
     const calculatedVal = await calculate(parsedVal, conversionType, line);
-    if (calculatedVal === null) resolve(line);
-    else if(conversionType === 'XY') resolve(calculatedVal); // XY handles it's own formatting.
-    else resolve(formatNewLine(line, parsedVal, calculatedVal, conversionType, originalVal));
+    if (calculatedVal === null) {
+      log.error('Err converting: ', originalVal, parsedVal, conversionType, line );
+      return resolve(line);
+    }
+    else if(conversionType === 'XY') return resolve(calculatedVal); // XY handles it's own formatting.
+    else return resolve(formatNewLine(line, parsedVal, calculatedVal, conversionType, originalVal));
   }).catch(/* istanbul ignore next */ (err) => log.error('Error processing: ', line, err));
 }
 
@@ -61,7 +71,7 @@ export function getCMT() {
   else return global.NOLS_CMT;
 }
 
-export async function calculate(val, type, attribute) {
+export async function calculate(val, type, line) {
   return new Promise(async (resolve) => {
     switch (type) {
       case('Y'): {
@@ -73,8 +83,7 @@ export async function calculate(val, type, attribute) {
         break;
       }
       case('XY'): {
-        // log.warning(attribute.trim(), 'attribute not currently supported');
-        resolve(null);
+        resolve(await calculateCombined(line));
         break;
       }
       default: {
@@ -126,8 +135,6 @@ export function getViewportType(type) {
 export function handleTranslateAttribute(line, vals, base, origVal) {
   var calculatedString = base;
   const lineValues = vals.split(' ');
-  console.log(lineValues);
-  console.log(calculatedString);
 
   lineValues.map((v) => parseFloat(v))
     .map((v, index) => {
@@ -143,7 +150,6 @@ export function handleTranslateAttribute(line, vals, base, origVal) {
   });
   // An extra space gets added in, so we have to remove that... TODO: Fix this in the future.
   calculatedString = calculatedString.substring(0, calculatedString.length -1);
-  console.log('Calculated String Translate: ', calculatedString);
   return new Promise((resolve) => resolve(calculatedString + getCMT() + origVal + ' */'));
 }
 
@@ -154,15 +160,12 @@ export async function calculateCombined(line) {
     const valsAfterFirstNum = line.substring(indexOfFirstNum, line.index);
     const baseString = line.substring(0, indexOfFirstNum);
     const origVal = line.substring(line.indexOf(':'), line.length);
-    console.log('valsAfterFirstNum: ', valsAfterFirstNum);
-    console.log('baseString: ', baseString);
+
     // Since translate doesn't adhere to our calculation. Handle it specially.
     if (hasComma(line)) return resolve(await handleTranslateAttribute(line, valsAfterFirstNum, baseString, origVal));
 
     // Now we need to create an array of the values.
     const lineValues = valsAfterFirstNum.split(' ');
-    // console.log('lineValues: ', lineValues);
-
     var calculatedString = baseString;
 
     // Get only the numbers that have px values.
@@ -183,9 +186,6 @@ export async function calculateCombined(line) {
       // Add a space between values.
       else calculatedString = calculatedString + v + ' ';
     });
-    // console.log('CalculatedString: ', calculatedString);
-
-    // console.log('onlyPxValues Calculated : ', onlyPxValues);
 
     // Format the string with the comment & original value.
     resolve(calculatedString + getCMT() + origVal + ' */');
