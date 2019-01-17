@@ -216,6 +216,6 @@ export function getProductionSrc() {
   else return './src/';
 }
 
-export function hasComma(line) {
-  return line.includes(',');
+export function hasTranslate(line) {
+  return line.includes('translate(');
 }

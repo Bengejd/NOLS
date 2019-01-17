@@ -1,7 +1,7 @@
 const log = require('clg-color');
 
 /* istanbul ignore next */
-import {areWeTesting, hasNolsComment, hasPX, hasComma, isString} from './util/util';
+import {areWeTesting, hasNolsComment, hasPX, hasTranslate, isString} from './util/util';
 
 const HEIGHT_TRANSLATIONS = {
   name: 'Y',
@@ -45,18 +45,18 @@ export function convertLine(line) {
     const originalVal = line.split(':')[1]; // Grab the value.
     var parsedVal = parseFloat(originalVal); // Convert value to float (which removes the px/vh/%/em... strings).
 
-    if(isNaN(parsedVal)) { // TranslateX & translateY don't work well.
+    if (isNaN(parsedVal)) { // TranslateX & translateY don't work well.
       parsedVal = line.split(':')[1];
-      parsedVal = parsedVal.substring(parsedVal.search(/\d/), parsedVal.length -1);
+      parsedVal = parsedVal.substring(parsedVal.search(/\d/), parsedVal.length);
       parsedVal = parseFloat(parsedVal);
     }
 
     const calculatedVal = await calculate(parsedVal, conversionType, line);
     if (calculatedVal === null) {
-      log.error('Err converting: ', originalVal, parsedVal, conversionType, line );
+      log.error('Err converting: ', originalVal, parsedVal, conversionType, line);
       return resolve(line);
     }
-    else if(conversionType === 'XY') return resolve(calculatedVal); // XY handles it's own formatting.
+    else if (conversionType === 'XY') return resolve(calculatedVal); // XY handles it's own formatting.
     else return resolve(formatNewLine(line, parsedVal, calculatedVal, conversionType, originalVal));
   }).catch(/* istanbul ignore next */ (err) => log.error('Error processing: ', line, err));
 }
@@ -67,7 +67,7 @@ export function formatNewLine(line, parsedVal, calcVal, conversionType, origVal)
 }
 
 export function getCMT() {
-  if(areWeTesting()) return ' /* NOLS Converted from';
+  if (areWeTesting()) return ' /* NOLS Converted from';
   else return global.NOLS_CMT;
 }
 
@@ -138,18 +138,19 @@ export function handleTranslateAttribute(line, vals, base, origVal) {
 
   lineValues.map((v) => parseFloat(v))
     .map((v, index) => {
-    // X POS
-    if (index === 0) return calculateVW(v) + 'vw' + ',';
-    // Y POS
-    if (index === 1) return calculateVH(v) + 'vh);';
-  }).map((v, index) => { // Put all the calculated vals together.
+      // X POS
+      if (index === 0 && lineValues.length > 1) return calculateVW(v) + 'vw' + ',';
+      if (index === 0 && lineValues.length === 1) return calculateVW(v) + 'vw' + ');';
+      // Y POS
+      if (index === 1) return calculateVH(v) + 'vh);';
+    }).map((v, index) => { // Put all the calculated vals together.
     // Add a semi-colon at the end.
     if (index === vals.length - 1) calculatedString = calculatedString + v + ';';
     // Add a space between values.
     else calculatedString = calculatedString + v + ' ';
   });
   // An extra space gets added in, so we have to remove that... TODO: Fix this in the future.
-  calculatedString = calculatedString.substring(0, calculatedString.length -1);
+  calculatedString = calculatedString.substring(0, calculatedString.length - 1);
   return new Promise((resolve) => resolve(calculatedString + getCMT() + origVal + ' */'));
 }
 
@@ -162,7 +163,7 @@ export async function calculateCombined(line) {
     const origVal = line.substring(line.indexOf(':'), line.length);
 
     // Since translate doesn't adhere to our calculation. Handle it specially.
-    if (hasComma(line)) return resolve(await handleTranslateAttribute(line, valsAfterFirstNum, baseString, origVal));
+    if (hasTranslate(line)) return resolve(await handleTranslateAttribute(line, valsAfterFirstNum, baseString, origVal));
 
     // Now we need to create an array of the values.
     const lineValues = valsAfterFirstNum.split(' ');

@@ -169,8 +169,13 @@ describe('convertLine()', () => {
     },
     {
       input: '  margin: 50px;',
-      expectedResult: '  margin: 50px;',
+      expectedResult: '  margin: 6.157635467980295vh; /* NOLS Converted from: 50px; */',
       description: 'returns "margin: 50px;" when receiving "margin: 50px;"'
+    },
+    {
+      input: '  transform: translate(75px);',
+      expectedResult: '  transform: translate(20vw); /* NOLS Converted from: translate(75px); */',
+      description: 'returns "transform: translate(20vw);" when receiving "transform: translate(75px);"'
     },
     {
       input: '  asdf: 50px;',
