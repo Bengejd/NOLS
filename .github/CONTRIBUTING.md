@@ -1,7 +1,18 @@
-# RSO Developer Guide
-This is a short guide on how to contribute to RSO. Please read the document in full before submitting a pull-request.
+# NOLS Developer Guide
+This is a short guide on how to contribute to NOLS. Please read the document in full before submitting a pull-request.
 
 ### Testing your changes
+
+You should update any unit tests in the `./test/index.js` file as you alter code.
+
+Your pull-request will be ran through TravisCI and will automatically be denied by our bot, if your build does not 
+pass testing & a certain coverage percentage.
+
+There are two commands to run testing
+
+ - `npm run build:test` which will build & run the local package to test changes manually.
+ 
+ - `npm run test` will build & run the mocha unit tests, as well report the project codeCoverage.
 
 ### Cleaning the code
 

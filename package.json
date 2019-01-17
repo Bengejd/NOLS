@@ -47,7 +47,7 @@
     "build:dev": "NODE_ENV=development webpack --mode=development --progress --profile --colors",
     "build:prod": "NODE_ENV=production webpack --mode=production --progress --colors",
     "test": "env testing=true nyc mocha --require @babel/register",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov && rm coverage.lcov",
     "build:test": "npm run build:dev && time nols --h=812 --w=375 --testing=true"
   },
   "dependencies": {
