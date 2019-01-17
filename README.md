@@ -110,27 +110,27 @@ These are the attributes that NOLS will attempt to convert for you. If you would
 that isn't currently, or estabilished as known in the **unsupported attributtes** list, add it to 
 [our attributes request-list](https://github.com/Bengejd/NOLS/issues/3).
 
-| X Attributes                     | Y Attributes                  |
-|----------------------------------|-------------------------------|
-| height / min-height / max-height | width / min-width / max-width |
-| top / bottom                     | left / right                  |
-| margin-top / margin-bottom       | margin-left / margin-right    |
-| padding-top / padding-bottom     | padding-left / padding-right  |
-| transform: translateY            | transform: translateX         |
-| line-height                      | word-spacing / letter-spacing |
-|                                  | outline-width                 |
-|                                  | column-width                  |
+| X Attributes                     | Y Attributes                  | XY Attributes                  |
+|----------------------------------|-------------------------------|--------------------------------|
+| height / min-height / max-height | width / min-width / max-width |                                |
+| top / bottom                     | left / right                  |                                |
+| margin-top / margin-bottom       | margin-left / margin-right    | margin                         |
+| padding-top / padding-bottom     | padding-left / padding-right  | padding                        |
+| transform: translateY            | transform: translateX         | transform: translate           |
+| line-height                      | word-spacing / letter-spacing |                                |
+|                                  | outline-width                 |                                |
+|                                  | column-width                  |                                |
 
 ## Unsupported Attributes
 
 Nols has a few attributes that are not currently supported in this version. Some of them are because of usage 
 limitations, others are because I simply haven't gotten around them yet.
 
-| XY                                                         | MISC                                  |
-|------------------------------------------------------------|---------------------------------------|
-| margin - `margin: 1px 2px 3px 4px;`                        | outline - `outline: 5px solid green;` |
-| padding - `padding: 1px 2px 3px 4px;`                      | font-size - `font-size: 12px;`        |
-| transform: translate - `transform: translate(50px, 50px);` | border-radius - All types             |
+| MISC                                  |
+|---------------------------------------|
+| outline - `outline: 5px solid green;` |
+| font-size - `font-size: 12px;`        |
+| border-radius - All types             |
 
 ### Unit Compatibility 
 NOLS is only compatible with pixel (`px`) unit values at this time. That means NOLS will **skip** over any value 
