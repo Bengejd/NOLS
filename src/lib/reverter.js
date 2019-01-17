@@ -1,7 +1,5 @@
 import {hasNolsComment} from './util/util';
 
-// TODO: Reverter needs updated to take XY into account.
-
 /*
  * Reverts (removes all NOLS conversions / comments) from a line.
  * @param {string} line - The line in question.

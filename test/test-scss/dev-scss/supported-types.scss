@@ -1,0 +1,22 @@
+.one {
+  margin: 30px;
+  padding: 30px;
+  transform: translate(50px);
+}
+
+.two {
+  margin: 30px 30px;
+  padding: 30px;
+  transform: translate(50px, 50px);
+}
+
+.three {
+  margin: 30px 30px 30px;
+  padding: 30px 30px 30px;
+  transform: translate(-50px, -50px);
+}
+
+.four {
+  margin: 30px 30px 30px 30px;
+  padding: 30px 30px 30px 30px;
+}

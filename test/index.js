@@ -25,20 +25,20 @@ import {configQuestions, setEntry} from '../src/lib/util/questions';
 describe('readFile(): ', () => {
   const readFileTests = [
     {
-      input: './test/test-scss/read-file-tests/only-stylesheets/first.scss',
+      input: './test/test-scss/mocha-scss/only-stylesheets/first.scss',
       expectedResult: ['.foo {', '  height: 812px;', '  width: 375px;', '  padding-left: 20px;', '  padding-right: 20px;',
         '  margin-bottom: 50px;', '}', '', '.bar {', '  height: 200px;', '  width: 267px;', '  margin-top: 90px;', '}',
         '', '.baz {', '  height: 406px;', '  width: 100px;', '  transform: translateX(20px);', '}', '', ''],
       description: 'returns an array of the file contents.'
     },
     {
-      input: './test/test-scss/read-file-tests/only-stylesheets/second.scss',
+      input: './test/test-scss/mocha-scss/only-stylesheets/second.scss',
       expectedResult: ['.foo {', '  height: 812px;', '  //width: 375px;', '', '}', '', '.bar {', '  height: 200px;',
         '  width: 267px;', '  margin-top: 90px;', '  /*', '   * THIS IS A BLOCK COMMENT.', '   */', '}'],
       description: 'returns an array of the file contents.'
     },
     {
-      input: './test/test-scss/read-file-tests/only-stylesheets/third.scss',
+      input: './test/test-scss/mocha-scss/only-stylesheets/third.scss',
       expectedResult: [],
       description: 'returns an empty array if the file is empty.'
     }
@@ -54,40 +54,40 @@ describe('readFile(): ', () => {
 describe('getFiles(): ', () => {
   const getFilesTests = [
     {
-      input: './test/test-scss/read-file-tests/only-stylesheets/',
+      input: './test/test-scss/mocha-scss/only-stylesheets/',
       expectedResult: [
-        './test/test-scss/read-file-tests/only-stylesheets/first.scss',
-        './test/test-scss/read-file-tests/only-stylesheets/fourth.scss',
-        './test/test-scss/read-file-tests/only-stylesheets/second.scss',
-        './test/test-scss/read-file-tests/only-stylesheets/third.scss',
+        './test/test-scss/mocha-scss/only-stylesheets/first.scss',
+        './test/test-scss/mocha-scss/only-stylesheets/fourth.scss',
+        './test/test-scss/mocha-scss/only-stylesheets/second.scss',
+        './test/test-scss/mocha-scss/only-stylesheets/third.scss',
       ],
       description: 'returns an array of stylesheet file paths: first.scss, second.scss, third.scss'
     },
     {
-      input: './test/test-scss/read-file-tests/empty-folder/',
+      input: './test/test-scss/mocha-scss/empty-folder/',
       expectedResult: [],
       description: 'returns an empty array if there are no files in the folder'
     },
     {
-      input: './test/test-scss/read-file-tests/mixed-files/',
+      input: './test/test-scss/mocha-scss/mixed-files/',
       expectedResult: [
-        './test/test-scss/read-file-tests/mixed-files/fifth.css',
-        './test/test-scss/read-file-tests/mixed-files/fourth.scss'
+        './test/test-scss/mocha-scss/mixed-files/fifth.css',
+        './test/test-scss/mocha-scss/mixed-files/fourth.scss'
       ],
       description: 'returns an array of only stylesheets when there are multiple file types.'
     },
     {
-      input: './test/test-scss/read-file-tests/no-stylesheets/',
+      input: './test/test-scss/mocha-scss/no-stylesheets/',
       expectedResult: [],
       description: 'returns an empty array when no stylesheets are present.'
     },
     {
-      input: './test/test-scss/read-file-tests/folder-with-.scss-in-name/',
+      input: './test/test-scss/mocha-scss/folder-with-.scss-in-name/',
       expectedResult: [],
       description: 'returns an empty array even if the folder name has scss in it',
     },
     {
-      input: './test/test-scss/read-file-tests/folder-with-.scss-in-name/.scss',
+      input: './test/test-scss/mocha-scss/folder-with-.scss-in-name/.scss',
       expectedResult: [],
       description: 'returns an empty array even if the folder name ends with .scss',
     }
@@ -657,8 +657,8 @@ describe('getTestingSrc()', () => {
   const temp = [
     {
       input: '',
-      expectedResult: './test/test-scss/read-file-tests/only-stylesheets/',
-      description: 'returns "./test/test-scss/read-file-tests/only-stylesheets/"',
+      expectedResult: './test/test-scss/mocha-scss/only-stylesheets/',
+      description: 'returns "./test/test-scss/mocha-scss/only-stylesheets/"',
     },
   ];
   temp.forEach((sample) => {
@@ -725,7 +725,7 @@ describe('configQuestions()', () => {
       expectedResult: {
         WIDTH: 375,
         HEIGHT: 812,
-        DEFAULT_DIR: './test/test-scss/read-file-tests/only-stylesheets/',
+        DEFAULT_DIR: './test/test-scss/mocha-scss/only-stylesheets/',
         MODE: 'Default',
         CONFIRM: 'YES',
       },

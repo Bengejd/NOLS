@@ -199,7 +199,9 @@ export function hasEntryArg() {
  * @returns string;
  */
 export function getTestingSrc() {
-  return './test/test-scss/read-file-tests/only-stylesheets/';
+  if (isMochaRunning()) return './test/test-scss/mocha-scss/only-stylesheets/';
+  else if (isDevTestRunning()) return 'test/test-scss/dev-scss/';
+  else return './test/test-scss/mocha-scss/only-stylesheets/';
 }
 
 /*
