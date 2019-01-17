@@ -23,12 +23,13 @@
   <a href="https://codecov.io/gh/Bengejd/NOLS">
    <img src="https://codecov.io/gh/Bengejd/NOLS/branch/master/graph/badge.svg" />
   </a>
-  <a href="#">
-    <img alt="undefined" src="https://img.shields.io/npm/l/nols.svg" />
-  </a>
-  <!-- GreenKeeper -->
+    <!-- GreenKeeper -->
   <a href="https://badges.greenkeeper.io/Bengejd/NOLS.svg">
     <img src="https://badges.greenkeeper.io/Bengejd/NOLS.svg" />
+  </a>
+      <!-- License -->
+  <a href="#">
+    <img alt="undefined" src="https://img.shields.io/npm/l/nols.svg" />
   </a>
 </div>
 
