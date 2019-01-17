@@ -46,6 +46,9 @@ You can now write your stylesheet with one device in mind, and NOLS handles maki
 </p>
 
 ## Project Status
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Bengejd/NOLS.svg)](https://greenkeeper.io/)
+
 NOLS is currently under development and **NOT RECOMMENDED** for production use at this time. 
 
 <h3>About NOLS</h3>
