@@ -156,16 +156,14 @@ containing the following:
 ## CI TODO:
 - [x] Hookup `TravisCLI`
 - [x] Hookup `CodeCov`
-- [ ] Hookup `GreenKeeper`
-- [ ] Hook up `snyk`
-- [ ] Hook up `npm audit`
+- [x] Hookup `GreenKeeper`
 
 ## NPM TODO:
 - [x] Package for `NPM`
 - [X] Double check npmignore
 
 ## Github TODO:
-- [ ] Create `CHANGELOG.md`
+- [x] Create `CHANGELOG.md`
 - [X] Fix up readme
 - [X] Create package install/usage guide
 - [x] create a release that matches the npm package.
