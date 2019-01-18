@@ -37,7 +37,7 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 <img src="https://i.imgur.com/CuT4GgK.png" alt="Pixel_2" align="left" width="202">
 <img src="https://i.imgur.com/Ewb751o.png" alt="iPhone_6_7_8_Plus" align="left" width="202">
 
-<h3 align="left">_______________</h3>
+<h3 align="left">_________________________</h3>
 
 As you can see, the above layouts don't look the same as the layout on the iPhone X in the first example, which isn't what we want. We want it to look the same, no matter what device is displaying the page.
 
@@ -53,7 +53,7 @@ Here are the results after we run the `nols` command in default mode and input o
 <img src="https://i.imgur.com/f6OLeeH.png" alt="Pixel_2" align="left" width="202">
 <img src="https://i.imgur.com/Ka1KpYf.png" alt="iPhone_6_7_8_Plus" align="left" width="202">
 
-<h3 align="left">_______________</h3>
+<h3 align="left">_________________________</h3>
 
 ### SCSS - Converted by NOLS
 
