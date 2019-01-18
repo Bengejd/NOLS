@@ -39,7 +39,7 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 
 <h3 align="left">_______________</h3>
 
-As you can see, this layout doesn't look the same as it does on the iPhone X in the first example, which isn't what we want. We want it to look the same, no matter what device is displaying the page.
+As you can see, the above layouts don't look the same as the layout on the iPhone X in the first example, which isn't what we want. We want it to look the same, no matter what device is displaying the page.
 
 ### NOLS SCSS - Any Device
 
