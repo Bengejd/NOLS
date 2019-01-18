@@ -6,7 +6,7 @@ If you're still confused about NOLS, this visual example should help explain wha
 
 <img src="https://i.imgur.com/haGjSPw.png" alt="NOLS" align="left" width="225">
 
-This is the design layout that you start with. It's pretty simple, but for this example, it's all we need to get to know what NOLS does for you.
+This is the design layout that you start with. It's pretty simple, but for this example, it's all we need, to get to know what NOLS does for you.
 
 I have written this example code for an iPhone X, which has the viewport values of: **height:** `812px`, **width:** `375px`.
 
