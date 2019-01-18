@@ -45,6 +45,7 @@ export function convertLine(line) {
     const originalVal = line.split(':')[1]; // Grab the value.
     var parsedVal = parseFloat(originalVal); // Convert value to float (which removes the px/vh/%/em... strings).
 
+    // TODO: Find a better way to handle this with translate attributes.
     if (isNaN(parsedVal)) { // TranslateX & translateY don't work well.
       parsedVal = line.split(':')[1];
       parsedVal = parsedVal.substring(parsedVal.search(/\d/), parsedVal.length);
