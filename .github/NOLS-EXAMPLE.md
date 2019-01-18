@@ -1,4 +1,4 @@
-## NOLS Example Project
+## NOLS Example
 
 If you're still confused about NOLS, this visual example should help explain what NOLS does in a real project.
 
