@@ -1,12 +1,12 @@
 ## Introduction
 
-This is a quick example about what NOLS can do for your hybrid app. It gives a simple example of a complex problem with hybrid app development, and how NOLS helps fix that.
+This is a quick example about what NOLS can do for your hybrid app. This is a simple example of a complex problem with hybrid app development, and how NOLS helps fix that.
 
 ### Original SCSS - iPhone X
 
 <img src="https://i.imgur.com/haGjSPw.png" alt="NOLS" align="left" width="225">
 
-This is the design layout that you start with. It's pretty simple, but for this example, it's all we need, to get to know what NOLS does for you.
+Let's say that this is the design layout that you start with. It's pretty simple, but for this example, it's all we need, to get to know what NOLS does for you.
 
 I have written this example code for an iPhone X, which has the viewport values of: **height:** `812px`, **width:** `375px`.
 
@@ -23,7 +23,7 @@ I have written this example code for an iPhone X, which has the viewport values 
   margin-left: 20px;
 }
 ```
-Now this looks quite nice on the iPhone X. It looks exactly how we want it to. But if we change the device to one of a different viewport, we don't get the same results. :sweat: 
+Now this looks quite nice on the iPhone X. It looks exactly how we want it to. But if we change the device to one that has a different viewport, we don't get the same results. :sweat: 
 <br><br>
 
 
@@ -34,7 +34,7 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 
 <img src="https://i.imgur.com/GOATy6j.png" alt="Original_design_all_devices" align="center">
 
-Here you can see how the original code from the first example, shows up on different devices. The black border is just to show the device border, and isn't actually apart of the CSS. As you probably can see, the layout changes based on what device is currently displaying it. This isn't what we want, what we want is a uniform look, based on what we originally designed.
+Here you can see how the original code from the first example, shows up on different devices. The black border is just to show the device border. As you probably can see, the layout changes based on what device is currently displaying it. This isn't what we want, what we want is a uniform look, based on what we originally designed.
 
 ### NOLS SCSS - Any Device
 
@@ -65,23 +65,23 @@ Here is the SCSS after we run the `nols` command in **Default** mode.
 
 You probably noticed that NOLS inserted some comments into the above CSS. This is because NOLS has the ability to revert conversions it has made previously, through the use of these comments. If you want to revert changes made by NOLS, all you have to do is select the the **`Revert`** mode when you run **`nols`**, and nols will revert those conversions to their original values. 
 
-If you wanted to get rid of these commends, you can run NOLS under the **Clean** mode, and all comments left behind by NOLS will be removed.
+If you wanted to get rid of these comments, you can run NOLS under the **Clean** mode, and all comments left behind by NOLS will be removed.
 
 Please note though, that this also makes it impossible to revert previous changes by NOLS down the line. So only use this mode after you've checked that your project.
 
 #### How does NOLS do all of this? 
 
-NOLS will ask you a few questions: 
+NOLS starts off by asking you a few questions: 
 
 1. Your entry folder - the folder you'd like NOLS to start in. 
 2. Your device dimensions - The device view-height and view-width you're developing in.
 
 Afterwards, NOLS reads through every stylesheet that is inside that entry folder, and it's sub-folders.
-When it gets to a [supported attribute](https://github.com/Bengejd/NOLS#supported-attributes), it determines the proper calculation to make.
+When it gets to a [supported attribute](https://github.com/Bengejd/NOLS#supported-attributes), it determines the proper calculation to make, runs the calculation, and then writes the calculated value into your stylesheet.
 
 To actually make the calculation, NOLS uses the following formula: 
 
-`(attribute_value_in_pixels * 100) / viewport_value`. With the viewport_value being either view-height or view-width, depending on the attribute type.
+`(attribute_value_in_pixels * 100) / viewport_value`. With the viewport_value being either your view-height or view-width, depending on the attribute.
 
 #### Thanks for reading!
 
