@@ -29,7 +29,7 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 
 ### Original SCSS - Other Devices
 
-|Pixel 2 XL _______________|Galaxy 5S _____________|Pixel 2 _______________ |iPhone 6, 7, 8 PLUS |
+|Pixel 2 XL _______________|Galaxy 5S _____________|Pixel 2 ___________________ |iPhone 6, 7, 8 PLUS |
 |-----------------|----------------------|:------------------:|:-------------------------------:|
 
 <img src="https://i.imgur.com/des3vyM.png" alt="iPad" align="left" width="202">
@@ -45,7 +45,7 @@ As you can see, the above layouts don't look the same as the layout on the iPhon
 
 Here are the results after we run the `nols` command in default mode and input our height of `812px`, and width of `375px`, which was the original viewport values of the iPhone X we were using when we designed the page.
 
-|Pixel 2 XL _______________|Galaxy 5S _____________|Pixel 2 _______________ |iPhone 6, 7, 8 PLUS |
+|Pixel 2 XL _______________|Galaxy 5S _____________|Pixel 2 ___________________ |iPhone 6, 7, 8 PLUS |
 |-----------------|----------------------|:------------------:|:-------------------------------:|
 
 <img src="https://i.imgur.com/Qr8DFuI.png" alt="iPad_2" align="left" width="202">
