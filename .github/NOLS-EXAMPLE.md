@@ -1,4 +1,4 @@
-## NOLS EXAMPLE
+## NOLS Example Project
 
 If you're still confused about NOLS, this visual example should help explain what NOLS does in a real project.
 
@@ -70,7 +70,7 @@ Now as you can see -  NOLS leaves behind comments in the converted CSS.
 This is because NOLS also has the ability to revert changes it makes - through the use of these comments. 
 So if something goes wrong with a conversion, god forbid - running nols under the `revert` mode, will cause all changes that NOLS has made, to be reverted to their original values.
 
-If you wanted to get rid of these comments, you can run NOLS under the `clean` mode, and all comments will be removed. 
-Though this also makes it so that you can no longer revert previous changes made by nols. So use this after you've checked your project.
+If you wanted to get rid of these comments, you can run NOLS under the `clean` mode, and all comments that NOLS made will be removed. 
+Please note though, this also makes it so that you can no longer revert previous changes made by nols. So use this after you've checked your project.
 
-I hope this makes NOLS make a little bit more sense! If you have any additional questions, not answered here or in the Readme, please feel free to open an issue in it!
+I hope this makes NOLS make a little bit more sense! If you have any additional questions, not answered here or in the Readme, please feel free to open an issue about it!
