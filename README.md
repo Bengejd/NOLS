@@ -50,9 +50,9 @@ Other Node packages allow you to calculate a conversion, but none actually help 
 You can now write your stylesheet with one device in mind, and NOLS handles making it pixel perfect (<strong>within reason</strong>) everywhere else.
 </p>
 
-## Visual Example
+## Example
 
-Checkout this [visual example](https://github.com/Bengejd/NOLS/blob/master/.github/NOLS-EXAMPLE.md) of NOLS in action.
+Still unsure? Check out this [visual example](https://github.com/Bengejd/NOLS/blob/master/.github/NOLS-EXAMPLE.md) of what NOLS does in a real project.
 
 ## Project Status
 
