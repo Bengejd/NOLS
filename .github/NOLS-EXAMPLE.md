@@ -85,4 +85,4 @@ To actually make the calculation, NOLS uses the following formula:
 
 #### Thanks for reading!
 
-I hope this makes NOLS make a little bit more sense! If you have any additional questions, not answered here or in the Readme, please feel free to open an issue about it!
+I hope this makes NOLS make a little bit more sense! If you have any additional questions, not answered here or in the [Readme](https://github.com/Bengejd/NOLS#important-notes), please feel free to open an [issue](https://github.com/Bengejd/NOLS/issues) about it!
