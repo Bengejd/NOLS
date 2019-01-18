@@ -41,7 +41,7 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 
 ### NOLS SCSS - Any Device
 
-Here are the results after we run the `nols` command and input our height of `812px`, and width of `375px` - which was the original viewport values of the iPhone X; which we were using when we designed the page.
+Here are the results after we run the `nols` command in default mode and input our height of `812px`, and width of `375px` - which was the original viewport values of the iPhone X; which we were using when we designed the page.
 
 |iPad _____________________|Galaxy 5S ________________|Pixel 2 __________________|iPhone 6, 7, 8 PLUS |
 |-----------------|----------------------|:------------------:|:-------------------------------:|
