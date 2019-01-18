@@ -6,9 +6,10 @@ This is a quick example about what NOLS can do for your hybrid app. This is a si
 
 <img src="https://i.imgur.com/haGjSPw.png" alt="NOLS" align="left" width="225">
 
-Let's say that this is the design layout that you start with. It's pretty simple, but for this example, it's all we need, to get to know what NOLS does for you.
+Let's say that this is the design layout that you start with. It's pretty simple, but for this example, it's all we need, to understand what NOLS does.
 
 I have written this example code for an iPhone X, which has the viewport values of: **height:** `812px`, **width:** `375px`.
+If you want, you can follow along [here](#).
 
 ##### HTML
 ```
