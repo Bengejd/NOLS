@@ -53,7 +53,7 @@ Here are the results after we run the `nols` command in default mode and input o
 <img src="https://i.imgur.com/f6OLeeH.png" alt="Pixel_2" align="left" width="202">
 <img src="https://i.imgur.com/Ka1KpYf.png" alt="iPhone_6_7_8_Plus" align="left" width="202">
 
-<h3 align="left">_________________________</h3>
+<h3 align="left">_____________________________________________</h3>
 
 ### SCSS - Converted by NOLS
 
