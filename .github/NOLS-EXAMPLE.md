@@ -29,7 +29,7 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 
 ### Original SCSS - Other Devices
 
-|Pixel 2 XL ______________________|Galaxy 5S __________________|Pixel 2 ___________________|iPhone 6, 7, 8 PLUS |
+|Pixel 2 XL ______________________ |Galaxy 5S __________________| Pixel 2 ___________________ |iPhone 6, 7, 8 PLUS |
 |-----------------|----------------------|:------------------:|:-------------------------------:|
 
 <img src="https://i.imgur.com/des3vyM.png" alt="iPad" align="left" width="202">
