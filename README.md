@@ -39,11 +39,11 @@ ________________________________________________________________________________
   alt="NOLS" align="left" width="225">
 
 <p align="left">
-  NOLS is a NodeJs package that I came up with after getting tired of making pixel-to-viewport conversions by hand, as in a large project you could potentially have dozens of small conversions that need to be done.
+NOLS is a NodeJs package meant to be used during hybrid mobile app development. Other Node packages allow you to calculate a conversion, but none actually help you streamline your development process by applying the conversion in your stylesheets for you. <strong>Until NOLS</strong>.
 </p>
 
-<p align="left"> 
-Other Node packages allow you to calculate a conversion, but none actually help you streamline your development process by applying the conversion in your stylesheets for you. <strong>Until NOLS</strong>.
+<p> align="left">
+I came up the idea after getting tired of making pixel-to-viewport conversions by hand, as in a large project you could potentially have dozens of small conversions that need to be done. This replaces the need for media queries, if all you want is a uniform UI across any mobile device.
 </p>
 
 <p align="left">
