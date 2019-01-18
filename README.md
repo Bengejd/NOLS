@@ -39,7 +39,7 @@ ________________________________________________________________________________
   alt="NOLS" align="left" width="225">
 
 <p align="left">
-NOLS is a NodeJs package meant to be used during hybrid mobile app development. Other Node packages allow you to calculate a conversion, but none of them actually help you streamline your development process by applying the conversion in your stylesheets for you. <strong>Until NOLS</strong>.
+NOLS is a NodeJs package meant to be used during hybrid mobile app development. Other Node packages allow you to calculate a viewport conversion, but none of them actually help you streamline your development process by applying that conversion in your stylesheets for you. <strong>Until NOLS</strong>.
 </p>
 
 <p align="left">
@@ -47,7 +47,7 @@ This replaces the need for media queries, if all you want is a uniform UI across
 </p>
 
 <p align="left">
-You can now write your stylesheet with one device in mind, and NOLS handles making it pixel perfect (<strong>within reason</strong>) everywhere else.
+You can now write your stylesheet with one device in mind (such as Ionic Lab), and NOLS handles making it pixel perfect (<strong>within reason</strong>) everywhere else.
 </p>
 
 ## Project Status
