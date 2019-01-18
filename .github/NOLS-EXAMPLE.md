@@ -1,6 +1,6 @@
-## NOLS Example
+## Introduction
 
-If you're still confused about NOLS, this visual example should help explain what NOLS does in a real project.
+This is a quick example about what NOLS can do for your hybrid app. It gives a simple example of a complex problem with hybrid app development, and how NOLS helps fix that.
 
 ### Original SCSS - iPhone X
 
@@ -34,18 +34,23 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 
 <img src="https://i.imgur.com/GOATy6j.png" alt="Original_design_all_devices" align="center">
 
-As you can see, the above layouts don't look the same as the layout on the iPhone X in the first example, which isn't what we want. We want it to look the same, no matter what device is displaying the page.
+Here you can see how the original code from the first example, shows up on different devices. The black border is just to show the device border, and isn't actually apart of the CSS. As you probably can see, the layout changes based on what device is currently displaying it. This isn't what we want, what we want is a uniform look, based on what we originally designed.
 
 ### NOLS SCSS - Any Device
 
-Here are the results after we run the `nols` command in default mode and input our height of `812px`, and width of `375px`, which was the original viewport values of the iPhone X we were using when we designed the page.
+Here is the result after we run the **`nols`** command in **Default** mode. NOLS will ask for your device dimensions, which in this example, had a view-height of `812px` and a view-width of `375px`, and then handles making the calculations for you. 
+
 
 |Pixel 2 XL _______________|Galaxy 5S _____________|Pixel 2 ___________________ |iPhone 6, 7, 8 PLUS |
 |-----------------|----------------------|:------------------:|:-------------------------------:|
 
 <img src="https://i.imgur.com/czG43Cu.jpg" alt="NOLS_design_all_devices" align="center">
 
+As you can see, the original design now renders the same, regardless of what device is displaying it. The takeaway from this? You can now write CSS once, use **`nols`**, and run your code anywhere.
+
 ### SCSS - Converted by NOLS
+
+Here is the SCSS after we run the `nols` command in **Default** mode.
 
 ```
 .test-img {
@@ -56,11 +61,28 @@ Here are the results after we run the `nols` command in default mode and input o
 }
 ```
 
-Now as you can see -  NOLS leaves behind comments in the converted CSS. 
-This is because NOLS also has the ability to revert changes it makes - through the use of these comments. 
-So if something goes wrong with a conversion, god forbid - running nols under the `revert` mode, will cause all changes that NOLS has made, to be reverted to their original values.
+#### What's with the comments?
 
-If you wanted to get rid of these comments, you can run NOLS under the `clean` mode, and all comments that NOLS made will be removed. 
-Please note though, this also makes it so that you can no longer revert previous changes made by nols. So use this after you've checked your project.
+You probably noticed that NOLS inserted some comments into the above CSS. This is because NOLS has the ability to revert conversions it has made previously, through the use of these comments. If you want to revert changes made by NOLS, all you have to do is select the the **`Revert`** mode when you run **`nols`**, and nols will revert those conversions to their original values. 
+
+If you wanted to get rid of these commends, you can run NOLS under the **Clean** mode, and all comments left behind by NOLS will be removed.
+
+Please note though, that this also makes it impossible to revert previous changes by NOLS down the line. So only use this mode after you've checked that your project.
+
+#### How does NOLS do all of this? 
+
+NOLS will ask you a few questions: 
+
+1. Your entry folder - the folder you'd like NOLS to start in. 
+2. Your device dimensions - The device view-height and view-width you're developing in.
+
+Afterwards, NOLS reads through every stylesheet that is inside that entry folder, and it's sub-folders.
+When it gets to a [supported attribute](https://github.com/Bengejd/NOLS#supported-attributes), it determines the proper calculation to make.
+
+To actually make the calculation, NOLS uses the following formula: 
+
+`(attribute_value_in_pixels * 100) / viewport_value`. With the viewport_value being either view-height or view-width, depending on the attribute type.
+
+#### Thanks for reading!
 
 I hope this makes NOLS make a little bit more sense! If you have any additional questions, not answered here or in the Readme, please feel free to open an issue about it!
