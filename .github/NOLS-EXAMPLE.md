@@ -32,7 +32,7 @@ Now this looks quite nice on the iPhone X. It looks exactly how we want it to. B
 |Pixel 2 XL _______________|Galaxy 5S _____________|Pixel 2 ___________________ |iPhone 6, 7, 8 PLUS |
 |-----------------|----------------------|:------------------:|:-------------------------------:|
 
-<img src="https://i.imgur.com/GOATy6j.png" alt="iPad" align="center">
+<img src="https://i.imgur.com/GOATy6j.png" alt="Original_design_all_devices" align="center">
 
 As you can see, the above layouts don't look the same as the layout on the iPhone X in the first example, which isn't what we want. We want it to look the same, no matter what device is displaying the page.
 
@@ -43,12 +43,7 @@ Here are the results after we run the `nols` command in default mode and input o
 |Pixel 2 XL _______________|Galaxy 5S _____________|Pixel 2 ___________________ |iPhone 6, 7, 8 PLUS |
 |-----------------|----------------------|:------------------:|:-------------------------------:|
 
-<img src="https://i.imgur.com/Qr8DFuI.png" alt="iPad_2" align="left" width="202">
-<img src="https://i.imgur.com/ttk40A8.png" alt="Galaxy_5S" align="left" width="202">
-<img src="https://i.imgur.com/f6OLeeH.png" alt="Pixel_2" align="left" width="202">
-<img src="https://i.imgur.com/Ka1KpYf.png" alt="iPhone_6_7_8_Plus" align="left" width="202">
-
-<h3 align="left">_____________________________________________</h3>
+<img src="https://i.imgur.com/czG43Cu.jpg" alt="NOLS_design_all_devices" align="center">
 
 ### SCSS - Converted by NOLS
 
