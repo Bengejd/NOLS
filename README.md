@@ -98,7 +98,7 @@ If you have installed NOLS from npm, then from terminal in your project director
 
     nols
     
-> Note: `nols` is meant to be run before any minification / compression is done. Running it on minified / compressed files will have adverse affects. Don't say I didn't warn you.
+> Note: `nols` is meant to be run before any minification / compression is done. Running it on minified / compressed files will have adverse effects. Don't say I didn't warn you.
     
 ### Optional Parameters
 
