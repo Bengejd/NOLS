@@ -157,27 +157,11 @@ containing the following:
 - [x] Create more manual file tests.
 - [x] Run package on fresh project to test non-linked package.
 
-## CI TODO:
-- [x] Hookup `TravisCLI`
-- [x] Hookup `CodeCov`
-- [x] Hookup `GreenKeeper`
-
-## NPM TODO:
-- [x] Package for `NPM`
-- [X] Double check npmignore
-
-## Github TODO:
-- [x] Create `CHANGELOG.md`
-- [X] Fix up readme
-- [X] Create package install/usage guide
-- [x] create a release that matches the npm package.
-
-## Code TODO:
+## TODO:
 - [x] Include JSDocs for all appropriate functions.
 - [ ] Optimize project code.
 - [ ] Convert parser to use AST style parsing.
 - [ ] Utilize RegEx where appropriate.
 - [ ] Reduce Bundle Size (250kb gzipped isn't that bad is it?).
-
 
 **Copyright © 2018 Jordan Benge**
