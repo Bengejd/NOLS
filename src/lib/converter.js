@@ -63,12 +63,11 @@ export function convertLine(line) {
 }
 
 export function formatNewLine(line, parsedVal, calcVal, conversionType, origVal) {
-  const CMT = areWeTesting() ? ' /* NOLS Converted from:' : /* istanbul ignore next */ global.NOLS_CMT;
-  return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + CMT + origVal + ' */';
+  return line.replace(`${parsedVal}px`, `${calcVal}${getViewportType(conversionType)}`) + getCMT() + origVal + ' */';
 }
 
 export function getCMT() {
-  if (areWeTesting()) return ' /* NOLS Converted from';
+  if (areWeTesting()) return ' /* NOLS Converted from:';
   else return global.NOLS_CMT;
 }
 
@@ -150,9 +149,12 @@ export function handleTranslateAttribute(line, vals, base, origVal) {
     // Add a space between values.
     else calculatedString = calculatedString + v + ' ';
   });
+
+  const CMT = getCMT();
+
   // An extra space gets added in, so we have to remove that... TODO: Fix this in the future.
   calculatedString = calculatedString.substring(0, calculatedString.length - 1);
-  return new Promise((resolve) => resolve(calculatedString + getCMT() + origVal + ' */'));
+  return new Promise((resolve) => resolve(calculatedString + CMT.substring(0, CMT.length -1) + origVal + ' */'));
 }
 
 // TODO: Find out if we can speed this process up. Could cause a bottleneck.
@@ -189,7 +191,9 @@ export async function calculateCombined(line) {
       else calculatedString = calculatedString + v + ' ';
     });
 
+    const CMT = getCMT();
+
     // Format the string with the comment & original value.
-    resolve(calculatedString + getCMT() + origVal + ' */');
+    resolve(calculatedString + CMT.substring(0, CMT.length -1) + origVal + ' */');
   });
 }
