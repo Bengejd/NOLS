@@ -2,7 +2,7 @@ import assert from 'assert';
 import {getFiles, readFile} from '../src/lib/util/fileReader';
 import {revertLine} from '../src/lib/reverter';
 import {cleanLine} from '../src/lib/cleaner';
-import {calculateVH, calculateVW, convertLine, getViewportType, calculateCombined} from '../src/lib/converter';
+import {calculateCombined, calculateVH, calculateVW, convertLine, getViewportType} from '../src/lib/converter';
 import {
   getTestingSrc,
   hasBorderRadius,
@@ -196,6 +196,21 @@ describe('convertLine()', () => {
       input: '  asdf: 50px;',
       expectedResult: '  asdf: 50px;',
       description: 'returns "asdf: 50px;" when receiving "asdf: 50px;"'
+    },
+    {
+      input: 'transform: translate(75px, 162.4px);',
+      expectedResult: 'transform: translate(20vw, 20vh); /* NOLS Converted from: translate(75px, 162.4px); */',
+      description: 'returns "transform: translate(20vw, 20vh); /* ... */" when receiving "transform: translate(75px, 162.4px);"',
+    },
+    {
+      input: 'margin: 162.4px 75px;',
+      expectedResult: 'margin: 20vh 20vw; /* NOLS Converted from: 162.4px 75px; */',
+      description: 'returns "margin: 20vh 20vw; /* ... */" when receiving "margin: 162.4px 75px;"',
+    },
+    {
+      input: 'margin: 162.4px 75px;',
+      expectedResult: 'margin: 20vh 20vw; /* NOLS Converted from: 162.4px 75px; */',
+      description: 'returns "margin: 20vh 20vw; /* ... */" when receiving "margin: 162.4px 75px;"',
     },
   ];
   convertLineTests.forEach((sample) => {

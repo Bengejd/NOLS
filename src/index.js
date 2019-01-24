@@ -7,7 +7,7 @@ import {convertLine} from './lib/converter';
 import {revertLine} from './lib/reverter';
 import {cleanLine} from './lib/cleaner';
 
-global.NOLS_CMT = ' /* NOLS Converted from:';
+global.NOLS_CMT = ' /* NOLS Converted from';
 global.NOLS_ARGS = require('minimist')(process.argv.slice(2));
 global.VIEWPORT = {HEIGHT: 0, WIDTH: 0};
 global.DEFAULT_DIR = areWeTesting() ? getTestingSrc() : getProductionSrc();
