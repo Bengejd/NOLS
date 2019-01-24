@@ -1,64 +1,64 @@
 .conversionChecks { // Check to see if the conversions are made correctly.
   .attributes {
     .x { // all set to 406px for simplicities sake.
-      height: 406px;
-      min-height: 406px;
-      max-height: 406px;
-      top: 406px;
-      bottom: 406px;
-      margin-top: 406px;
-      margin-bottom: 406px;
-      padding-top: 406px;
-      padding-bottom: 406px;
-      transform: translateY(406px);
-      line-height: 406px;
+      height: 50vh; /* NOLS Converted from: 406px; */
+      min-height: 50vh; /* NOLS Converted from: 406px; */
+      max-height: 50vh; /* NOLS Converted from: 406px; */
+      top: 50vh; /* NOLS Converted from: 406px; */
+      bottom: 50vh; /* NOLS Converted from: 406px; */
+      margin-top: 50vh; /* NOLS Converted from: 406px; */
+      margin-bottom: 50vh; /* NOLS Converted from: 406px; */
+      padding-top: 50vh; /* NOLS Converted from: 406px; */
+      padding-bottom: 50vh; /* NOLS Converted from: 406px; */
+      transform: translateY(50vh); /* NOLS Converted from: translateY(406px); */
+      line-height: 50vh; /* NOLS Converted from: 406px; */
     }
     .y {
-      width: 187.5px;
-      min-width: 187.5px;
-      max-width: 187.5px;
-      left: 187.5px;
-      right: 187.5px;
-      margin-right: 187.5px;
-      margin-left: 187.5px;
-      padding-left: 187.5px;
-      padding-right: 187.5px;
-      transform: translateX(187.5px);
-      word-spacing: 187.5px;
-      letter-spacing: 187.5px;
-      outline-width: 187.5px;
-      column-width: 187.5px;
+      width: 50vw; /* NOLS Converted from: 187.5px; */
+      min-width: 50vw; /* NOLS Converted from: 187.5px; */
+      max-width: 50vw; /* NOLS Converted from: 187.5px; */
+      left: 50vw; /* NOLS Converted from: 187.5px; */
+      right: 50vw; /* NOLS Converted from: 187.5px; */
+      margin-right: 50vw; /* NOLS Converted from: 187.5px; */
+      margin-left: 50vw; /* NOLS Converted from: 187.5px; */
+      padding-left: 50vw; /* NOLS Converted from: 187.5px; */
+      padding-right: 50vw; /* NOLS Converted from: 187.5px; */
+      transform: translateX(50vw); /* NOLS Converted from: translateX(187.5px); */
+      word-spacing: 50vw; /* NOLS Converted from: 187.5px; */
+      letter-spacing: 50vw; /* NOLS Converted from: 187.5px; */
+      outline-width: 50vw; /* NOLS Converted from: 187.5px; */
+      column-width: 50vw; /* NOLS Converted from: 187.5px; */
     }
     .xy {
-      margin: 406px;
-      padding: 406px;
-      transform: translate(187.5px, 406px);
+      margin: 50vh; /* NOLS Converted from: 406px; */
+      padding: 50vh; /* NOLS Converted from: 406px; */
+      transform: translate(50vw, 50vh); /* NOLS Converted from: translate(187.5px, 406px); */
     }
   }
   .styles {
     .hasInline {
-      width: 187.5px; // Keep
-      transform: translateY(406px); // Keep
+      width: 50vw; // Keep /* NOLS Converted from: 187.5px; // Keep */
+      transform: translateY(50vh); // Keep /* NOLS Converted from: translateY(406px); // Keep */
       // Keep
     }
     .varyingLength {
       .one {
-        margin: 406px;
-        padding: 406px;
-        transform: translate(187.5px);
+        margin: 50vh; /* NOLS Converted from: 406px; */
+        padding: 50vh; /* NOLS Converted from: 406px; */
+        transform: translate(50vw); /* NOLS Converted from: translate(187.5px); */
       }
       .two {
-        margin: 406px 187.5px;
-        padding: 406px 187.5px;
-        transform: translate(187.5px, 406px);
+        margin: 50vh 50vw; /* NOLS Converted from: 406px 187.5px; */
+        padding: 50vh 50vw; /* NOLS Converted from: 406px 187.5px; */
+        transform: translate(50vw, 50vh); /* NOLS Converted from: translate(187.5px, 406px); */
       }
       .three {
-        margin: 406px 187.5px 406px;
-        padding: 406px 187.5px 406px;
+        margin: 50vh 50vw 50vh; /* NOLS Converted from: 406px 187.5px 406px; */
+        padding: 50vh 50vw 50vh; /* NOLS Converted from: 406px 187.5px 406px; */
       }
       .four {
-        margin: 406px 187.5px 406px 187.5px;
-        padding: 406px 187.5px 406px 187.5px;
+        margin: 50vh 50vw 50vh 50vw; /* NOLS Converted from: 406px 187.5px 406px 187.5px; */
+        padding: 50vh 50vw 50vh 50vw; /* NOLS Converted from: 406px 187.5px 406px 187.5px; */
       }
     }
     .blockComment {
@@ -67,9 +67,9 @@
        */
     }
     .brackets {
-      .weirdBrackets { height: 406px; }
-      .weirdBracketsCrushed {height: 406px;}
-      .weirdBracketsCrushed2 {height:406px;}
+      .weirdBrackets { height: 50vh; } /* NOLS Converted from: 406px; } */
+      .weirdBracketsCrushed {height: 50vh;} /* NOLS Converted from: 406px;} */
+      .weirdBracketsCrushed2 {height:50vh;} /* NOLS Converted from:406px;} */
     }
   }
 }

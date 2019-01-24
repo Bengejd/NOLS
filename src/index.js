@@ -15,7 +15,6 @@ global.DEFAULT_DIR = areWeTesting() ? getTestingSrc() : getProductionSrc();
 /*
  * The entry point of the package..
  */
-
 /* istanbul ignore next */
 async function init() {
   log.success('Thanks for using NOLS!');
@@ -44,7 +43,6 @@ async function init() {
  * @param {string} line - The line in question.
  * @returns Promise<string>;
  */
-
 /* istanbul ignore next */
 function transformLine(line) {
   return new Promise(async (resolve) => {

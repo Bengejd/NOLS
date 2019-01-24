@@ -139,11 +139,26 @@ describe('revertLine(): ', () => {
       description: 'returns the original string in px when receiving "{ height: 100vh; } /* NOLS Converted from:' +
         ' 812px; */"'
     },
+    {
+      input: '  transform: translate(20vw); /* NOLS Converted from: translate(75px); */',
+      expectedResult: '  transform: translate(75px);',
+      description: 'returns "transform: translate(75px);" when receiving "transform: translate(20vw);"'
+    },
+    {
+      input: '  transform: translate(20vw, ); /* NOLS Converted from: translate(75px); */',
+      expectedResult: '  transform: translate(75px);',
+      description: 'returns "transform: translate(75px);" when receiving "transform: translate(20vw);"'
+    },
+    {
+      input: 'transform: translate(20vw, 20vh); /* NOLS Converted from: translate(75px, 162.4px); */',
+      expectedResult: 'transform: translate(75px, 162.4px);',
+      description: 'returns "transform: translate(75px, 162.4px); /* ... */" when receiving "transform: translate(20vw, 20vh);"',
+    },
   ];
   revertLineTests.forEach((sample) => {
     it(sample.description, async () => {
       const revertedLine = await revertLine(sample.input);
-      assert.deepEqual(revertedLine, sample.expectedResult);
+      assert.equal(revertedLine, sample.expectedResult);
     });
   });
 });
