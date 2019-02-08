@@ -323,6 +323,16 @@ describe('isConvertible()', () => {
       input: '/* block comment */ height: 30px; /* block comment */',
       expectedResult: true,
       description: 'returns true when receiving "/* block comment */ height: 30px; /* block comment */"'
+    },
+    {
+      input: 'height: 30px; // Nols ignore',
+      expectedResult: false,
+      description: 'returns false when receiving "height: 30px; // Nols ignore"'
+    },
+    {
+      input: 'height: 30px; /* Nols ignore */',
+      expectedResult: false,
+      description: 'returns false when receiving "height: 30px; /* Nols ignore */"'
     }
   ];
   isConvertibleTests.forEach((sample) => {
@@ -922,11 +932,6 @@ describe('calculateCombined()', () => {
       description: 'returns "transform: translate(20vw, 20vh); /* ... */" when receiving "transform: translate(75px,' +
         ' 162.4px);"',
     },
-    // {
-    //   input: 'margin: 406px 187.5px;',
-    //   expectedResult: '50px 60px',
-    //   description: 'returns "50px 60px" when receiving "padding: 50px 60px;"',
-    // },
   ];
   calculateCombinedTests.forEach((sample) => {
     it(sample.description, async () => {

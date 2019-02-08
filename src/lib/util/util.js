@@ -13,6 +13,7 @@ export function isConvertible(line) {
     && !isExtended(trimmed) // Isn't a extend
     && !hasFontSize(trimmed) // Isn't a font-size attribute
     && !hasBorderRadius(trimmed) // Isn't a border-radius value.
+    && !nolsShouldIgnore(trimmed) // Isn't an ignored line.
     && hasPX(trimmed) // Line has a Pixel value.
   );
 }
@@ -220,4 +221,13 @@ export function getProductionSrc() {
 
 export function hasTranslate(line) {
   return line.includes('translate(');
+}
+
+/*
+ * Tells us if we should ignore this line or not.
+ * @returns boolean;
+ */
+/* istanbul ignore next */
+export function nolsShouldIgnore(line) {
+  return line.toLowerCase().includes('nols ignore');
 }
